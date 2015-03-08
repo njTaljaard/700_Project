@@ -1,0 +1,55 @@
+Lumer-Faiet Ant Cemetery Alg: P388
+23. Lumer, E.D., Faieta, B.: Diversity and adaptation in populations of 
+clustering ants. In: Proceedings of the third international conference on 
+Simulation of adaptive behavior: from animals to animats, MIT Press (1994) 
+501–508 
+
+Vein Layout
+24. Frimmel,H.,Minter,W.: Recent developments concerning thegeological 
+history and genesis of the witwatersrand gold deposits, south africa. 
+Special Publication-Society of Economic Geologists 9 (2002) 17–46
+
+
+
+Ant System:
+ [4,77,216] - AI Textbook first AS algorithm (368)
+ [216] Path selection
+ Algorithm 17.3 AS (371)
+
+Ant Colony System:
+ [77,215,301] To improve AS (372)
+ [215,301] Path selection (373)
+ [215,737] TSP graph lenghts (373)
+ Algorithm 17.4 ACS - Summarized alg (374)
+ [215] Alg for large complex problems (375)
+ 
+
+ANTS:
+ Pheromones update using (17.5, 17.10) (381)
+ Algorithm 17.6 summorized ANTS alg (383)
+
+Parameter settings:
+ Nk - Number of ants
+      [215,216] Size study (383)
+      [216] Nk == Ng (384)
+      [215] Optimal size of Nk (384)
+ Nt - Number of iterations
+ T0 - Initial pheromone
+      
+
+Cemetary Clustering:
+ [127,77] clustering of corpses (384)
+ [77,563] Clustering aroud spatial heterogeneities (385)
+ [127] Basic clustering model inpseration (385)
+ [78] fitting parameter (385)
+ [200] Simple ant behavior (385)
+ .....
+
+
+Dision of Labor
+ [625] Worker specialization
+ [774] Fitness gain
+ [393,625,733] Honey bees
+ [328] Respons to local cues
+ 
+

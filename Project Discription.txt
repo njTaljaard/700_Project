@@ -1,0 +1,14 @@
+Prioritized Foraging using Robot Swarms
+
+Recently, we have developed prioritized foraging models to control robots swarms to collect items,
+where different items have different priorities. The two model are based on the foraging behvior of
+bees and that of the desert ant. For both mdels, each agent (robot) follow very simple rules to find,
+collect, and return an object to a store. This study will adapt this model in two ways:
+
+1. The objects will first be clustered using a clustering algorithm modeled after the cemetery organization
+behavior of ants. When the clustering is done, then the foraging algorithms mentioned
+above will be executed.
+
+2. Agents decide whether they want to be a clustering or a forager using a division of labor model
+(seen in ant colonie). Initially more agents should cluster, but over time more should move to
+foraging.
