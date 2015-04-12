@@ -15,23 +15,23 @@ public class Settings {
     public static int ROCK = 4;
     
     //Scatter formation of gold on grid
-    public static int scatterType;
+    public int scatterType;
     public static int[] scatterTypes = new int[] {1,2,3,4};
     public static final int UNIFORM     = 1;
     public static final int CLUSTERD    = 2;
     public static final int VEIN        = 3;
     public static final int GAUSSIAN    = 4;
     
-    public static int RobotCount;   //c = 10, 30, 50, 70, 100
+    public int RobotCount;   //c = 10, 30, 50, 70, 100
     public static int[] robotCounts = new int[] {10,30,50,70,100};
     
-    public static int GridSize;     //S = 50, 100, 200
+    public int GridSize;     //S = 50, 100, 200
     public static int[] gridSizes = new int[] {50,100,200};
     
-    public static double coverage;  //p = 5%, 20%, 50%, 70%, 90%
+    public double coverage;  //p = 5%, 20%, 50%, 70%, 90%
     public static double[] coverages = new double[] {0.05,0.2,0.7,0.9};
     
-    public static double ratio;     //r = 0.2, 0.25, 0.333, 0.5, 0.667, 0.75, 0.8, 1
+    public double ratio;     //r = 0.2, 0.25, 0.333, 0.5, 0.667, 0.75, 0.8, 1
     public static double[] ratios = new double[] {0.2,0.25,0.33,0.5,0.667,0.75,0.8,1};
     
     //@TODO: need stopping condition & max iterations...
@@ -44,5 +44,13 @@ public class Settings {
     
     //Desert Ant cemetary clustering
     public static final double interLimit = 2.0;
-    public static final double intraLimit = 2.0;    
+    public static final double intraLimit = 2.0;   
+    
+    public Settings(int gSize, int rCount, int cover, int ratio, int scatter) {
+        this.GridSize = gridSizes[gSize];
+        this.RobotCount = robotCounts[rCount];
+        this.coverage = coverages[cover];
+        this.ratio = ratios[ratio];
+        this.scatterType = scatterTypes[scatter];
+    }
 }

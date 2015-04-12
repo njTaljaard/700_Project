@@ -12,20 +12,26 @@ import java.util.ArrayList;
 public class Grid {
     public int[][] grid;
     public Movement movement;
+    public Settings settings;
+    private final Utilities utils;
     
-    public Grid() {
-        grid = new int[Settings.GridSize][Settings.GridSize];
+    public Grid(Settings settings, Utilities util) {
+        this.settings = settings;
+        this.utils = util;
+        
+        this.grid = new int[settings.GridSize][settings.GridSize];
         
         createGrid();
-        Utilities.writeGrid(grid);
+        
+        util.writeGrid(grid, settings, "0");
         
         movement = new Movement(this);
     }
     
     public boolean complete() {
-        for (int i = 0; i < Settings.GridSize; i++) {
+        for (int i = 0; i < settings.GridSize; i++) {
             
-            for (int j = 0; j < Settings.GridSize; i++) {
+            for (int j = 0; j < settings.GridSize; i++) {
                 
                 if (grid[i][j] == Settings.GOLD) {
                     return false;
@@ -53,16 +59,16 @@ public class Grid {
     
     private void createGrid() {
         //init possitions of rocks & gold
-        int placement = (int) ((Settings.GridSize * 2) * Settings.coverage);
-        int rock = (int) (placement / (Settings.ratio + 1));
-        int gold = (int) (Settings.ratio * rock);
+        int placement = (int) ((settings.GridSize * 2) * settings.coverage);
+        int rock = (int) (placement / (settings.ratio + 1));
+        int gold = (int) (settings.ratio * rock);
         int place, x, y;
         
-        switch (Settings.scatterType) {
+        switch (settings.scatterType) {
             case Settings.UNIFORM:
                 for (place = 0; place < gold;) {
-                    x = Utilities.getNextUniform();
-                    y = Utilities.getNextUniform();
+                    x = utils.getNextUniform(settings);
+                    y = utils.getNextUniform(settings);
                     
                     if (grid[x][y] == Settings.EMPTY) {
                         grid[x][y] = Settings.GOLD;
@@ -71,8 +77,8 @@ public class Grid {
                 }
                 
                 for (place = 0; place < rock;) {
-                    x = Utilities.getNextUniform();
-                    y = Utilities.getNextUniform();
+                    x = utils.getNextUniform(settings);
+                    y = utils.getNextUniform(settings);
                     
                     if (grid[x][y] == Settings.EMPTY) {
                         grid[x][y] = Settings.ROCK;
@@ -127,8 +133,8 @@ public class Grid {
                 break;
             case Settings.GAUSSIAN:
                 for (place = 0; place < gold;) {
-                    x = Utilities.getNextGausion();
-                    y = Utilities.getNextGausion();
+                    x = utils.getNextGausion(settings);
+                    y = utils.getNextGausion(settings);
                     
                     if (grid[x][y] == Settings.EMPTY) {
                         grid[x][y] = Settings.GOLD;
@@ -137,8 +143,8 @@ public class Grid {
                 }
                 
                 for (place = 0; place < rock;) {
-                    x = Utilities.getNextGausion();
-                    y = Utilities.getNextGausion();
+                    x = utils.getNextGausion(settings);
+                    y = utils.getNextGausion(settings);
                     
                     if (grid[x][y] == Settings.EMPTY) {
                         grid[x][y] = Settings.ROCK;

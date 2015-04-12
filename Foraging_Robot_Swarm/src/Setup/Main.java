@@ -1,8 +1,11 @@
 package Setup;
 
 import Processing.Controller;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Nico
@@ -19,55 +22,49 @@ public class Main {
     }
     
     public void runSimulation() {
-        ExecutorService exec = Executors.newFixedThreadPool(12);        
+        int id = 0;
         
+        final BlockingQueue<Runnable> queue = new ArrayBlockingQueue<>(57600);
+        ExecutorService executorService = new ThreadPoolExecutor(12, 57600,
+                0L, TimeUnit.MILLISECONDS,
+                queue);
+                
         //Grid size
-        for (int gSize = 1; gSize <= 3; gSize++) {
-            
-            Settings.GridSize = Settings.gridSizes[gSize];
+        /*for (int gSize = 0; gSize <= 2; gSize++) {
             
             //Amount of robots
-            for (int rCount = 1; rCount <= 5; rCount++) {
-
-                Settings.RobotCount = Settings.robotCounts[rCount];
+            for (int rCount = 0; rCount <= 4; rCount++) {
 
                 //Grid coverage
-                for (int cover = 1; cover <= 5; cover++) {
-                    
-                    Settings.coverage = Settings.coverages[cover];
+                for (int cover = 0; cover <= 3; cover++) {
                     
                     //Gold : Rock
-                    for (int ratio = 1; ratio <= 8; ratio++) {
-                        
-                        Settings.ratio = Settings.ratios[ratio];
+                    for (int ratio = 0; ratio <= 7; ratio++) {
                         
                         //Grid pattern
-                        for (int scatter = 1; scatter <= 4; scatter++) {
-                            
-                            Settings.scatterType = Settings.scatterTypes[scatter];                            
-                            
-                            if (Settings.scatterType == Settings.UNIFORM ||  //Remove
-                                    Settings.scatterType == Settings.GAUSSIAN) { //Remove
+                        for (int scatter = 0; scatter <= 3; scatter++) {
+                                                        
+                            if (Settings.scatterTypes[scatter] == Settings.UNIFORM ||  //Remove
+                                    Settings.scatterTypes[scatter] == Settings.GAUSSIAN) { //Remove
                                 
                                 //Run a single configuration
                                 for (int tests = 0; tests < 30; tests++) {
-                                    exec.submit(new Controller());
+                                    executorService.execute(
+                                            new Controller(
+                                                new Settings(gSize, rCount, cover, 
+                                                        ratio, scatter),
+                                                id++));
                                 }
-                            }
-                            
-                        }
-                        
-                    }
-                    
-                }
-                
-            }
-            
-        }
+                            }                            
+                        }                        
+                    }                    
+                }                
+            }            
+        }*/
         
-        exec.shutdown();
+        executorService.execute(new Controller(new Settings(0, 0, 3, 4, 0), id++));
         
-        while (!exec.isTerminated()) {}
+        while (queue.remainingCapacity() > 0) {}
         
     }
     

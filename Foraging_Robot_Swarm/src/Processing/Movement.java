@@ -164,7 +164,7 @@ public class Movement {
     }
     
     private boolean testUse(int x, int y) {
-        return x >= 0 && y >=0 && x < Settings.GridSize && y < Settings.GridSize;
+        return x >= 0 && y >=0 && x < grid.settings.GridSize && y < grid.settings.GridSize;
     }
     
     private int wrapPosition(int pos, boolean type) {
@@ -172,8 +172,8 @@ public class Movement {
         
         if (type) {
             
-            if (pos > Settings.GridSize - 5) {
-                value = Settings.GridSize;
+            if (pos > grid.settings.GridSize - 5) {
+                value = grid.settings.GridSize;
             } else {
                 value = pos - 5;
             }

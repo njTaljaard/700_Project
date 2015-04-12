@@ -14,39 +14,40 @@ import java.util.logging.Logger;
 public class Utilities {
     private static final Random random = new Random();
     
-    public static void writeGrid(int[][] grid) {
+    public Utilities() {}
+    
+    public void writeGrid(int[][] grid, Settings settings, String IT) {
+        System.out.println(IT);
         try {
-            File file = new File("./Grid/" + Settings.GridSize + "-" 
-                    + Settings.RobotCount + "-" + Settings.coverage + "-" 
-                    + Settings.ratio + "-" + Settings.scatterType);
+            File file = new File("./Grid/" + settings.GridSize + "-" 
+                    + settings.RobotCount + "-" + settings.coverage + "-" 
+                    + settings.ratio + "-" + settings.scatterType + "-" + IT + ".txt");
             
-            boolean flag = file.createNewFile();
-            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-            
-            String line = "----------------------------\n";
-            writer.write(line);
+            if (file.createNewFile() && file.canWrite()) {
+                BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+                String line = "----------------------------\n";
+                writer.write(line);
 
-            for (int i = 0; i < grid.length; i++) {
-                line = "|";
-
-                for (int j = 0; j < grid[i].length; j++) {
-                    line += grid[i][j] + "|";
+                for (int i = 0; i < grid.length; i++) {
+                    line = "|";
+                    for (int j = 0; j < grid[i].length; j++) {
+                        line += grid[i][j] + "|";
+                    }
+                    writer.write(line + "\n");
                 }
-
-                writer.write(line + "\n");
+            } else {
+                System.out.println("could create file");
             }
-            
-            writer.close();
         } catch (IOException ex) {
             Logger.getLogger(Utilities.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    public static int getNextUniform() {
-        return random.nextInt(Settings.GridSize);
+    public int getNextUniform(Settings settings) {
+        return random.nextInt(settings.GridSize);
     }
     
-    public static int getNextGausion() {
-        return (int) (random.nextGaussian() * Settings.GridSize);
+    public int getNextGausion(Settings settings) {
+        return (int) (random.nextGaussian() * settings.GridSize);
     }
 }
