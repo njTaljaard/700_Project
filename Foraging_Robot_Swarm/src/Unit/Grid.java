@@ -31,7 +31,7 @@ public class Grid {
     public boolean complete() {
         for (int i = 0; i < settings.GridSize; i++) {
             
-            for (int j = 0; j < settings.GridSize; i++) {
+            for (int j = 0; j < settings.GridSize; j++) {
                 
                 if (grid[i][j] == Settings.GOLD) {
                     return false;
@@ -232,7 +232,7 @@ public class Grid {
     }
     
     public boolean intra(ArrayList<Position> centroids) { //inner cluster density
-        boolean test = true;
+        boolean test = false;
         
         for (int x = 0; x < grid.length; x++) {
             
@@ -242,14 +242,14 @@ public class Grid {
                     
                     for (Position p : centroids) {
 
-                        if (distance(x, y ,p.row, p.column) > Settings.intraLimit) {
-                            test = false;
+                        if (distance(x, y ,p.row, p.column) > settings.intraLimit) {
+                            test = true;
                             break;
                         }
                         
                     }
 
-                    if (!test) {
+                    if (test) {
                         return test;
                     }
                 }
@@ -262,7 +262,7 @@ public class Grid {
     public boolean inter(ArrayList<Position> centroids) { //cluster seperation
         return centroids.stream().noneMatch((p1) -> 
                 (!centroids.stream().noneMatch((p2) -> 
-                        (distance(p2.row, p1.row, p2.column, p1.column) < Settings.interLimit))));
+                        (distance(p2.row, p1.row, p2.column, p1.column) < settings.interLimit))));
     }
     
     private double distance(double p1x, double p1y, double p2x, double p2y) {

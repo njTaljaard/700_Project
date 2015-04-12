@@ -14,7 +14,7 @@ public class Controller implements Runnable {
     public Cluster cluster;
     private Robot[] robots;
     protected Grid grid;
-    private final Settings settings;
+    public final Settings settings;
     private final Utilities utils;
     
     private final String ID;
@@ -41,6 +41,7 @@ public class Controller implements Runnable {
             
             utils.writeGrid(grid.grid, settings, String.valueOf(itterations));
         } while (testStoppingCondition());
+        
         System.out.println("DONE!!!");
         
         utils.writeGrid(grid.grid, settings, "DONE...");
@@ -63,6 +64,6 @@ public class Controller implements Runnable {
         }
         
         return false;*/
-        return grid.isClustered();
+        return grid.isClustered() || grid.complete();
     }
 }

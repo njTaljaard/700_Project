@@ -43,8 +43,8 @@ public class Settings {
     public static final double Rho = 0.1; //rho
     
     //Desert Ant cemetary clustering
-    public static final double interLimit = 2.0;
-    public static final double intraLimit = 2.0;   
+    public double interLimit = 2.0;
+    public double intraLimit = 2.0;   
     
     public Settings(int gSize, int rCount, int cover, int ratio, int scatter) {
         this.GridSize = gridSizes[gSize];
@@ -52,5 +52,7 @@ public class Settings {
         this.coverage = coverages[cover];
         this.ratio = ratios[ratio];
         this.scatterType = scatterTypes[scatter];
+        this.interLimit = GridSize / 10;
+        this.intraLimit = GridSize / 10;
     }
 }

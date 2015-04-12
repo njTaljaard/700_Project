@@ -23,7 +23,10 @@ public class Utilities {
                     + settings.RobotCount + "-" + settings.coverage + "-" 
                     + settings.ratio + "-" + settings.scatterType + "-" + IT + ".txt");
             
-            if (file.createNewFile() && file.canWrite()) {
+            boolean create = file.createNewFile();
+            boolean write = file.canWrite();
+
+            if (create && write) {
                 BufferedWriter writer = new BufferedWriter(new FileWriter(file));
                 String line = "----------------------------\n";
                 writer.write(line);
@@ -35,11 +38,14 @@ public class Utilities {
                     }
                     writer.write(line + "\n");
                 }
+
+                writer.close();
             } else {
-                System.out.println("could create file");
+                System.out.println("creat write error");
             }
         } catch (IOException ex) {
             Logger.getLogger(Utilities.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("shit");
         }
     }
     

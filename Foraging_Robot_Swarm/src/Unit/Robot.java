@@ -21,7 +21,7 @@ public class Robot {
         
     public Robot(Controller controller) {
         this.controller = controller;
-        this.position = new Position();
+        this.position = new Position(controller.settings.GridSize);
         this.state = Settings.CLUSTER;
         this.carryType = Settings.EMPTY;
         this.clusterDensity = 0.0f;
