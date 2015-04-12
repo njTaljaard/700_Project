@@ -10,34 +10,36 @@ import Unit.Robot;
 public class Controller implements Runnable {
     
     public Forage forage;
-    public Cluster cluser;
+    public Cluster cluster;
     private Robot[] robots;
     protected Grid grid;
     
     public Controller() {}
-    
-    private void setup() {
-        grid = new Grid();
         
-        for (int i = 0; i < Settings.RobotCount; i++) {
-            robots[i] = new Robot(this);
-        }
-    }
-    
     @Override
     public void run() {
         int itterations = 0;
         
         setup();
         
-        /*do {
+        do {
             itterations++;
         
             for (Robot robot : robots) {
                 robot.update();
             }
             
-        } while (testStoppingCondition());*/
+        } while (testStoppingCondition());
+    }
+    
+    private void setup() {
+        grid = new Grid();
+        forage = new Forage(this);
+        cluster = new Cluster(this);
+        
+        for (int i = 0; i < Settings.RobotCount; i++) {            
+            robots[i] = new Robot(this);
+        }
     }
     
     private boolean testStoppingCondition() {

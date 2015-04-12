@@ -1,22 +1,25 @@
 package Unit;
 
+import Processing.Movement;
 import Setup.Position;
 import Setup.Settings;
 import Setup.Utilities;
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * @author Nico
  */
 public class Grid {
-    public static int[][] grid;
+    public int[][] grid;
+    public Movement movement;
     
     public Grid() {
         grid = new int[Settings.GridSize][Settings.GridSize];
         
         createGrid();
         Utilities.writeGrid(grid);
+        
+        movement = new Movement(this);
     }
     
     public boolean complete() {
@@ -33,6 +36,19 @@ public class Grid {
         }
         
         return true;
+    }
+    
+    public int pickUpItem(int i, int j) {
+        return grid[i][j];
+    }
+    
+    public boolean dropItem(int i, int j, int type) {
+        if (grid[i][j] == Settings.EMPTY) {
+            grid[i][j] = type;
+            return true;
+        }
+        
+        return false;
     }
     
     private void createGrid() {
@@ -136,170 +152,114 @@ public class Grid {
     }
     
     
-    //Scouting
-    public Position getNewPosition(Position origin) { // Can see 5 units ahead
-        ArrayList<Position> availablePosition = new ArrayList<>();
-        int fromX = wrapPosition(origin.row, true);
-        int toX = wrapPosition(origin.row, false);
-        int fromY = wrapPosition(origin.column, true);
-        int toY = wrapPosition(origin.column, false);
-        boolean goldFound = false;
+    public ArrayList<Position> getSurroundPositions(Position pos) {
+        ArrayList<Position> list = new ArrayList<>();
         
-        for (int i = fromX; i < toX; i++) {
+        for (int i = pos.row-1; i < pos.row+1; i++) {
             
-            for (int j = fromY; j < toY; j++) {
+            for (int j = pos.column-1; j < pos.column+1; j++) {
                 
-                if (origin.row != i && origin.column != j) {
+                if (i >= 0 && j >= 0 && i < grid.length && j < grid[i].length &&
+                        (i != pos.row && j != pos.column) ) {
                     
-                    if (grid[i][j] == Settings.GOLD) {
-                        goldFound = true;
-                        availablePosition.add(new Position(i, j));
-                    } else if (grid[i][j] == Settings.ROCK) {
-                        availablePosition.add(new Position(i, j));
+                    list.add(new Position(i, j));
+                    
+                }
+                
+            }
+            
+        }
+        
+        return list;
+    }
+    
+    /*
+     * Test if grid is clustered... 
+     */
+    
+    public boolean isClustered() {
+        ArrayList<Position> centroids = getCentroids();
+        
+        return intra(centroids) && inter(centroids);
+    }
+    
+    public ArrayList<Position> getCentroids() {
+        
+        ArrayList<Position> centroids = new ArrayList<>();
+        
+        for (int i = 0; i < grid.length; i++) {
+            
+            for (int j = 0; j < grid[i].length; j++) {
+                
+                if (grid[i][j] == Settings.GOLD) {
+                    Position pos = new Position(i,j);
+                    
+                    for (int x = 0; x < grid.length; x++) {
+                        
+                        for (int y = 0; y < grid[x].length; y++) {
+                         
+                            pos.distCount += distance(i, j, x, y);
+                            
+                        }                        
                     }
                     
-                }
+                    centroids.add(pos);
+                    
+                    if (centroids.size() > 10) {
+                        
+                        double tmp = centroids.get(0).distCount;
+                        int rm = 0;
+                        
+                        for (int k = 0; k < centroids.size(); k++) {
+                            if (centroids.get(k).distCount > tmp) {
+                                rm = k;
+                            }
+                        }
+                        
+                        centroids.remove(rm);
+                    }
+                }                
+            }            
+        }
+        
+        return centroids;
+    }
+    
+    public boolean intra(ArrayList<Position> centroids) { //inner cluster density
+        boolean test = true;
+        
+        for (int x = 0; x < grid.length; x++) {
+            
+            for (int y = 0; y < grid[x].length; y++) {
                 
-            }
-            
-        }
-        
-        if (availablePosition.isEmpty()) { //No priority found random direction...     
-            
-            return setDefaultPos(origin);
-            
-        }  else { 
-        
-            Position course = getClosest(availablePosition, origin, goldFound);
+                if (grid[x][y] == Settings.GOLD) {
+                    
+                    for (Position p : centroids) {
 
-            return getMoveTo(course, origin);
-        }
-    }
-    
-    private Position getMoveTo(Position course, Position origin) {
-        Position moveTo = origin;
-        
-        if (course.row < origin.row && course.column == origin.column) {
-            moveTo.row -= 1;
-        } else if (course.row > origin.row && course.column == origin.column) {
-            moveTo.row += 1;
-        } else if (course.row == origin.row && course.column < origin.column) {
-            moveTo.column -= 1;
-        } else if (course.row == origin.row && course.column > origin.column) {
-            moveTo.column += 1;
-        } else if (course.row < origin.row && course.column < origin.column) {
-            moveTo.row -= 1;
-            moveTo.column -= 1;
-        } else if (course.row > origin.row && course.column > origin.column) {
-            moveTo.row += 1;
-            moveTo.column += 1;
-        } else if (course.row < origin.row && course.column > origin.column) {
-            moveTo.row -= 1;
-            moveTo.column += 1;
-        } else if (course.row > origin.row && course.column < origin.column) {
-            moveTo.row += 1;
-            moveTo.column -= 1;
-        }  
-        
-        return moveTo;
-    }
-    
-    private Position setDefaultPos(Position origin) {
-        ArrayList<Position> availablePosition = new ArrayList<>();
-        
-        if (testUse(origin.row-1, origin.column) && grid[origin.row-1][origin.column] == Settings.EMPTY) {
-            availablePosition.add(new Position(origin.row-1, origin.column));    
-        } 
-        
-        if (testUse(origin.row, origin.column-1) && grid[origin.row][origin.column-1] == Settings.EMPTY) {
-            availablePosition.add(new Position(origin.row, origin.column-1));    
-        } 
-        
-        if (testUse(origin.row+1, origin.column) && grid[origin.row+1][origin.column] == Settings.EMPTY) {
-            availablePosition.add(new Position(origin.row+1, origin.column));    
-        } 
-        
-        if (testUse(origin.row, origin.column+1) && grid[origin.row][origin.column+1] == Settings.EMPTY) {
-            availablePosition.add(new Position(origin.row, origin.column+1));  
-        } 
-        
-        if (testUse(origin.row-1, origin.column-1) && grid[origin.row-1][origin.column-1] == Settings.EMPTY) {
-            availablePosition.add(new Position(origin.row-1, origin.column-1));    
-        } 
-        
-        if (testUse(origin.row+1, origin.column+1) && grid[origin.row+1][origin.column+1] == Settings.EMPTY) {
-            availablePosition.add(new Position(origin.row+1, origin.column+1));
-        } 
-        
-        if (testUse(origin.row-1, origin.column+1) && grid[origin.row-1][origin.column+1] == Settings.EMPTY) {
-            availablePosition.add(new Position(origin.row-1, origin.column+1));    
-        }
-        
-        if (testUse(origin.row+1, origin.column-1) && grid[origin.row+1][origin.column-1] == Settings.EMPTY) {
-            availablePosition.add(new Position(origin.row+1, origin.column-1));
-        }
-        
-        Random rnd = new Random();
-        int use = (int) (rnd.nextFloat() * 8);
-        
-        return availablePosition.get(use);
-    }
-    
-    private Position getClosest(ArrayList<Position> availablePosition, Position origin, boolean goldFound) {
-        double dist = Double.MAX_VALUE;
-        double dist2;
-        Position course = new Position();
-        for (Position distPos : availablePosition) {
-            dist2 = distance(distPos, origin);
+                        if (distance(x, y ,p.row, p.column) > Settings.intraLimit) {
+                            test = false;
+                            break;
+                        }
+                        
+                    }
 
-            if (goldFound) {
-                if (dist2 < dist && grid[distPos.row][distPos.column] == Settings.GOLD) {
-                    dist = dist2;
-                    course = distPos;
-                }
-            } else {
-                if (dist2 < dist) {
-                    dist = dist2;
-                    course = distPos;
+                    if (!test) {
+                        return test;
+                    }
                 }
             }
-
         }
         
-        return course;
+        return test;
     }
     
-    private double distance(Position pos, Position origin) {
-        return Math.sqrt((pos.row - origin.row) * (pos.row - origin.row) + 
-                (pos.column - origin.column) * (pos.column - origin.column));
+    public boolean inter(ArrayList<Position> centroids) { //cluster seperation
+        return centroids.stream().noneMatch((p1) -> 
+                (!centroids.stream().noneMatch((p2) -> 
+                        (distance(p2.row, p1.row, p2.column, p1.column) < Settings.interLimit))));
     }
     
-    private boolean testUse(int x, int y) {
-        return x >= 0 && y >=0 && x < Settings.GridSize && y < Settings.GridSize;
+    private double distance(double p1x, double p1y, double p2x, double p2y) {
+        return Math.sqrt(Math.pow(p2x - p1x, 2) + Math.pow(p2y - p1y ,2));
     }
-    
-    private int wrapPosition(int pos, boolean type) {
-        int value;
-        
-        if (type) {
-            
-            if (pos > Settings.GridSize - 5) {
-                value = Settings.GridSize;
-            } else {
-                value = pos - 5;
-            }
-            
-        } else {
-            
-            if (pos < 4) {
-                value = 0;
-            } else {
-                value = pos - 5;
-            }
-            
-        }
-        
-        return value;
-    }
-    
 }

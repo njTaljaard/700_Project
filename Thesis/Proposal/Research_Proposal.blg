@@ -1,0 +1,30 @@
+This is BibTeX, Version 0.99dThe top-level auxiliary file: Research_Proposal.aux
+The style file: plain.bst
+Database file #1: reference.bib
+I was expecting a `,' or a `)'---line 40 of file reference.bib
+ : 
+ : }
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+Too many commas in name 1 of "Dorigo, M., Sahin, E." for entry Robots-Dorigo
+while executing---line 1049 of file plain.bst
+Name 1 in "J-L. Deneubourg, S. Goss, N. Franks, A. Sendova-Franks, C. Detrain, and L. Chrètien" has a comma at the end for entry RobotAnt
+while executing---line 1049 of file plain.bst
+Too many commas in name 1 of "J-L. Deneubourg, S. Goss, N. Franks, A. Sendova-Franks, C. Detrain, and L. Chrètien" for entry RobotAnt
+while executing---line 1049 of file plain.bst
+Too many commas in name 1 of "J-L. Deneubourg, S. Goss, N. Franks, A. Sendova-Franks, C. Detrain, and L. Chrètien" for entry RobotAnt
+while executing---line 1049 of file plain.bst
+Warning--can't use both volume and number fields in Jade-2014
+Too many commas in name 1 of "Dorigo, M., Sahin, E." for entry Robots-Dorigo
+while executing---line 1090 of file plain.bst
+Warning--empty title in Robot-Swarm
+Name 1 in "J-L. Deneubourg, S. Goss, N. Franks, A. Sendova-Franks, C. Detrain, and L. Chrètien" has a comma at the end for entry RobotAnt
+while executing---line 1090 of file plain.bst
+Too many commas in name 1 of "J-L. Deneubourg, S. Goss, N. Franks, A. Sendova-Franks, C. Detrain, and L. Chrètien" for entry RobotAnt
+while executing---line 1090 of file plain.bst
+Too many commas in name 1 of "J-L. Deneubourg, S. Goss, N. Franks, A. Sendova-Franks, C. Detrain, and L. Chrètien" for entry RobotAnt
+while executing---line 1090 of file plain.bst
+Warning--empty title in T-Seeley
+Warning--empty chapter and pages in T-Seeley
+Warning--empty journal in Forage-09
+(There were 9 error messages)

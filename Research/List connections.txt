@@ -1,3 +1,12 @@
+12. Hoff, N.R., Sagoff, A., Wood, R.J., Nagpal, R.: 
+Two foraging algorithms for robot swarms using only local communication. 
+In: Proceedings of Robotics and Biomimetics (ROBIO), 2010 IEEE International 
+Conference on, IEEE (2010) 123–130 
+
+13. Collett, M., Collett, T.S., Bisch, S., Wehner, R.: 
+Local and global vectors in desert ant navigation. Nature394(6690) (1998) 
+269–272 
+
 Lumer-Faiet Ant Cemetery Alg: P388
 23. Lumer, E.D., Faieta, B.: Diversity and adaptation in populations of 
 clustering ants. In: Proceedings of the third international conference on 
@@ -9,7 +18,11 @@ Vein Layout
 history and genesis of the witwatersrand gold deposits, south africa. 
 Special Publication-Society of Economic Geologists 9 (2002) 17–46
 
-
+Path finding
+Lin,J.H.,Huang,L.R.,etal.: Chaotic bees warm optimization algorithm for 
+path planning of mobile robots. In:Proceedings of the 10th WSEAS 
+international conference on evolutionary computing,World Scienti?c and
+Engineering Academy and Society (WSEAS)(2009)84–89 
 
 Ant System:
  [4,77,216] - AI Textbook first AS algorithm (368)
@@ -38,7 +51,7 @@ Parameter settings:
       
 
 Cemetary Clustering:
- [127,77] clustering of corpses (384)
+ [127] clustering of corpses (384)
  [77,563] Clustering aroud spatial heterogeneities (385)
  [127] Basic clustering model inpseration (385)
  [78] fitting parameter (385)

@@ -1,0 +1,70 @@
+\begin{thebibliography}{10}
+
+\bibitem{Jade-2014}
+Jade Abbott and Andries~P. Engelbrecht.
+\newblock Nature-inspired swarm robotics algorithms for prioritized foraging.
+\newblock In {\em Swarm Intelligence}, volume International Conference, ANTS
+  2014 of {\em Brussels, Belgium, 10-12.}, pages 246--253. Springer
+  International Publishing, September 2014.
+
+\bibitem{Beni-Robot}
+Gerado Beni.
+\newblock {\em From Swarm Intelligence to Swarm Robotics}, chapter SAB 2004
+  International Workshop, Santa Monica, CA, USA, July 17, 2004, Revised
+  Selected Papers, pages 1--9.
+\newblock Springer Berlin Heidelberg, 2004.
+
+\bibitem{L-Chretien}
+L.~Chrètien.
+\newblock Organisation spatiale du mat´eriel provenant de l’excavation du
+  nid chez messor barbarus et des cadavres d’ouvrières chez ‘‘lasius
+  niger’’ (hymenopterae: Formicidae).
+\newblock {\em PhD thesis, Universite Libre de Bruxelles}, 1996.
+
+\bibitem{Robots-Dorigo}
+Sahin~E. Dorigo, M.
+\newblock {\em Swarm Robotics}, chapter Robots 17(2-3), pages 111--113.
+\newblock Auton, 2004.
+
+\bibitem{Engel}
+Andries~P. Engelbrecht.
+\newblock {\em Computational Intelligence An Introduction}.
+\newblock John Wiley \& Sons, Ltd, 2nd edition, 2007.
+
+\bibitem{SI}
+Guy~Theraulaz Eric~Bonabeau, Marco~Dorigo.
+\newblock {\em Swarm Intelligence: From Natural to Artificial Systems},
+  chapter~1, pages 7--9.
+\newblock Oxford University Press, 198 Madison Avenue, New York, New York, 1
+  edition, 1991.
+
+\bibitem{Robot-Swarm}
+Guy~Theraulaz Eric~Bonabeau, Marco~Dorigo.
+\newblock chapter Social Insects, pages 1--23.
+\newblock Oxford Univeristy Press, 1999.
+
+\bibitem{Lumer-Faieta}
+Baldo~Faieta Erik D.~Lumer.
+\newblock Diversity and adaption in populations of clustering ants.
+\newblock In {\em SAB94 Proceedings of the third international conference of
+  Simulation of adaptive behaviour}, volume~3 of {\em From animals to
+  animates}, pages 501--508. MIT Press Cambridge, July 1994.
+
+\bibitem{RobotAnt}
+N.~Franks A. Sendova-Franks C.~Detrain J-L.~Deneubourg, S.~Goss and
+  L.~Chrètien.
+\newblock The dynamics of collective sorting: Robot-like ant and antlike robot.
+\newblock In {\em Conference on Simulation of Adaptive Behavior: From Animals
+  to Animats}, number First in J.A. Meyer and S.W. Wilson, pages 356--365. MIT
+  Press, 1991.
+
+\bibitem{T-Seeley}
+Thomas Seeley.
+\newblock Harvard University Press, 2009.
+
+\bibitem{Forage-09}
+A.F. Winﬁeld.
+\newblock Foraging robots.
+\newblock 2009.
+
+\end{thebibliography}

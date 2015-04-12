@@ -1,8 +1,6 @@
 package Unit;
 
-import Processing.Cluster;
 import Processing.Controller;
-import Processing.Forage;
 import Setup.Position;
 import Setup.Settings;
 
@@ -15,12 +13,19 @@ public class Robot {
 
     public Position foragePostion;
     public Position position;
+    public float clusterDensity;
+    public boolean laden;
     public int state;
+    
+    protected int carryType;
         
     public Robot(Controller controller) {
         this.controller = controller;
         this.position = new Position();
-        this.state = Settings.FORAGE;
+        this.state = Settings.CLUSTER;
+        this.carryType = Settings.EMPTY;
+        this.clusterDensity = 0.0f;
+        this.laden = false;
     }
     
     public void update() {
@@ -29,10 +34,16 @@ public class Robot {
                 controller.forage.update(this);
                 break;
             case Settings.CLUSTER:
-                controller.cluser.update(this);
+                controller.cluster.update(this);
                 break;
         }
-    }    
+    }  
     
+    public int getCarry() {
+        return carryType;
+    }
     
+    public void setCarry(int type) {
+        carryType = type;
+    }
 }
