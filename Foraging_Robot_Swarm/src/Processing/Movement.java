@@ -20,25 +20,22 @@ public class Movement {
     //Scouting
     public Position getNewPosition(Position origin) { // Can see 5 units ahead
         ArrayList<Position> availablePosition = new ArrayList<>();
-        int fromX = wrapPosition(origin.row, true);
-        int toX = wrapPosition(origin.row, false);
-        int fromY = wrapPosition(origin.column, true);
-        int toY = wrapPosition(origin.column, false);
+        int fromX = wrapPosition(origin.row-5, true);
+        int toX = wrapPosition(origin.row+5, false);
+        int fromY = wrapPosition(origin.column-5, true);
+        int toY = wrapPosition(origin.column+5, false);
         boolean goldFound = false;
         
         for (int i = fromX; i < toX; i++) {
             
             for (int j = fromY; j < toY; j++) {
                 
-                if (origin.row != i && origin.column != j) {
-                    
-                    if (grid.grid[i][j] == Settings.GOLD) {
+                if (grid.grid[i][j] == Settings.GOLD || grid.grid[i][j] == Settings.ROCK ||
+                        grid.grid[i][j] == Settings.ANT_GOLD || grid.grid[i][j] == Settings.ANT_ROCK){
+                    availablePosition.add(new Position(i, j));
+                        
+                    if (grid.grid[i][j] == Settings.GOLD || grid.grid[i][j] == Settings.ANT_GOLD)
                         goldFound = true;
-                        availablePosition.add(new Position(i, j));
-                    } else if (grid.grid[i][j] == Settings.ROCK) {
-                        availablePosition.add(new Position(i, j));
-                    }
-                    
                 }
                 
             }
@@ -129,7 +126,7 @@ public class Movement {
         }
         
         Random rnd = new Random();
-        int use = (int) (rnd.nextFloat() * 8);
+        int use = (int) (rnd.nextFloat() * availablePosition.size());
         
         return availablePosition.get(use);
     }
@@ -168,26 +165,22 @@ public class Movement {
     }
     
     private int wrapPosition(int pos, boolean type) {
-        int value;
-        
-        if (type) {
+        if (!type) {
             
-            if (pos > grid.settings.GridSize - 5) {
-                value = grid.settings.GridSize;
+            if (pos >= grid.settings.GridSize-1) {
+                return grid.settings.GridSize-1;
             } else {
-                value = pos - 5;
+                return pos;
             }
             
         } else {
             
-            if (pos < 4) {
-                value = 0;
+            if (pos < 0) {
+                return 0;
             } else {
-                value = pos - 5;
+                return pos;
             }
             
         }
-        
-        return value;
     }
 }

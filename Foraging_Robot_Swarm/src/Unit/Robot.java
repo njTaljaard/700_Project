@@ -43,7 +43,26 @@ public class Robot {
         return carryType;
     }
     
-    public void setCarry(int type) {
-        carryType = type;
+    public void setCarry(int type, boolean ant) {
+        if (type == Settings.EMPTY) {
+            carryType = type;
+            laden = false;
+        } if (ant) {
+            if (type == Settings.GOLD) {
+                carryType = Settings.ANT_GOLD;
+                laden = true;
+            } else {
+                carryType = Settings.ANT_ROCK;
+                laden = true;
+            }
+        } else {
+            if (type == Settings.GOLD) {
+                carryType = Settings.BEE_GOLD;
+                laden = true;
+            } else {
+                carryType = Settings.BEE_ROCK;
+                laden = true;
+            }
+        }
     }
 }

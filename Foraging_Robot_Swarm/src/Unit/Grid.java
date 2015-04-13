@@ -44,13 +44,32 @@ public class Grid {
         return true;
     }
     
-    public int pickUpItem(int i, int j) {
+    public int pickUpItem(int i, int j, boolean ant, boolean gold) {
+        int r = grid[i][j];
+        
+        if (ant) {
+            if (gold) {
+                grid[i][j] = Settings.ANT_GOLD;
+            } else {
+                grid[i][j] = Settings.ANT_ROCK;
+            }
+        } else {
+            if (gold) {
+                grid[i][j] = Settings.BEE_GOLD;
+            } else {
+                grid[i][j] = Settings.BEE_ROCK;
+            }
+        }
+        
         return grid[i][j];
     }
     
     public boolean dropItem(int i, int j, int type) {
-        if (grid[i][j] == Settings.EMPTY) {
-            grid[i][j] = type;
+        if (type == Settings.ANT_GOLD || type == Settings.BEE_GOLD) {
+            grid[i][j] = Settings.GOLD;
+            return true;
+        } else if (type == Settings.ANT_ROCK || type == Settings.BEE_ROCK) {
+            grid[i][j] = Settings.ROCK;
             return true;
         }
         

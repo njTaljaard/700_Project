@@ -4,7 +4,6 @@ import Setup.Position;
 import Setup.Settings;
 import Unit.Robot;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -19,8 +18,8 @@ public class Cluster {
     public Cluster(Controller controller) {
         this.controller = controller;
         this.clustered = false;
-        this.gamma_1 = 0.0f;
-        this.gamma_2 = 0.0f;
+        this.gamma_1 = 0.7f;
+        this.gamma_2 = 0.85f;
         this.r = new Random();
     }
     
@@ -32,29 +31,30 @@ public class Cluster {
             
             ArrayList<Position> positions = controller.grid.getSurroundPositions(robot.position);
             
-            for (Position pos : positions) {
-                
-                if (!robot.laden && controller.grid.grid[pos.row][pos.column] != Settings.EMPTY) {
+            positions.stream().forEach((pos) -> {
+                if (!robot.laden && (controller.grid.grid[pos.row][pos.column] == Settings.ROCK || 
+                        controller.grid.grid[pos.row][pos.column] == Settings.GOLD)) {
                     
-                    if (random() <= robot.clusterDensity) {
-                        robot.setCarry(controller.grid.pickUpItem(pos.row, pos.column));
+                    if (random() <= computePickPropability(robot.clusterDensity)) {
+                        robot.setCarry(controller.grid.pickUpItem(pos.row, pos.column, 
+                                true, Settings.ANT_GOLD == robot.getCarry()), true);
                     }
                     
-                } else if (robot.laden && controller.grid.grid[pos.row][pos.column] == Settings.EMPTY) {
+                } else if (robot.laden && (controller.grid.grid[pos.row][pos.column] != Settings.ROCK || 
+                        controller.grid.grid[pos.row][pos.column] != Settings.ROCK)) {
                     
-                    if (random() <= robot.clusterDensity) {
+                    if (random() <= computeDropPropability(robot.clusterDensity)) {
                         
                         if (controller.grid.dropItem(pos.row, pos.column, robot.getCarry())) {
-                            robot.setCarry(Settings.EMPTY);
+                            robot.setCarry(Settings.EMPTY, true);
                         }
                         
                     }
                     
                 }
-                
-            }
+            });
             
-            //moveToEmptyPos
+            controller.grid.movement.getNewPosition(robot.position);
         }
     }
         
@@ -66,9 +66,41 @@ public class Cluster {
             
             for (int j = 0; j < controller.grid.grid[i].length; j++) {
                 
-                if (controller.grid.grid[i][j] == Settings.GOLD) {
+                if (robot.getCarry() == Settings.ANT_GOLD) {
                     
-                    tmp += ( 1 - distance(robot.position, i, j) / gamma_1 );
+                    if (controller.grid.grid[i][j] == Settings.GOLD || 
+                            controller.grid.grid[i][j] == Settings.ANT_GOLD ||
+                            controller.grid.grid[i][j] == Settings.BEE_GOLD) {
+
+                        tmp += ( 1 - distance(robot.position, i, j) / gamma_1 );
+
+                    }
+                    
+                } else if (robot.getCarry() == Settings.ANT_ROCK) {                
+                    
+                    if (controller.grid.grid[i][j] == Settings.ROCK || 
+                        controller.grid.grid[i][j] == Settings.ANT_ROCK ||
+                        controller.grid.grid[i][j] == Settings.BEE_ROCK) {
+                        
+                        tmp += ( 1 - distance(robot.position, i, j) / gamma_1 ) / 2;
+                        
+                    }
+                    
+                } else {
+                    
+                    if (controller.grid.grid[i][j] == Settings.GOLD || 
+                            controller.grid.grid[i][j] == Settings.ANT_GOLD ||
+                            controller.grid.grid[i][j] == Settings.BEE_GOLD) {
+
+                        tmp += ( 1 - distance(robot.position, i, j) / gamma_1 );
+
+                    } else if (controller.grid.grid[i][j] == Settings.ROCK || 
+                        controller.grid.grid[i][j] == Settings.ANT_ROCK ||
+                        controller.grid.grid[i][j] == Settings.BEE_ROCK) {
+                        
+                        tmp += ( 1 - distance(robot.position, i, j) / gamma_1 ) / 2;
+                        
+                    }
                     
                 }
                 

@@ -14,6 +14,11 @@ public class Settings {
     public static int GOLD = 3;
     public static int ROCK = 4;
     
+    public static int ANT_GOLD = 6;
+    public static int ANT_ROCK = 7;
+    public static int BEE_GOLD = 8;
+    public static int BEE_ROCK = 9;
+    
     //Scatter formation of gold on grid
     public int scatterType;
     public static int[] scatterTypes = new int[] {1,2,3,4};
@@ -52,7 +57,7 @@ public class Settings {
         this.coverage = coverages[cover];
         this.ratio = ratios[ratio];
         this.scatterType = scatterTypes[scatter];
-        this.interLimit = GridSize / 10;
+        this.interLimit = GridSize / 5;
         this.intraLimit = GridSize / 10;
     }
 }
