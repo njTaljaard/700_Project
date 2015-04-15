@@ -57,7 +57,7 @@ public class Settings {
         this.coverage = coverages[cover];
         this.ratio = ratios[ratio];
         this.scatterType = scatterTypes[scatter];
-        this.interLimit = GridSize / 5;
-        this.intraLimit = GridSize / 10;
+        this.interLimit = GridSize / 25;
+        this.intraLimit = GridSize / 25;
     }
 }

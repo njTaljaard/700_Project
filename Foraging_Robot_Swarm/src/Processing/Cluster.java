@@ -12,21 +12,22 @@ import java.util.Random;
 public class Cluster {
     private final Controller controller;
     private boolean clustered;
-    private float gamma_1, gamma_2;
+    private float gamma_1, gamma_2, alpha;
     private Random r;
     
     public Cluster(Controller controller) {
         this.controller = controller;
         this.clustered = false;
-        this.gamma_1 = 0.7f;
-        this.gamma_2 = 0.85f;
+        this.gamma_1 = 0.4f;
+        this.gamma_2 = 0.7f;
+        this.alpha = (float) Math.sqrt(controller.settings.GridSize);
         this.r = new Random();
     }
     
     public void update(Robot robot) {
         if (!clustered) {
             
-            if (robot.clusterDensity == 0.0f)
+            //if (robot.clusterDensity == 0.0f)
                 robot.clusterDensity = computeDensity(robot);
             
             ArrayList<Position> positions = controller.grid.getSurroundPositions(robot.position);
@@ -54,7 +55,7 @@ public class Cluster {
                 }
             });
             
-            controller.grid.movement.getNewPosition(robot.position);
+            robot.position = controller.grid.movement.getNewPosition(robot.position);
         }
     }
         
@@ -72,7 +73,7 @@ public class Cluster {
                             controller.grid.grid[i][j] == Settings.ANT_GOLD ||
                             controller.grid.grid[i][j] == Settings.BEE_GOLD) {
 
-                        tmp += ( 1 - distance(robot.position, i, j) / gamma_1 );
+                        tmp += ( 1 - distance(robot.position, i, j) / alpha );
 
                     }
                     
@@ -82,7 +83,7 @@ public class Cluster {
                         controller.grid.grid[i][j] == Settings.ANT_ROCK ||
                         controller.grid.grid[i][j] == Settings.BEE_ROCK) {
                         
-                        tmp += ( 1 - distance(robot.position, i, j) / gamma_1 ) / 2;
+                        tmp += ( 1 - distance(robot.position, i, j) / alpha ) / 2;
                         
                     }
                     
@@ -92,13 +93,13 @@ public class Cluster {
                             controller.grid.grid[i][j] == Settings.ANT_GOLD ||
                             controller.grid.grid[i][j] == Settings.BEE_GOLD) {
 
-                        tmp += ( 1 - distance(robot.position, i, j) / gamma_1 );
+                        tmp += ( 1 - distance(robot.position, i, j) / alpha );
 
                     } else if (controller.grid.grid[i][j] == Settings.ROCK || 
                         controller.grid.grid[i][j] == Settings.ANT_ROCK ||
                         controller.grid.grid[i][j] == Settings.BEE_ROCK) {
                         
-                        tmp += ( 1 - distance(robot.position, i, j) / gamma_1 ) / 2;
+                        tmp += ( 1 - distance(robot.position, i, j) / alpha ) / 2;
                         
                     }
                     
@@ -108,7 +109,7 @@ public class Cluster {
             
         }
         
-        lamda += tmp;
+        lamda *= tmp;
         
         return lamda < 0.0f ? 0.0f : lamda;
     }

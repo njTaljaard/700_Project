@@ -12,20 +12,21 @@ public class Position {
 
     public Position(int size) {
         Random ron = new Random();
-        this.row = (int) ron.nextFloat() * size;
-        this.column = 0;
-        this.distCount = Double.MAX_VALUE;
+        double tmp = ron.nextGaussian();
+        row = (int)(size * tmp);
+        column = 0;
+        distCount = 0;
     }
 
     public Position() {
-        this.row = 0;
-        this.column = 0;
-        this.distCount = Double.MAX_VALUE;
+        row = 0;
+        column = 0;
+        distCount = 0;
     }   
     
     
     public Position(int x, int y) {
-        this.row = x;
-        this.column = y;
+        row = x;
+        column = y;
     }
 }

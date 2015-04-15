@@ -40,6 +40,7 @@ public class Controller implements Runnable {
             }
             
             utils.writeGrid(grid.grid, settings, String.valueOf(itterations));
+            utils.writeRobots(robots, settings, String.valueOf(itterations));
         } while (testStoppingCondition());
         
         System.out.println("DONE!!!");
