@@ -12,8 +12,12 @@ public class Position {
 
     public Position(int size) {
         Random ron = new Random();
-        double tmp = ron.nextGaussian();
-        row = (int)(size * tmp);
+        double tmp = Math.abs(ron.nextGaussian());
+        
+        while (tmp > 1)
+            tmp -= 1;
+        
+        row = (int)((size-1) * tmp);
         column = 0;
         distCount = 0;
     }

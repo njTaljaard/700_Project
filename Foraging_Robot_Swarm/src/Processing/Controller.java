@@ -30,7 +30,7 @@ public class Controller implements Runnable {
         int itterations = 0;
         
         setup();
-        System.out.println(ID + " setup done");
+        utils.writeRobots(robots, settings, ID);
         
         do {
             itterations++;
@@ -65,6 +65,6 @@ public class Controller implements Runnable {
         }
         
         return false;*/
-        return grid.isClustered() || grid.complete();
+        return true;//grid.isClustered() || !grid.complete();
     }
 }

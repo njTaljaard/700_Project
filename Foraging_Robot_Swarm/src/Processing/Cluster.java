@@ -25,38 +25,35 @@ public class Cluster {
     }
     
     public void update(Robot robot) {
-        if (!clustered) {
             
-            //if (robot.clusterDensity == 0.0f)
-                robot.clusterDensity = computeDensity(robot);
-            
-            ArrayList<Position> positions = controller.grid.getSurroundPositions(robot.position);
-            
-            positions.stream().forEach((pos) -> {
-                if (!robot.laden && (controller.grid.grid[pos.row][pos.column] == Settings.ROCK || 
-                        controller.grid.grid[pos.row][pos.column] == Settings.GOLD)) {
-                    
-                    if (random() <= computePickPropability(robot.clusterDensity)) {
-                        robot.setCarry(controller.grid.pickUpItem(pos.row, pos.column, 
-                                true, Settings.ANT_GOLD == robot.getCarry()), true);
-                    }
-                    
-                } else if (robot.laden && (controller.grid.grid[pos.row][pos.column] != Settings.ROCK || 
-                        controller.grid.grid[pos.row][pos.column] != Settings.ROCK)) {
-                    
-                    if (random() <= computeDropPropability(robot.clusterDensity)) {
-                        
-                        if (controller.grid.dropItem(pos.row, pos.column, robot.getCarry())) {
-                            robot.setCarry(Settings.EMPTY, true);
-                        }
-                        
-                    }
-                    
+        robot.clusterDensity = computeDensity(robot);
+
+        ArrayList<Position> positions = controller.grid.getSurroundPositions(robot.position);
+
+        positions.stream().forEach((pos) -> {
+            if (!robot.laden && (controller.grid.grid[pos.row][pos.column] == Settings.ROCK || 
+                    controller.grid.grid[pos.row][pos.column] == Settings.GOLD)) {
+
+                if (random() <= computePickPropability(robot.clusterDensity)) {
+                    robot.setCarry(controller.grid.pickUpItem(pos.row, pos.column, 
+                            true, Settings.ANT_GOLD == robot.getCarry()), true);
                 }
-            });
-            
-            robot.position = controller.grid.movement.getNewPosition(robot.position);
-        }
+
+            } else if (robot.laden && (controller.grid.grid[pos.row][pos.column] != Settings.ROCK || 
+                    controller.grid.grid[pos.row][pos.column] != Settings.ROCK)) {
+
+                if (random() <= computeDropPropability(robot.clusterDensity)) {
+
+                    if (controller.grid.dropItem(pos.row, pos.column, robot.getCarry())) {
+                        robot.setCarry(Settings.EMPTY, true);
+                    }
+
+                }
+
+            }
+        });
+
+        robot.position = controller.grid.movement.getNewPosition(robot);
     }
         
     private float computeDensity(Robot robot) {

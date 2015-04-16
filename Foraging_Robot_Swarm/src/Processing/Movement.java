@@ -3,6 +3,7 @@ package Processing;
 import Setup.Position;
 import Setup.Settings;
 import Unit.Grid;
+import Unit.Robot;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -12,13 +13,183 @@ import java.util.Random;
 public class Movement {
     
     private Grid grid;
+    private ArrayList<Position> area;
+    private ArrayList<Position> options;
+    private Random rand;
     
     public Movement(Grid grid) {
         this.grid = grid;
+        this.area = new ArrayList<>();
+        this.options = new ArrayList<>();
+        this.rand = new Random();
+    }
+    
+    public Position getNewPosition(Robot robot) { // Can see 5 units ahead
+        try {
+            area = getSurrounding(robot.position);
+            options = getOptions(robot.position);
+
+            if (area.isEmpty()) { // no surrounding gold found       
+
+                if (options.isEmpty()) { // im stuck
+
+                    System.out.println("Im stuck " + robot.position.row + " " + robot.position.column);
+                    return robot.position;
+
+                } 
+            } else {
+
+                Position move = testDensity(robot);
+
+                if (move != null) {
+                    return move;
+                }
+            }
+            
+            // use random movement
+            if (!options.isEmpty()) {
+                double tmp = Math.abs(rand.nextGaussian());
+                
+                while (tmp > 1)
+                    tmp -= 1;
+                
+                int r = (int)((options.size()-1) * tmp);
+                
+                return options.get(r);
+            } else {
+                return robot.position;
+            }
+            
+        } finally {
+            area.clear();
+            options.clear();
+        }
+    }    
+    
+    private ArrayList<Position> getSurrounding(Position origin) {
+        ArrayList<Position> tmp = new ArrayList<>();
+        
+        for (int i = -5; i <= 5; i++) {
+            
+            for (int j = -5; j <= 5; j++) {
+            
+                int tmpRow = i + origin.row;
+                int tmpCol = j + origin.column;
+                
+                if (!(i == 0 && j == 0) && wrap(tmpRow, tmpCol) && 
+                        (grid.grid[tmpRow][tmpCol] == Settings.EMPTY ||
+                        grid.grid[tmpRow][tmpCol] == Settings.ANT_GOLD || 
+                        grid.grid[tmpRow][tmpCol] == Settings.ANT_ROCK)) {
+                    
+                    tmp.add(new Position(i+origin.row, j+origin.column));
+                }               
+            }            
+        }
+        
+        return tmp;
+    }
+    
+    private ArrayList<Position> getOptions(Position origin) {
+        ArrayList<Position> tmp = new ArrayList<>();
+        
+        for (int i = -1; i <= 1; i++) {
+            
+            for (int j = -1; j <= 1; j++) {
+            
+                int tmpRow = i + origin.row;
+                int tmpCol = j + origin.column;
+                
+                if (!(i == 0 && j == 0) && wrap(tmpRow, tmpCol) && 
+                        grid.grid[tmpCol][tmpCol] == Settings.EMPTY) {
+                    
+                    tmp.add(new Position(tmpRow, tmpCol));
+                    
+                }                
+            }            
+        }
+        
+        return tmp;
+    }
+    
+    private Position testDensity(Robot robot) {        
+        Position pos = null;
+        float tmp = 0.0f;
+        float tmp2;
+        
+        for (Position opt : options) {
+            tmp2 = getDensity(opt, robot);
+            if (tmp2 > tmp) {
+                pos = opt;
+                tmp = tmp2;
+            }
+        }
+        
+        return pos;
+    }
+    
+    private float getDensity(Position pos, Robot robot) {
+        float alpha = (float) Math.sqrt(5);
+        float lamda = (float) (1 / 25);
+        
+        float tmp = 0.0f;
+                
+        for (Position test : area) {
+            
+            if (robot.getCarry() == Settings.ANT_GOLD) {
+
+                if (grid.grid[test.row][test.column] == Settings.GOLD || 
+                        grid.grid[test.row][test.column] == Settings.ANT_GOLD ||
+                        grid.grid[test.row][test.column] == Settings.BEE_GOLD) {
+
+                    tmp += ( 1 - distance(pos, test.row, test.column) / alpha );
+
+                }
+
+            } else if (robot.getCarry() == Settings.ANT_ROCK) {                
+
+                if (grid.grid[test.row][test.column] == Settings.ROCK || 
+                    grid.grid[test.row][test.column] == Settings.ANT_ROCK ||
+                    grid.grid[test.row][test.column] == Settings.BEE_ROCK) {
+
+                    tmp += ( 1 - distance(pos, test.row, test.column) / alpha ) / 2;
+
+                }
+
+            } else {
+
+                if (grid.grid[test.row][test.column] == Settings.GOLD || 
+                        grid.grid[test.row][test.column] == Settings.ANT_GOLD ||
+                        grid.grid[test.row][test.column] == Settings.BEE_GOLD) {
+
+                    tmp += ( 1 - distance(pos, test.row, test.column) / alpha );
+
+                } else if (grid.grid[test.row][test.column] == Settings.ROCK || 
+                    grid.grid[test.row][test.column] == Settings.ANT_ROCK ||
+                    grid.grid[test.row][test.column] == Settings.BEE_ROCK) {
+
+                    tmp += ( 1 - distance(pos, test.row, test.column) / alpha ) / 2;
+
+                }
+            }            
+        }
+        
+        lamda *= tmp;
+        
+        return lamda < 0.0f ? 0.0f : lamda;
+    }
+    
+    private float distance(Position ya, int ybX, int ybY) {
+        
+        return (float) Math.sqrt(Math.pow(ybX - ya.row, 2) + Math.pow(ybY - ya.column, 2));
+        
+    }
+    
+    private boolean wrap(int p1, int p2) {
+        return p1 < grid.settings.GridSize && p2 < grid.settings.GridSize && p1 >= 0 && p2 >= 0;
     }
     
     //Scouting
-    public Position getNewPosition(Position origin) { // Can see 5 units ahead
+    /*public Position getNewPosition(Position origin) { // Can see 5 units ahead
         ArrayList<Position> availablePosition = new ArrayList<>();
         int fromX = wrapPosition(origin.row-5, true);
         int toX = wrapPosition(origin.row+5, false);
@@ -30,12 +201,6 @@ public class Movement {
         for (int i = fromX; i < toX; i++) {
             
             for (int j = fromY; j < toY; j++) {
-                
-                /*if (grid.grid[i][j] == Settings.EMPTY){
-                    
-                    availablePosition.add(new Position(i, j));
-                        
-                }*/
                 
                 tmp = new Position(i, j);
                 
@@ -115,43 +280,35 @@ public class Movement {
     private Position setDefaultPos(Position origin) {
         ArrayList<Position> availablePosition = new ArrayList<>();
         
-        if (testUse(origin.row-1, origin.column)) {/* && 
-                grid.grid[origin.row-1][origin.column] == Settings.EMPTY) {*/
+        if (testUse(origin.row-1, origin.column)) {
             availablePosition.add(new Position(origin.row-1, origin.column));    
         } 
         
-        if (testUse(origin.row, origin.column-1)) {/* && 
-                grid.grid[origin.row][origin.column-1] == Settings.EMPTY) {*/
+        if (testUse(origin.row, origin.column-1)) {
             availablePosition.add(new Position(origin.row, origin.column-1));    
         } 
         
-        if (testUse(origin.row+1, origin.column)) {/*&& 
-                grid.grid[origin.row+1][origin.column] == Settings.EMPTY) {*/
+        if (testUse(origin.row+1, origin.column)) {
             availablePosition.add(new Position(origin.row+1, origin.column));    
         } 
         
-        if (testUse(origin.row, origin.column+1)) {/* && 
-                grid.grid[origin.row][origin.column+1] == Settings.EMPTY) {*/
+        if (testUse(origin.row, origin.column+1)) {
             availablePosition.add(new Position(origin.row, origin.column+1));  
         } 
         
-        if (testUse(origin.row-1, origin.column-1)) {/*&& 
-                grid.grid[origin.row-1][origin.column-1] == Settings.EMPTY) {*/
+        if (testUse(origin.row-1, origin.column-1)) {
             availablePosition.add(new Position(origin.row-1, origin.column-1));    
         } 
         
-        if (testUse(origin.row+1, origin.column+1)) {/*&& 
-                grid.grid[origin.row+1][origin.column+1] == Settings.EMPTY) {*/
+        if (testUse(origin.row+1, origin.column+1)) {
             availablePosition.add(new Position(origin.row+1, origin.column+1));
         } 
         
-        if (testUse(origin.row-1, origin.column+1)) {/* && 
-                grid.grid[origin.row-1][origin.column+1] == Settings.EMPTY) {*/
+        if (testUse(origin.row-1, origin.column+1)) {
             availablePosition.add(new Position(origin.row-1, origin.column+1));    
         }
         
-        if (testUse(origin.row+1, origin.column-1)) {/* && 
-                grid.grid[origin.row+1][origin.column-1] == Settings.EMPTY) {*/
+        if (testUse(origin.row+1, origin.column-1)) {
             availablePosition.add(new Position(origin.row+1, origin.column-1));
         }
         
@@ -216,5 +373,5 @@ public class Movement {
             }
             
         }
-    }
+    }*/
 }

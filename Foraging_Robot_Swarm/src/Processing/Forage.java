@@ -28,7 +28,7 @@ public class Forage {
                 
                 break;
             case RobotState.Bee_SCOUT:
-                Position moveTo = controller.grid.movement.getNewPosition(robot.position);
+                Position moveTo = controller.grid.movement.getNewPosition(robot);
                 
                 break;
             case RobotState.Bee_WAIT:

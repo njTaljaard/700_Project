@@ -93,10 +93,24 @@ public class Utilities {
     }
     
     public int getNextUniform(Settings settings) {
-        return random.nextInt(settings.GridSize);
+        int tmp;
+        
+        while ((tmp = random.nextInt(settings.GridSize)) <= 0) {}
+        
+        return tmp;
     }
     
     public int getNextGausion(Settings settings) {
-        return (int) (random.nextGaussian() * settings.GridSize);
+        int tmp = 0;
+        
+        while (tmp <= 0) {
+            double tmp2 = Math.abs(random.nextGaussian());
+            if (tmp2 < 0) 
+                continue;
+            
+            tmp = (int) (tmp2 * settings.GridSize);
+        }
+        
+        return tmp;
     }
 }
