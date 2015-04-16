@@ -27,7 +27,7 @@ public class Movement {
     public Position getNewPosition(Robot robot) { // Can see 5 units ahead
         try {
             area = getSurrounding(robot.position);
-            options = getOptions(robot.position);
+            options = getOptions(robot.position, robot.laden);
 
             if (area.isEmpty()) { // no surrounding gold found       
 
@@ -89,7 +89,7 @@ public class Movement {
         return tmp;
     }
     
-    private ArrayList<Position> getOptions(Position origin) {
+    private ArrayList<Position> getOptions(Position origin, boolean laden) {
         ArrayList<Position> tmp = new ArrayList<>();
         
         for (int i = -1; i <= 1; i++) {
@@ -99,12 +99,23 @@ public class Movement {
                 int tmpRow = i + origin.row;
                 int tmpCol = j + origin.column;
                 
-                if (!(i == 0 && j == 0) && wrap(tmpRow, tmpCol) && 
-                        grid.grid[tmpCol][tmpCol] == Settings.EMPTY) {
-                    
-                    tmp.add(new Position(tmpRow, tmpCol));
-                    
-                }                
+                if (wrap(tmpRow, tmpCol)) {
+
+                    if (laden) {
+                        if (!(i == 0 && j == 0) && grid.grid[tmpRow][tmpCol] == Settings.EMPTY) {
+
+                            tmp.add(new Position(tmpRow, tmpCol));
+                        }                    
+                    } else {
+                        if (!(i == 0 && j == 0) && 
+                                grid.grid[tmpRow][tmpCol] == Settings.EMPTY || 
+                                grid.grid[tmpRow][tmpCol] == Settings.GOLD ||
+                                grid.grid[tmpRow][tmpCol] == Settings.ROCK) {
+
+                            tmp.add(new Position(tmpRow, tmpCol));
+                        }
+                    }            
+                }
             }            
         }
         

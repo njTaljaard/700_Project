@@ -15,6 +15,7 @@ public class Robot {
     public Position position;
     public float clusterDensity;
     public boolean laden;
+    public int ladenCount;
     public int state;
     
     protected int carryType;
@@ -26,6 +27,7 @@ public class Robot {
         this.carryType = Settings.EMPTY;
         this.clusterDensity = 0.0f;
         this.laden = false;
+        this.ladenCount = 0;
     }
     
     public void update() {
@@ -35,6 +37,8 @@ public class Robot {
                 break;
             case Settings.CLUSTER:
                 controller.cluster.update(this);
+                if (laden)
+                    ladenCount++;
                 break;
         }
     }  
@@ -46,6 +50,7 @@ public class Robot {
     public void setCarry(int type, boolean ant) {
         if (type == Settings.EMPTY) {
             carryType = type;
+            ladenCount = 0;
             laden = false;
         } if (ant) {
             if (type == Settings.GOLD) {

@@ -60,7 +60,11 @@ public class Utilities {
         }
         
         for (Robot bot : bots) {
-            grid[bot.position.row][bot.position.column] = Settings.ANT;
+            if (bot.laden) {
+                grid[bot.position.row][bot.position.column] = bot.getCarry();
+            } else {
+                grid[bot.position.row][bot.position.column] = Settings.ANT;
+            }
         }
         
         try {
