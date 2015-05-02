@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2015.2.24)  6 APR 2015 12:52
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2015.2.24)  27 APR 2015 15:25
 entering extended mode
 **Research_Proposal.tex
 
@@ -167,14 +167,24 @@ File: UP.jpg Graphic file (type jpg)
 Package pdftex.def Info: UP.jpg used on input line 18.
 (pdftex.def)             Requested size: 195.0pt x 118.44789pt.
 
-Overfull \hbox (21.03589pt too wide) in paragraph at lines 28--34
-[]$[]$ $[]$ 
+Underfull \hbox (badness 10000) in paragraph at lines 28--30
+
  []
 
 [1
 
 {C:/Users/Nico/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map} <D:/Documents
 /UP/2015/700 Project/700_Project/Thesis/Proposal/UP.jpg>]
+Underfull \hbox (badness 10000) in paragraph at lines 57--59
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 59--61
+
+ []
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 61--63
 
  []
@@ -184,84 +194,73 @@ Underfull \hbox (badness 10000) in paragraph at lines 63--65
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 65--67
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 67--69
-
- []
-
 [2
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 76--78
+Underfull \hbox (badness 10000) in paragraph at lines 72--74
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 78--80
+Underfull \hbox (badness 10000) in paragraph at lines 74--76
 
  []
 
 [3]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 93.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 89.
  ("F:\Program Files\MikTeX\tex\latex\base\omscmr.fd"
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 93.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 89.
  [4]
-Underfull \hbox (badness 10000) in paragraph at lines 120--122
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 122--124
+Underfull \hbox (badness 10000) in paragraph at lines 116--118
 
  []
 
 [5]
+Underfull \hbox (badness 10000) in paragraph at lines 118--120
+
+ []
+
 Missing character: There is no √ in font cmr12!
 Missing character: There is no ® in font cmr12!
 
-Underfull \hbox (badness 10000) in paragraph at lines 134--136
+Underfull \hbox (badness 10000) in paragraph at lines 130--132
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 136--138
+Underfull \hbox (badness 10000) in paragraph at lines 132--134
 
  []
 
 [6]
-Underfull \hbox (badness 10000) in paragraph at lines 140--142
+Underfull \hbox (badness 10000) in paragraph at lines 136--138
 
  []
 
 [7]
-Underfull \hbox (badness 10000) in paragraph at lines 158--160
+Underfull \hbox (badness 10000) in paragraph at lines 154--156
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 177--182
+Underfull \hbox (badness 10000) in paragraph at lines 173--178
 
  []
 
 [8]
-Underfull \hbox (badness 10000) in paragraph at lines 183--185
+Underfull \hbox (badness 10000) in paragraph at lines 179--181
 
  []
 
-<Planning.png, id=41, 615.80063pt x 548.80031pt>
+[9] <Planning.png, id=44, 615.80063pt x 548.80031pt>
 File: Planning.png Graphic file (type png)
  <use Planning.png>
-Package pdftex.def Info: Planning.png used on input line 210.
+Package pdftex.def Info: Planning.png used on input line 206.
 (pdftex.def)             Requested size: 390.0pt x 347.57155pt.
- [9]
+
 ("D:\Documents\UP\2015\700 Project\700_Project\Thesis\Proposal\Research_Proposa
 l.bbl" [10 <D:/Documents/UP/2015/700 Project/700_Project/Thesis/Proposal/Planni
 ng.png>]
@@ -299,16 +298,16 @@ Missing character: There is no Å in font cmr12!
 l.aux") )
 (\end occurred inside a group at level 1)
 
-### simple group (level 1) entered at line 122 ({)
+### simple group (level 1) entered at line 118 ({)
 ### bottom level 
 Here is how much of TeX's memory you used:
  1854 strings out of 493921
  23607 string characters out of 3148889
- 78880 words of memory out of 3000000
+ 79880 words of memory out of 3000000
  5153 multiletter control sequences out of 15000+200000
  10282 words of font info for 37 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 27i,12n,20p,807b,322s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 27i,12n,20p,855b,322s stack positions out of 5000i,500n,10000p,200000b,50000s
 <F:/Program Files/MikTeX/fonts/type1/public/amsfonts/cm/cmbx10.
 pfb><F:/Program Files/MikTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><F:/Prog
 ram Files/MikTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><F:/Program Files/Mi
@@ -321,7 +320,7 @@ MikTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><F:/Program Files/MikTeX/fonts/t
 ype1/public/amsfonts/cm/cmsy10.pfb><F:/Program Files/MikTeX/fonts/type1/public/
 amsfonts/cm/cmsy8.pfb><F:/Program Files/MikTeX/fonts/type1/public/amsfonts/cm/c
 mti12.pfb>
-Output written on Research_Proposal.pdf (11 pages, 312713 bytes).
+Output written on Research_Proposal.pdf (11 pages, 311726 bytes).
 PDF statistics:
  94 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

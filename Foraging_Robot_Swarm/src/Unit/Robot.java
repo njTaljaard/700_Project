@@ -17,7 +17,7 @@ public class Robot {
     public boolean laden;
     public int ladenCount;
     public int state;
-    
+    public float pickUpDensity;    
     protected int carryType;
         
     public Robot(Controller controller) {
@@ -47,26 +47,27 @@ public class Robot {
         return carryType;
     }
     
-    public void setCarry(int type, boolean ant) {
+    public void setCarry(int type, boolean ant, float density) {
+        
+        ladenCount = 0;
+        laden = false;
+
         if (type == Settings.EMPTY) {
+            
             carryType = type;
-            ladenCount = 0;
             laden = false;
-        } if (ant) {
-            if (type == Settings.GOLD) {
-                carryType = Settings.ANT_GOLD;
-                laden = true;
-            } else {
-                carryType = Settings.ANT_ROCK;
-                laden = true;
-            }
+            pickUpDensity = 0.0f;
+            
         } else {
-            if (type == Settings.GOLD) {
-                carryType = Settings.BEE_GOLD;
-                laden = true;
+            
+            laden = true;
+            pickUpDensity = density;
+            
+            if (ant) {                
+                carryType = type;
             } else {
-                carryType = Settings.BEE_ROCK;
-                laden = true;
+                carryType = type;
+                
             }
         }
     }

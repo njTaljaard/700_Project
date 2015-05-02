@@ -44,31 +44,37 @@ public class Grid {
         return true;
     }
     
-    public int pickUpItem(int i, int j, boolean ant, boolean gold) {
-        int r = grid[i][j];
+    public boolean pickUpItem(int i, int j, boolean ant) {
         
         if (ant) {
-            if (gold) {
+            if (grid[i][j] == Settings.GOLD) {
                 grid[i][j] = Settings.ANT_GOLD;
-            } else {
+                return true;
+            } else if (grid[i][j] == Settings.ROCK) {
                 grid[i][j] = Settings.ANT_ROCK;
+                return true;
             }
         } else {
-            if (gold) {
+            if (grid[i][j] == Settings.GOLD) {
                 grid[i][j] = Settings.BEE_GOLD;
-            } else {
+                return true;
+            } else if (grid[i][j] == Settings.ROCK) {
                 grid[i][j] = Settings.BEE_ROCK;
+                return true;
             }
         }
         
-        return grid[i][j];
+        return false;
     }
     
     public boolean dropItem(int i, int j, int type) {
+        
         if (type == Settings.ANT_GOLD || type == Settings.BEE_GOLD) {
             grid[i][j] = Settings.GOLD;
             return true;
-        } else if (type == Settings.ANT_ROCK || type == Settings.BEE_ROCK) {
+        } 
+        
+        if (type == Settings.ANT_ROCK || type == Settings.BEE_ROCK) {
             grid[i][j] = Settings.ROCK;
             return true;
         }
@@ -79,12 +85,15 @@ public class Grid {
     private void createGrid() {
         //init possitions of rocks & gold
         int placement = (int) ((settings.GridSize * 2) * settings.coverage);
-        int rock = (int) (placement / (settings.ratio + 1));
-        int gold = (int) (settings.ratio * rock);
+        int gold = (int) (placement / (settings.ratio + 1));
+        int rock = (int) (settings.ratio * gold);
         int place, x, y;
+        
+        System.out.println("Size : " + (settings.GridSize*2) + " Place : " + placement + " Rock : " + rock + " Gold : " + gold);
         
         switch (settings.scatterType) {
             case Settings.UNIFORM:
+                
                 for (place = 0; place < gold;) {
                     x = utils.getNextUniform(settings);
                     y = utils.getNextUniform(settings);
@@ -107,6 +116,7 @@ public class Grid {
                     
                 break;
             case Settings.CLUSTERD: //@TODO: CHANGE
+                
                 for (place = 0; place < gold;) {
                     x = 0;
                     y = 0;
@@ -128,11 +138,17 @@ public class Grid {
                 }
                 
                 break;
-            case Settings.VEIN: //@TODO: CHANGE
+            case Settings.VEIN:
+                
+                int start = (settings.GridSize / 2) - (settings.GridSize / 20);
+                int end = (settings.GridSize / 2) + (settings.GridSize / 20); 
+                
+                System.out.println(start + " " + end);
+                
                 for (place = 0; place < gold;) {
-                    x = 0;
-                    y = 0;
-                    
+                    x = utils.getNextUniform(settings);
+                    y = utils.getBetween(start, end, settings);
+                                        
                     if (grid[x][y] == Settings.EMPTY) {
                         grid[x][y] = Settings.GOLD;
                         place++;
@@ -140,8 +156,8 @@ public class Grid {
                 }
                 
                 for (place = 0; place < rock;) {
-                    x = 0;
-                    y = 0;
+                    x = utils.getNextUniform(settings);
+                    y = utils.getBetween(start, end, settings);
                     
                     if (grid[x][y] == Settings.EMPTY) {
                         grid[x][y] = Settings.ROCK;
@@ -151,6 +167,7 @@ public class Grid {
                 
                 break;
             case Settings.GAUSSIAN:
+                
                 for (place = 0; place < gold;) {
                     x = utils.getNextGausion(settings);
                     y = utils.getNextGausion(settings);
@@ -216,41 +233,91 @@ public class Grid {
             
             for (int j = 0; j < grid[i].length; j++) {
                 
-                if (grid[i][j] == Settings.GOLD) {
-                    Position pos = new Position(i,j);
+                Position tmp = new Position(i, j);
+                tmp.dens = getDensity(tmp);
                     
-                    for (int x = 0; x < grid.length; x++) {
-                        
-                        for (int y = 0; y < grid[x].length; y++) {
-                         
-                            pos.distCount += distance(i, j, x, y);
-                            
-                        }                        
-                    }
-                    
-                    centroids.add(pos);
-                    
-                    if (centroids.size() > 10) {
-                        
-                        double tmp = centroids.get(0).distCount;
-                        int rm = 0;
-                        
-                        for (int k = 0; k < centroids.size(); k++) {
-                            if (centroids.get(k).distCount > tmp) {
-                                rm = k;
-                            }
-                        }
-                        
-                        centroids.remove(rm);
-                    }
-                }                
+                shouldAdd(centroids, tmp);
             }            
         }
         
         return centroids;
     }
     
-    public boolean intra(ArrayList<Position> centroids) { //inner cluster density
+    public void shouldAdd(ArrayList<Position> centroids, Position pos) {
+        boolean inCluster = false;
+        boolean highDens = false;
+        
+        for (Position p : centroids) {
+            if (distance(pos.row, p.row, pos.column, p.column) < settings.interLimit) {
+                inCluster = true;
+                if (pos.dens > p.dens) {
+                    highDens = true;
+                    pos.high = true;
+                    centroids.remove(p);
+                    centroids.add(pos);
+                    return;
+                }
+            }
+        }
+        
+        if (!inCluster) {
+            centroids.add(pos);
+        } else if (inCluster && !highDens) {
+            centroids.add(pos);
+            pos.high = false;
+        }
+    }
+    
+    private float getDensity(Position p) {
+        float lamda = (float) (1 / Math.pow(grid.length, 2));
+        float alpha = (float) Math.sqrt(settings.GridSize);
+        float tmp = 0.0f;
+        
+        int type = grid[p.row][p.column];
+        
+        for (int i = 0; i < grid.length; i++) {
+            
+            for (int j = 0; j < grid[i].length; j++) {
+            
+                int test = grid[i][j];
+
+                if (type == Settings.ANT_GOLD) {
+
+                    if (test == Settings.GOLD || test == Settings.ANT_GOLD || test == Settings.BEE_GOLD) {
+
+                        tmp += ( 1 - distance(p.row, i, p.column, j) / alpha );
+
+                    }
+
+                } else if (type == Settings.ANT_ROCK) {                
+
+                    if (test == Settings.ROCK || test == Settings.ANT_ROCK || test == Settings.BEE_ROCK) {
+
+                        tmp += ( 1 - distance(p.row, i, p.column, j) / alpha );
+
+                    }
+
+                } else {
+
+                    if (test == Settings.GOLD || test == Settings.ANT_GOLD || test == Settings.BEE_GOLD) {
+
+                        tmp += ( 1 - distance(p.row, i, p.column, j) / alpha );
+
+                    } else if (test == Settings.ROCK || test == Settings.ANT_ROCK || test == Settings.BEE_ROCK) {
+
+                        tmp += ( 1 - distance(p.row, i, p.column, j) / alpha );
+
+                    }
+                }            
+            }
+        }
+        
+        lamda *= tmp;
+        
+        return lamda < 0.0f ? 0.0f : lamda;
+    }
+    
+    private boolean intra(ArrayList<Position> centroids) { //inner cluster density
         boolean test = false;
         
         for (int x = 0; x < grid.length; x++) {
@@ -278,7 +345,7 @@ public class Grid {
         return test;
     }
     
-    public boolean inter(ArrayList<Position> centroids) { //cluster seperation
+    private boolean inter(ArrayList<Position> centroids) { //cluster seperation
         return centroids.stream().noneMatch((p1) -> 
                 (!centroids.stream().noneMatch((p2) -> 
                         (distance(p2.row, p1.row, p2.column, p1.column) < settings.interLimit))));

@@ -18,6 +18,7 @@ public class Controller implements Runnable {
     private final Utilities utils;
     
     private final String ID;
+    int itterations;
     
     public Controller(Settings settings, int id) {
         this.settings = settings;
@@ -27,7 +28,10 @@ public class Controller implements Runnable {
         
     @Override
     public void run() {
-        int itterations = 0;
+        itterations = 0;
+        
+        System.out.println("Gold: " + Settings.GOLD + " Rock: " + Settings.ROCK + 
+                "\nAntGold: " + Settings.ANT_GOLD + " AntRock: " + Settings.ANT_ROCK);
         
         setup();
         utils.writeRobots(robots, settings, ID);
@@ -39,8 +43,9 @@ public class Controller implements Runnable {
                 robot.update();
             }
             
-            utils.writeGrid(grid.grid, settings, String.valueOf(itterations));
-            utils.writeRobots(robots, settings, String.valueOf(itterations));
+            //if ((itterations % 100 == 0))
+                utils.writeGrid(grid.grid, settings, String.valueOf(itterations));
+            //utils.writeRobots(robots, settings, String.valueOf(itterations));
         } while (testStoppingCondition());
         
         System.out.println("DONE!!!");
@@ -65,6 +70,6 @@ public class Controller implements Runnable {
         }
         
         return false;*/
-        return true;//grid.isClustered() || !grid.complete();
+        return !(itterations == 100000);//grid.isClustered() || !grid.complete();
     }
 }

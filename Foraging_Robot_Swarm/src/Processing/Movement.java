@@ -5,6 +5,7 @@ import Setup.Settings;
 import Unit.Grid;
 import Unit.Robot;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 /**
@@ -15,51 +16,54 @@ public class Movement {
     private Grid grid;
     private ArrayList<Position> area;
     private ArrayList<Position> options;
-    private Random rand;
     
     public Movement(Grid grid) {
         this.grid = grid;
         this.area = new ArrayList<>();
         this.options = new ArrayList<>();
-        this.rand = new Random();
     }
     
     public Position getNewPosition(Robot robot) { // Can see 5 units ahead
         try {
-            area = getSurrounding(robot.position);
             options = getOptions(robot.position, robot.laden);
-
-            if (area.isEmpty()) { // no surrounding gold found       
-
-                if (options.isEmpty()) { // im stuck
-
-                    System.out.println("Im stuck " + robot.position.row + " " + robot.position.column);
-                    return robot.position;
-
-                } 
-            } else {
-
-                Position move = testDensity(robot);
-
-                if (move != null) {
-                    return move;
-                }
-            }
-            
-            // use random movement
-            if (!options.isEmpty()) {
-                double tmp = Math.abs(rand.nextGaussian());
+                        
+            if (options.isEmpty()) {
                 
-                while (tmp > 1)
-                    tmp -= 1;
+                System.out.println("Im stuck " + robot.position.row + " " + robot.position.column);
                 
-                int r = (int)((options.size()-1) * tmp);
-                
-                return options.get(r);
-            } else {
                 return robot.position;
+                
+            } else {
+                
+                area = getSurrounding(robot.position);
+
+                if (!area.isEmpty()) { // no surrounding gold found       
+                    
+                    Position move = testDensity(robot); //of open options
+                    
+                    if (move != null) {
+                        
+                        if (robot.laden) {
+                            grid.grid[robot.position.row][robot.position.column] = Settings.EMPTY;
+                            grid.grid[move.row][move.column] = robot.getCarry();
+                        }
+
+                        return move;
+                    }
+                }
+
+                // use random movement
+
+                long seed = System.nanoTime();
+                Collections.shuffle(options, new Random(seed));
+
+                if (robot.laden) {
+                    grid.grid[robot.position.row][robot.position.column] = Settings.EMPTY;
+                    grid.grid[options.get(0).row][options.get(0).column] = robot.getCarry();
+                }
+
+                return options.get(0);
             }
-            
         } finally {
             area.clear();
             options.clear();
@@ -81,7 +85,7 @@ public class Movement {
                         grid.grid[tmpRow][tmpCol] == Settings.ANT_GOLD || 
                         grid.grid[tmpRow][tmpCol] == Settings.ANT_ROCK)) {
                     
-                    tmp.add(new Position(i+origin.row, j+origin.column));
+                    tmp.add(new Position(tmpRow, tmpCol));
                 }               
             }            
         }
@@ -108,9 +112,9 @@ public class Movement {
                         }                    
                     } else {
                         if (!(i == 0 && j == 0) && 
-                                grid.grid[tmpRow][tmpCol] == Settings.EMPTY || 
+                                (grid.grid[tmpRow][tmpCol] == Settings.EMPTY || 
                                 grid.grid[tmpRow][tmpCol] == Settings.GOLD ||
-                                grid.grid[tmpRow][tmpCol] == Settings.ROCK) {
+                                grid.grid[tmpRow][tmpCol] == Settings.ROCK)) {
 
                             tmp.add(new Position(tmpRow, tmpCol));
                         }
@@ -126,44 +130,56 @@ public class Movement {
         Position pos = null;
         float tmp = 0.0f;
         float tmp2;
+        boolean test = true;
         
         for (Position opt : options) {
             tmp2 = getDensity(opt, robot);
+            opt.dens = tmp2;
+            
             if (tmp2 > tmp) {
                 pos = opt;
                 tmp = tmp2;
+                test = false;
             }
+        }
+        
+        if (test) {
+            Collections.shuffle(options);
+            return options.get(0);
         }
         
         return pos;
     }
     
-    private float getDensity(Position pos, Robot robot) {
-        float alpha = (float) Math.sqrt(5);
-        float lamda = (float) (1 / 25);
+    public float getDensity(Position pos, Robot robot) {
+        float alpha = (float) 0.80;
+        float lamda = (float) (1 / Math.pow(grid.settings.GridSize, 2));
         
         float tmp = 0.0f;
                 
         for (Position test : area) {
             
-            if (robot.getCarry() == Settings.ANT_GOLD) {
+            if (robot.laden) {
+                
+                if (robot.getCarry() == Settings.ANT_GOLD) {
 
-                if (grid.grid[test.row][test.column] == Settings.GOLD || 
-                        grid.grid[test.row][test.column] == Settings.ANT_GOLD ||
-                        grid.grid[test.row][test.column] == Settings.BEE_GOLD) {
+                    if (grid.grid[test.row][test.column] == Settings.GOLD || 
+                            grid.grid[test.row][test.column] == Settings.ANT_GOLD ||
+                            grid.grid[test.row][test.column] == Settings.BEE_GOLD) {
+                        
+                        tmp += ( distance(pos, test.row, test.column) / alpha );
 
-                    tmp += ( 1 - distance(pos, test.row, test.column) / alpha );
+                    }
 
-                }
+                } else if (robot.getCarry() == Settings.ANT_ROCK) {                
 
-            } else if (robot.getCarry() == Settings.ANT_ROCK) {                
+                    if (grid.grid[test.row][test.column] == Settings.ROCK || 
+                        grid.grid[test.row][test.column] == Settings.ANT_ROCK ||
+                        grid.grid[test.row][test.column] == Settings.BEE_ROCK) {
+                        
+                        tmp += ( distance(pos, test.row, test.column) / alpha );
 
-                if (grid.grid[test.row][test.column] == Settings.ROCK || 
-                    grid.grid[test.row][test.column] == Settings.ANT_ROCK ||
-                    grid.grid[test.row][test.column] == Settings.BEE_ROCK) {
-
-                    tmp += ( 1 - distance(pos, test.row, test.column) / alpha ) / 2;
-
+                    }
                 }
 
             } else {
@@ -171,28 +187,26 @@ public class Movement {
                 if (grid.grid[test.row][test.column] == Settings.GOLD || 
                         grid.grid[test.row][test.column] == Settings.ANT_GOLD ||
                         grid.grid[test.row][test.column] == Settings.BEE_GOLD) {
-
-                    tmp += ( 1 - distance(pos, test.row, test.column) / alpha );
+                    
+                    tmp += ( distance(pos, test.row, test.column) / alpha );
 
                 } else if (grid.grid[test.row][test.column] == Settings.ROCK || 
                     grid.grid[test.row][test.column] == Settings.ANT_ROCK ||
                     grid.grid[test.row][test.column] == Settings.BEE_ROCK) {
-
-                    tmp += ( 1 - distance(pos, test.row, test.column) / alpha ) / 2;
+                    
+                    tmp += ( distance(pos, test.row, test.column) / alpha ) / 4;
 
                 }
             }            
         }
         
         lamda *= tmp;
-        
+                
         return lamda < 0.0f ? 0.0f : lamda;
     }
     
-    private float distance(Position ya, int ybX, int ybY) {
-        
-        return (float) Math.sqrt(Math.pow(ybX - ya.row, 2) + Math.pow(ybY - ya.column, 2));
-        
+    private float distance(Position ya, int ybX, int ybY) {        
+        return (float) Math.sqrt(Math.pow(ya.row - ybX, 2) + Math.pow(ya.column - ybY, 2));
     }
     
     private boolean wrap(int p1, int p2) {

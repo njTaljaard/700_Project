@@ -18,7 +18,6 @@ public class Utilities {
     public Utilities() {}
     
     public void writeGrid(int[][] grid, Settings settings, String IT) {
-        System.out.println(IT);
         try {
             File file = new File("./Grid/" + settings.GridSize + "-" 
                     + settings.RobotCount + "-" + settings.coverage + "-" 
@@ -41,6 +40,20 @@ public class Utilities {
                 }
 
                 writer.close();
+                
+                int x = 0;
+                int y = 0;
+
+                for (int i = 0; i < grid.length; i++) {
+                    for (int j = 0; j < grid[i].length; j++) {
+                        if (grid[i][j] == Settings.GOLD || grid[i][j] == Settings.ANT_GOLD)
+                            x++;
+                        if (grid[i][j] == Settings.ROCK || grid[i][j] == Settings.ANT_ROCK)
+                            y++;
+                    }
+                }
+                
+                System.out.println(IT);
             } else {
                 System.out.println("creat write error");
             }
@@ -60,6 +73,7 @@ public class Utilities {
         }
         
         for (Robot bot : bots) {
+                        
             if (bot.laden) {
                 grid[bot.position.row][bot.position.column] = bot.getCarry();
             } else {
@@ -113,6 +127,20 @@ public class Utilities {
                 continue;
             
             tmp = (int) (tmp2 * settings.GridSize);
+        }
+        
+        return tmp;
+    }
+    
+    public int getBetween(int start, int end, Settings settings) {
+        int tmp = 0;
+        
+        while (true) {
+            tmp = (int) (random.nextDouble() * settings.GridSize);
+
+            if (tmp >= start && tmp <= end) {
+                break;
+            }
         }
         
         return tmp;

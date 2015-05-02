@@ -6,9 +6,6 @@
             <name>Foraging_Robot_Swarm</name>
             <source-roots>
                 <root id="src.dir"/>
-                <root id="src.Processing.dir"/>
-                <root id="src.Setup.dir"/>
-                <root id="src.Unit.dir"/>
             </source-roots>
             <test-roots>
                 <root id="test.src.dir"/>

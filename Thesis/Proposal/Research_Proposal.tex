@@ -22,18 +22,14 @@
     {\uppercase{\Large \\ Prioritized Foraging using \\ Robot Swarms \par}}
     \vspace{1cm}
 \end{minipage}
-\end{center}
 
 %Author's name
-    {\Large \begin{minipage}{0.5 \linewidth}
-    			Mr. Nico J. Taljaaard \\ 10153285 \\ 082 323 3108 \\ taljaard.nj@gmail.com
-			\end{minipage}
-			\begin{minipage}{0.5 \linewidth}
-				\flushright Prof. Andries P. Engelbrecth \\	012 420 3578 \\	engel@cs.up.ac.za
-			\end{minipage}
+    {\Large \begin{minipage}{\linewidth}	
+    			Student number \\ 10153285 \\
+    			Contact number \\ 082 323 3108 \\
+			\end{minipage} 
 	\par }
 
-\begin{center}
 \begin{minipage}{\linewidth}
 	\centering
     \vspace{1cm}
@@ -41,7 +37,7 @@
     {\Large University of Pretoria \\ Department of Computer Science \\ COS 700 Research Proposal \par}
     \vspace{1cm}
 %Date
-    {\Large 15/04/2015}
+    {\Large 27/04/2015}
 \end{minipage}
 \end{center}
 \clearpage
@@ -50,7 +46,7 @@
 %* Abstract *%
 %************%
 \begin{abstract}
-This study aim to improve on the problem of prioritized foraging by using robotic swarms. The attempt will introducing clustering during the foraging process to improve the over all performance of foraging. The paper focuses on swarm intelligence and swarm robotics through using social insect colonies as the work force. Previous work has shown that ant cemetery clustering and honey bee foraging algorithms are successful in collaboration for this study. Honey bee foraging is used for the ability to adapt to dynamic environment and the ant cemetery clustering not requiring communication from its peers or pheromone deposits. These algorithms are highly successful at path finding, grouping and retrieval of prioritized object, this directly correlates to the optimization goal.
+This empirical study aims to improve on the problem of prioritized foraging by using robotic swarms. The attempt will introducing clustering during the foraging process to improve the over all performance of foraging. The paper focuses on swarm intelligence in corporation with swarm robotics through using social insect colonies behavior as the work force. Previous work has shown that ant cemetery clustering and honey bee foraging algorithms are successful in collaboration for this study. Honey bee foraging is used for the ability to adapt to  dynamic environment and the ant cemetery clustering not requiring peer to peer communication or pheromone deposits. These algorithms are highly successful at path finding, grouping and retrieval of prioritized object, this directly correlates to the optimization goal of the paper.
 \end{abstract}
 
 %****************%
@@ -58,26 +54,26 @@ This study aim to improve on the problem of prioritized foraging by using roboti
 %****************%
 \section{Introduction}
 
-\par{The gold mining industry and grown complex where deep shaft mining is required to access richer gold deposits. At these depths practicality of humans work becomes impossible, highly expensive \& dangerous. To retrieve these gold deposits using Swarm Robotics will be more efficient, safer \& at lower maintenance costs. These is swarm robotics model is made possible by using Swarm Intelligence.}
+\par{The gold mining industry has grown in complexity where deep shaft mining is required to access richer gold deposits. At these depths in particular to conditions for humans has become impractical, highly expensive \& dangerous. To retrieve these gold deposits using Swarm Robotics can be seen as more efficient, safer \& at lower maintenance costs. These is swarm robotics model is made possible by using Swarm Intelligence.}
 \\
-\par{Swarm Intelligence (SI) is a broad field of modeling algorithms after animal \& insect behavior in nature \cite{SI}. This paper will focus on the algorithms simulated after ant cemetery clustering and of honey bee foraging. The one this these colony based eco-systems has as a priority is foraging. This is defined as search and retrieve procees from the environment to a collection point \cite{Forage-09}.}
+\par{Swarm Intelligence (SI) is a broad field of algorithms modeled after animal \& insect behavior in nature \cite{SI}. This paper will focus on the algorithms simulated after ant cemetery clustering and of honey bee foraging. This algorithm is a colony based eco-systems used as priority is foraging. This is defined as search and retrieve process from the environment to a collection point \cite{Forage-09}. As for the other Ant cemetery clustering by \cite{Lumer-Faieta} where ants cluster their dead based on the object density in their surrounding area.}
 \\
-\par{Swarm robotics uses a large amount of robots with simplistic abilities working together in a collaborative function \cite{Robots-Dorigo} as it is designed by SI. It can be seen as an entity with mechanisms where each is a specific behavior where together these entities collaborate in a swarm. These algorithms are build around the idea of self-organized social systems where the dynamic mechanics drive the entire system towards a goal \cite{SI}.}
+\par{Swarm robotics uses an amount of robots with simplistic abilities working together as a collaborative entity \cite{Robots-Dorigo} as it is designed by SI. It can be seen as an entity with mechanisms where each is a specific behavior where together these entities collaborate in a swarm. These robots are build \& designed around the idea of self-organized social systems where the dynamic mechanics drive the entire system towards a goal \cite{SI}.}
 \\
-\par{The research methodology to be followed and the process to complete the study. A literature review of background research relevant to the topic helping to get a better understanding and show the knowledge obtained during preparation for the paper. The project plan showing the sub-section of the project and project projection from start to submission. Also to show the study timely and no other research has been done on this exact topic before.}
+\par{The research methodology to be followed and the process to complete the study. A literature review of background research relevant to the topic helping to get a better understanding and show the knowledge obtained during preparation for the paper. The project plan showing the sub-section of the project and project projection from start to submission. Also to show the study timely and no previous research has been done on this exact topic before.}
 \\
-\par{I will follow up on a publication by Jade Abbott \cite{Jade-2014} about Prioritized foraging of multiple foraging methods. In her study the methods where tested against each other to determine their efficiency in different situations. From the study the honey bee algorithm has performed best under most situations, and indicates that it would perform best in dynamic environments. This study will introduce the property of clustering before and during foraging to improve the foraging process due to prioritized objects being in a closer vicinity of each other.}
+\par{I will follow up on a publication by Jade Abbott \cite{Jade-2014} around Prioritized foraging looking at multiple foraging methods. In her study the methods where tested against each other to determine their efficiency in different environment simulations. From the study the honey bee algorithm has performed best under most situations, and indicates that it would perform best in dynamic environments. This study will introduce the property of clustering before and during foraging to improve the foraging process due to prioritized objects being in a closer vicinity of each other.}
 
 %*********************%
 %* Problem Statement *%
 %*********************%
 \section{Problem Statement}
 
-\par{Prioritized Foraging using Robot Swarms is required by the mining industry when looking at deep mining where humans can't retrieve the gold ore after blasting has occurred. This is due to the reduced amount of breathable air and over whelming heat, increasing operation cost and unacceptable working conditions. All of this is irrelevant when looking at using robots to retrieve the gold and working prolonged hours.} 
+\par{Prioritized Foraging using Robot Swarms is required by the mining industry when looking at deep mining where humans can't retrieve the gold ore after blasting has occurred. This is due to the reduced amount of oxygen, increased levels of sulfur dioxide and nitrogen dioxide also over whelming heat. These problem contribute to increasing operation cost and unacceptable working conditions. All of this is irrelevant when looking at using robots to retrieve the gold and working prolonged hours.} 
 \\
 \par{The empirical study will simulate the behavior which will be programmed on a swarm of robots to cluster and forage the gold and rubble out of the mine. The foraging aspect will come in with retrieving the objects. Clustering to the grouping of objects to simplify the foraging process and prioritization to the gold and rubble objects respectively. This work research foraging and clustering but limits itself to only Ant Cemetery Clustering and Honey Bee Foraging, to keep with the SI model applicable to robots and by results of the standing study \cite{Jade-2014}.}
 \\
-\par{I am aiming to determine how clustering of the prioritized items will improve the foraging process, division of labor will be introduced where robots switch between clustering and foraging as needed to improve performance. This empirical study will prove that deep mining can be undertaken with the use of robots when physical simulations have been tested. No other study has been done on concurrent clustering of the prioritized object while foraging takes place to improve feasibility and performance}
+\par{I am aiming to determine how clustering of the prioritized items will improve on the foraging process, division of labor will be introduced where robots switch between clustering and foraging as needed to improve performance. This empirical study will prove that deep mining can be undertaken with the use of robots when physical simulations have been tested. No other study has been done on concurrent clustering of the prioritized object while foraging takes place to improve feasibility and performance.}
 
 %************************%
 %* Research methodology *%
@@ -90,7 +86,7 @@ This study aim to improve on the problem of prioritized foraging by using roboti
 
 \par{A prototype will be developed combining the algorithms being used to be able to run the simulations. It will consist of the following components of development:
 \begin{itemize}
-	\item 	A controller which controls all the simulations to be run with all the 					variations of settings.
+	\item 	A controller which controls all the simulations to be run with all the 					variations of configurations.
 	\item 	Honey bee foraging mechanism module, where each robot entity explores 					the search space for the prioritized object to carry them out the 						collection point as a bee would honey.
 	\item 	Ant cemetery clustering mechanism module, where each robot entity when 					discovering a prioritized object it has to cluster it as ant would his 					dead.
 	\item 	Division of labor module controlling the decision process where each 					robot entity must decide between the two mechanic modules.
@@ -101,14 +97,14 @@ This study aim to improve on the problem of prioritized foraging by using roboti
 
 \par{The simulations will test this prototype on a 2D grid that will simulate the environment where the robots might find themselves. The set of configurations to be tested are drawn from possible situations described in \cite{Jade-2014}:}
 \begin{itemize}
-	\item 	Environment layout of how the prioritized items are scattered around the 				search space.
-	\item	Grid size variation the search space and increasing complexity and run 					time.
-	\item	Coverage percentage of prioritized items over the open search spaces.
+	\item 	Scattering layout of how the prioritized items are scattered around the search space.
+	\item	Grid size variation the search space and increasing complexity of the clustering \& foraging and run time.
+	\item	Grid coverage percentage of prioritized items over the open search spaces.
 	\item	Ratio of the amount of gold objects versus that of the rubble.
 	\item	Priority of foraging gold over rubble if in a close proximity.
 	\item	Number of robot entities in the search space.
 \end{itemize} 
-\par{Each simulation has a long run time due to iteration count with simplistic probabilities. This implies high concurrency is more important for running multiple simulation and not high performance processors are required. The simulations will be run on a Amazon compute module to improve testing times.}
+\par{Each configuration simulation will be test 30 times for sufficiently comparable results. These simulations will each run on a concurrent thread increasing multi-thread support. The simulations will be test on a Amazon compute module to improve testing times due to the high concurrency provided.}
 
 %*******************%
 %* Research review *%
@@ -117,7 +113,7 @@ This study aim to improve on the problem of prioritized foraging by using roboti
 \par{The study will be based around a paper by Abbott \cite{Jade-2014}, various foraging methods where tested against one another: naive foraging, honey ant \& desert ant. This study will build on previous work by taking the proven best foraging algorithm and add a clustering process. It can be seen as a dynamic system where clustering and foraging are inter changed by each robot as the need occurs. The require research fields to complete this study is discussed in detail in the following sub-sections.}
 
 \subsection{Swarm Intelligence / Robotics}
-\par{Swarm Intelligence (SI) as defined by Gerando Beni \cite{Beni-Robot} it is 'A group of non-intelligent robots ("machines") capable of universal material computation'. He further stated that there SI can be divided in to sets, where ACO and PSO algorithms are more suited to swarm automata due to its pattern analysis behavior, and termites behavior of structure building is suited to intelligent robot behavior. The foraging and clustering behavior used is more suited for swarm robots due to it does not follow any pattern analysis but more of an opportunistic behavior by its mechanical ability.}
+\par{Swarm Intelligence (SI) as defined by Gerando Beni \cite{Beni-Robot} it is 'A group of non-intelligent robots ("machines") capable of universal material computation'. He further stated that SI can be divided in to sets, where ACO and PSO algorithms are more suited to swarm automata due to its pattern analysis behavior, also termites behavior of structure building is suited to intelligent robot behavior. The foraging and clustering behavior used is more suited for swarm robots due to it does not follow any pattern analysis but more of an opportunistic behavior by its mechanical ability.}
 \\
 \par{Swarm-based robotics is defined by Bonabeau \textit{et al} \cite{Robot-Swarm} that it may be able to perform tasks without needing a explicit representation of the environment. These self organized social insects use a communication method call stigmergy \cite{Robot-Swarm}, it can be in a form of direct and in-direct communication. Where direct is in the form of physical information exchange \& in-direct by means of environment changes.
 \\

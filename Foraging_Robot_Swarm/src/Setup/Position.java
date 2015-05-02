@@ -8,7 +8,8 @@ import java.util.Random;
 public class Position {
     public int row;
     public int column;
-    public double distCount;
+    public float dens;
+    public boolean high;
 
     public Position(int size) {
         Random ron = new Random();
@@ -19,18 +20,26 @@ public class Position {
         
         row = (int)((size-1) * tmp);
         column = 0;
-        distCount = 0;
+        dens = 0;
+        high = false;
     }
 
     public Position() {
         row = 0;
         column = 0;
-        distCount = 0;
+        dens = 0;
+        high = false;
     }   
     
     
     public Position(int x, int y) {
         row = x;
         column = y;
+        dens = 0;
+        high = false;
+    }
+    
+    public String Print() {
+        return row + " " + column;
     }
 }
