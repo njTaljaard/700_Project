@@ -117,42 +117,7 @@ public class Cluster {
         for (Position pos : surrounding) {
             
             tmp += ( 1 - distance(robot.position, pos.row, pos.column) / alpha );
-            /*int test = controller.grid.grid[pos.row][pos.column];
-                
-            if (robot.laden) {
-                if (robot.getCarry() == Settings.ANT_GOLD) {
-
-                    if (test == Settings.GOLD || test == Settings.ANT_GOLD || test == Settings.BEE_GOLD) {
-
-                        tmp += ( 1 - distance(robot.position, pos.row, pos.column) / alpha );
-
-                    }
-
-                } else if (robot.getCarry() == Settings.ANT_ROCK) {                
-
-                    if (test == Settings.ROCK || test == Settings.ANT_ROCK || test == Settings.BEE_ROCK) {
-
-                        tmp += ( 1 - distance(robot.position, pos.row, pos.column) / alpha );
-
-                    }
-                }
-
-            } else {
-
-                if (test == Settings.GOLD) {
-
-                    tmp += ( 1 - distance(robot.position, pos.row, pos.column) / alpha );
-
-                } else if (test == Settings.ANT_GOLD || test == Settings.BEE_GOLD) {
-
-                    tmp += ( 1 - distance(robot.position, pos.row, pos.column) / alpha ) / 2;
-
-                } else if (test == Settings.ROCK || test == Settings.ANT_ROCK || test == Settings.BEE_ROCK) {
-
-                    tmp += ( 1 - distance(robot.position, pos.row, pos.column) / alpha ) / 4;
-
-                }
-            }*/
+            
         }
         
         lamda *= tmp;
