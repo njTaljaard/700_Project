@@ -84,12 +84,12 @@ public class Grid {
     
     private void createGrid() {
         //init possitions of rocks & gold
-        int placement = (int) ((settings.GridSize * 2) * settings.coverage);
+        int placement = (int) ((Math.pow(settings.GridSize, 2)) * settings.coverage);
         int gold = (int) (placement / (settings.ratio + 1));
         int rock = (int) (settings.ratio * gold);
         int place, x, y;
         
-        System.out.println("Size : " + (settings.GridSize*2) + " Place : " + placement + " Rock : " + rock + " Gold : " + gold);
+        System.out.println("Size : " + Math.pow(settings.GridSize, 2) + " Place : " + placement + " Rock : " + rock + " Gold : " + gold);
         
         switch (settings.scatterType) {
             case Settings.UNIFORM:
@@ -140,8 +140,8 @@ public class Grid {
                 break;
             case Settings.VEIN:
                 
-                int start = (settings.GridSize / 2) - (settings.GridSize / 20);
-                int end = (settings.GridSize / 2) + (settings.GridSize / 20); 
+                int start = (int) ( (settings.GridSize / 2) - (settings.GridSize * settings.coverage) );
+                int end = (int) ( (settings.GridSize / 2) + (settings.GridSize * settings.coverage) ); 
                 
                 System.out.println(start + " " + end);
                 
@@ -352,6 +352,6 @@ public class Grid {
     }
     
     private double distance(double p1x, double p1y, double p2x, double p2y) {
-        return Math.sqrt(Math.pow(p2x - p1x, 2) + Math.pow(p2y - p1y ,2));
+        return Math.sqrt(Math.pow(Math.abs(p2x - p1x), 2) + Math.pow(Math.abs(p2y - p1y),2));
     }
 }

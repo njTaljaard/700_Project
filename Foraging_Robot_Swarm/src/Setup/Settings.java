@@ -34,7 +34,7 @@ public class Settings {
     public static int[] gridSizes = new int[] {50,100,200};
     
     public double coverage;  //p = 5%, 20%, 50%, 70%, 90%
-    public static double[] coverages = new double[] {0.05,0.2,0.7,0.9};
+    public static double[] coverages = new double[] {0.05,0.2,0.35,0.5};
     
     public double ratio;     //r = 0.2, 0.25, 0.333, 0.5, 0.667, 0.75, 0.8, 1
     public static double[] ratios = new double[] {0.2,0.25,0.33,0.5,0.667,0.75,0.8,1};

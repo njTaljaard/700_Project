@@ -43,13 +43,13 @@ public class Controller implements Runnable {
                 robot.update();
             }
             
-            //if ((itterations % 100 == 0))
+            if ((itterations % 1000 == 0)){
                 utils.writeGrid(grid.grid, settings, String.valueOf(itterations));
-            //utils.writeRobots(robots, settings, String.valueOf(itterations));
+                utils.writeRobots(robots, settings, String.valueOf(itterations));
+            }
+            
         } while (testStoppingCondition());
-        
-        System.out.println("DONE!!!");
-        
+                
         utils.writeGrid(grid.grid, settings, "DONE...");
     }
     
@@ -70,6 +70,6 @@ public class Controller implements Runnable {
         }
         
         return false;*/
-        return !(itterations == 100000);//grid.isClustered() || !grid.complete();
+        return !(itterations == 400000);//grid.isClustered() || !grid.complete();
     }
 }
