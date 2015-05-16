@@ -70,6 +70,6 @@ public class Controller implements Runnable {
         }
         
         return false;*/
-        return !(itterations == 400000);//grid.isClustered() || !grid.complete();
+        return itterations != 400000 && !grid.isClustered();// || !grid.complete();
     }
 }

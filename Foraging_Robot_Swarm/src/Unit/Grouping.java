@@ -10,15 +10,14 @@ public class Grouping {
     
     Space[][] spaces;
     ArrayList<ArrayList<Space>> clusters;
-    final int e = 5;
-    int clusterCount;
+    final int e = 6;
     
     public Grouping() {
-        
+        clusters = new ArrayList<>();
     }
     
     public boolean grouped(int[][] grid) {
-        clusterCount = 0;
+        clusters.clear();
         createSpace(grid);
         
         //Set object clusters...
@@ -45,7 +44,7 @@ public class Grouping {
                 
             } else {
                 
-                //Reset cluster to small
+                //Reset cluster due to small
                 for (Space s : cluster) {
                     spaces[s.x][s.y].parented = false;
                 }   
@@ -66,7 +65,7 @@ public class Grouping {
             
             for (int j = 0; j < centroids.size(); j++) {
                 
-                if (manhattanDistance(centroids.get(i).x, centroids.get(j).x, centroids.get(i).y, centroids.get(j).y) > 3) {
+                if (manhattanDistance(centroids.get(i).x, centroids.get(j).x, centroids.get(i).y, centroids.get(j).y) < 4) {
                     return false;
                 }
             }
@@ -97,7 +96,6 @@ public class Grouping {
                         spaces[i][j].x = i;
                         spaces[i][j].y = j;
                         spaces[i][j].parented = true;
-                        spaces[i][j].cluster = clusterCount;
                         cluster.add(spaces[i][j]);
                     }
                     
@@ -105,7 +103,6 @@ public class Grouping {
             }
         }
         
-        clusterCount++;
         clusters.add(cluster);
     }
     
@@ -123,7 +120,7 @@ public class Grouping {
        return centroid;
     }        
     
-    public void density(ArrayList<Space> cluster) {
+    private void density(ArrayList<Space> cluster) {
         
         for (int i = 0; i < cluster.size(); i++) {
             

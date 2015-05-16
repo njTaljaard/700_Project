@@ -32,7 +32,7 @@ public class Movement {
                         
             if (options.isEmpty()) {
                 
-                System.out.println("Im stuck " + robot.position.row + " " + robot.position.column);
+                //System.out.println("Im stuck " + robot.position.row + " " + robot.position.column);
                 
                 return robot.position;
                 
@@ -75,95 +75,127 @@ public class Movement {
     
     private void getSurrounding(Position origin, boolean laden, int carry) {
         
-        for (int i = -5; i <= 5; i++) {
+        int xStart  = wrap(-5 + origin.row);
+        int yStart  = wrap(-5 + origin.column);
+        int xEnd    = wrap(5 + origin.row);
+        int yEnd    = wrap(5 + origin.column);
+        
+        for (int i = xStart; i <= xEnd; i++) {
             
-            for (int j = -5; j <= 5; j++) {
+            for (int j = yStart; j <= yEnd; j++) {
             
-                int tmpRow = i + origin.row;
-                int tmpCol = j + origin.column;
+                /*int tmpRow = i + origin.row;
+                int tmpCol = j + origin.column;*/
                 
                 if (laden) {
                     if (carry == Settings.ANT_GOLD || carry == Settings.BEE_GOLD) {
 
-                        if (!(i == 0 && j == 0) && wrap(tmpRow, tmpCol) && 
-                                (grid.grid[tmpRow][tmpCol] == Settings.GOLD || 
-                                grid.grid[tmpRow][tmpCol] == Settings.ANT_GOLD || 
-                                grid.grid[tmpRow][tmpCol] == Settings.BEE_GOLD)) {
+                        if (!(i == origin.row && j == origin.column) && 
+                                (grid.grid[i][j] == Settings.GOLD || 
+                                grid.grid[i][j] == Settings.ANT_GOLD || 
+                                grid.grid[i][i] == Settings.BEE_GOLD)) {
 
-                            area.add(new Position(tmpRow, tmpCol));
+                            area.add(new Position(i, j));
                         }
                     } else if (carry == Settings.ANT_ROCK || carry == Settings.BEE_ROCK) {
-                        if (!(i == 0 && j == 0) && wrap(tmpRow, tmpCol) && 
-                                (grid.grid[tmpRow][tmpCol] == Settings.ROCK ||
-                                grid.grid[tmpRow][tmpCol] == Settings.BEE_ROCK || 
-                                grid.grid[tmpRow][tmpCol] == Settings.ANT_ROCK)) {
+                        if (!(i == origin.row && j == origin.column) && 
+                                (grid.grid[i][j] == Settings.ROCK ||
+                                grid.grid[i][j] == Settings.BEE_ROCK || 
+                                grid.grid[i][j] == Settings.ANT_ROCK)) {
 
-                            area.add(new Position(tmpRow, tmpCol));
+                            area.add(new Position(i, j));
                         }
                     }
                     
                 } else {
-                    if (!(i == 0 && j == 0) && wrap(tmpRow, tmpCol) && 
-                            (grid.grid[tmpRow][tmpCol] == Settings.GOLD || 
-                            grid.grid[tmpRow][tmpCol] == Settings.ROCK)) {
+                    if (!(i == origin.row && j == origin.column) && 
+                            (grid.grid[i][j] == Settings.GOLD || 
+                            grid.grid[i][j] == Settings.ROCK)) {
 
-                        area.add(new Position(tmpRow, tmpCol));
+                        area.add(new Position(i, j));
                     }
                 }
             }            
         }
     }
     
+    private int wrap(int x) {
+        if (x < 0) {
+            return 0;
+        } else if (x >= grid.grid.length) {
+            return grid.grid.length - 1;
+        } else {
+            return x;
+        }
+    }
+    
     private void getOptions(Position origin, boolean laden) {
         
-        for (int i = -1; i <= 1; i++) {
+        int xStart  = wrap(-1 + origin.row);
+        int yStart  = wrap(-1 + origin.column);
+        int xEnd    = wrap(1 + origin.row);
+        int yEnd    = wrap(1 + origin.column);
+        
+        for (int i = xStart; i <= xEnd; i++) {
             
-            for (int j = -1; j <= 1; j++) {
-            
-                int tmpRow = i + origin.row;
-                int tmpCol = j + origin.column;
-                
-                if (wrap(tmpRow, tmpCol)) {
+            for (int j = yStart; j <= yEnd; j++) {
 
-                    if (laden) {
-                        if (!(i == 0 && j == 0) && grid.grid[tmpRow][tmpCol] == Settings.EMPTY) {
+                if (laden) {
+                    if (!(i == origin.row && j == origin.column) && grid.grid[i][j] == Settings.EMPTY) {
 
-                            options.add(new Position(tmpRow, tmpCol));
-                            
-                        }                    
-                    } else {
-                        if (!(i == 0 && j == 0) && 
-                                (grid.grid[tmpRow][tmpCol] == Settings.EMPTY || 
-                                grid.grid[tmpRow][tmpCol] == Settings.GOLD ||
-                                grid.grid[tmpRow][tmpCol] == Settings.ROCK)) {
+                        options.add(new Position(i, j));
 
-                            options.add(new Position(tmpRow, tmpCol));
-                        }
-                    }            
-                }
+                    }                    
+                } else {
+                    if (!(i == origin.row && j == origin.column) && 
+                            (grid.grid[i][j] == Settings.EMPTY || 
+                            grid.grid[i][j] == Settings.GOLD ||
+                            grid.grid[i][j] == Settings.ROCK)) {
+
+                        options.add(new Position(i, j));
+                    }
+                } 
             }            
         }
     }
     
     private Position testDensity(Robot robot) {        
         Position pos = null;
-        float tmp = 0.0f;
+        float tmp;
         float tmp2;
         boolean test = true;
+        
+        if (robot.laden) {
+            tmp = 0.0f;
+        } else {
+            tmp = Float.MAX_VALUE;
+        }
         
         for (Position opt : options) {
             tmp2 = getDensity(opt, robot);
             opt.dens = tmp2;
-            
-            if (tmp2 > tmp) {
-                pos = opt;
-                tmp = tmp2;
-                test = false;
+             
+            if (robot.laden) {
+                if (tmp2 > tmp) {
+                    pos = opt;
+                    tmp = tmp2;
+                    test = false;
+                }
+            } else {
+                if (tmp2 != 0) {
+                    if (tmp2 < tmp) {
+                        pos = opt;
+                        tmp = tmp2;
+                        test = false;
+                    }
+                }
             }
         }
         
         if (test) {
-            Collections.shuffle(options);
+            long seed = System.nanoTime();
+            Random r = new Random(seed);
+            Collections.shuffle(options, r);
             return options.get(0);
         }
         
@@ -172,23 +204,23 @@ public class Movement {
     
     public float getDensity(Position pos, Robot robot) {
         float alpha = (float) 0.80;
-        float lamda = (float) (1 / Math.pow(grid.settings.GridSize, 2));
-        
+        float lamda = (float) (1 / grid.grid.length);
         float tmp = 0.0f;
                 
         for (Position test : area) {
             
-            tmp += ( 1 - distance(pos, test.row, test.column) / alpha );
+            tmp += ( distance(pos, test.row, test.column) / alpha );
                  
         }
-        
-        lamda *= tmp;
-                
-        return lamda < 0.0f ? 0.0f : lamda;
+          
+        if (tmp < 0)
+            return 0;
+        else 
+            return tmp;
     }
     
     private float distance(Position ya, int ybX, int ybY) {        
-        return (float) Math.sqrt(Math.pow(Math.abs(ya.row - ybX), 2) + Math.pow(Math.abs(ya.column - ybY), 2));
+        return (float) Math.sqrt(Math.pow(Math.abs(ya.row - ybX), 2) + Math.sqrt(Math.pow(Math.abs(ya.column - ybY), 2)));
     }
     
     private boolean wrap(int p1, int p2) {

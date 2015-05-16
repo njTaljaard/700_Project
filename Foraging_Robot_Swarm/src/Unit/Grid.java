@@ -98,7 +98,7 @@ public class Grid {
         
         switch (settings.scatterType) {
             case Settings.UNIFORM:
-                
+                System.out.println("Uniform");
                 for (place = 0; place < gold;) {
                     x = utils.getNextUniform(settings);
                     y = utils.getNextUniform(settings);
@@ -121,7 +121,7 @@ public class Grid {
                     
                 break;
             case Settings.CLUSTERD: //@TODO: CHANGE
-                
+                System.out.println("Clustered");
                 for (place = 0; place < gold;) {
                     x = 0;
                     y = 0;
@@ -144,9 +144,9 @@ public class Grid {
                 
                 break;
             case Settings.VEIN:
-                
-                int start = (int) ( (settings.GridSize / 2) - (settings.GridSize * settings.coverage) );
-                int end = (int) ( (settings.GridSize / 2) + (settings.GridSize * settings.coverage) ); 
+                System.out.println("Vein");
+                int start = (int) ( (settings.GridSize / 2) - (settings.GridSize * (settings.coverage / 2)) );
+                int end = (int) ( (settings.GridSize / 2) + (settings.GridSize * (settings.coverage / 2)) ); 
                 
                 System.out.println(start + " " + end);
                 
@@ -172,7 +172,7 @@ public class Grid {
                 
                 break;
             case Settings.GAUSSIAN:
-                
+                System.out.println("Gaussian");
                 for (place = 0; place < gold;) {
                     x = utils.getNextGausion(settings);
                     y = utils.getNextGausion(settings);
@@ -195,159 +195,5 @@ public class Grid {
                 
                 break;
         }
-        
     }
-    
-    
-    public ArrayList<Position> getSurroundPositions(Position pos) {
-        ArrayList<Position> list = new ArrayList<>();
-        
-        for (int i = pos.row-1; i < pos.row+1; i++) {
-            
-            for (int j = pos.column-1; j < pos.column+1; j++) {
-                
-                if (i >= 0 && j >= 0 && i < grid.length && j < grid[i].length &&
-                        (i != pos.row && j != pos.column) ) {
-                    
-                    list.add(new Position(i, j));
-                    
-                }
-                
-            }
-            
-        }
-        
-        return list;
-    }
-    
-    /*
-    public ArrayList<Position> getCentroids() {
-        
-        ArrayList<Position> centroids = new ArrayList<>();
-        
-        for (int i = 0; i < grid.length; i++) {
-            
-            for (int j = 0; j < grid[i].length; j++) {
-                
-                Position tmp = new Position(i, j);
-                tmp.dens = getDensity(tmp);
-                    
-                shouldAdd(centroids, tmp);
-            }            
-        }
-        
-        return centroids;
-    }
-    
-    public void shouldAdd(ArrayList<Position> centroids, Position pos) {
-        boolean inCluster = false;
-        boolean highDens = false;
-        
-        for (Position p : centroids) {
-            if (distance(pos.row, p.row, pos.column, p.column) < settings.interLimit) {
-                inCluster = true;
-                if (pos.dens > p.dens) {
-                    highDens = true;
-                    pos.high = true;
-                    centroids.remove(p);
-                    centroids.add(pos);
-                    return;
-                }
-            }
-        }
-        
-        if (!inCluster) {
-            centroids.add(pos);
-        } else if (inCluster && !highDens) {
-            centroids.add(pos);
-            pos.high = false;
-        }
-    }
-    
-    private float getDensity(Position p) {
-        float lamda = (float) (1 / Math.pow(grid.length, 2));
-        float alpha = (float) Math.sqrt(settings.GridSize);
-        float tmp = 0.0f;
-        
-        int type = grid[p.row][p.column];
-        
-        for (int i = 0; i < grid.length; i++) {
-            
-            for (int j = 0; j < grid[i].length; j++) {
-            
-                int test = grid[i][j];
-
-                if (type == Settings.ANT_GOLD) {
-
-                    if (test == Settings.GOLD || test == Settings.ANT_GOLD || test == Settings.BEE_GOLD) {
-
-                        tmp += ( 1 - distance(p.row, i, p.column, j) / alpha );
-
-                    }
-
-                } else if (type == Settings.ANT_ROCK) {                
-
-                    if (test == Settings.ROCK || test == Settings.ANT_ROCK || test == Settings.BEE_ROCK) {
-
-                        tmp += ( 1 - distance(p.row, i, p.column, j) / alpha );
-
-                    }
-
-                } else {
-
-                    if (test == Settings.GOLD || test == Settings.ANT_GOLD || test == Settings.BEE_GOLD) {
-
-                        tmp += ( 1 - distance(p.row, i, p.column, j) / alpha );
-
-                    } else if (test == Settings.ROCK || test == Settings.ANT_ROCK || test == Settings.BEE_ROCK) {
-
-                        tmp += ( 1 - distance(p.row, i, p.column, j) / alpha );
-
-                    }
-                }            
-            }
-        }
-        
-        lamda *= tmp;
-        
-        return lamda < 0.0f ? 0.0f : lamda;
-    }
-    
-    private boolean intra(ArrayList<Position> centroids) { //inner cluster density
-        boolean test = false;
-        
-        for (int x = 0; x < grid.length; x++) {
-            
-            for (int y = 0; y < grid[x].length; y++) {
-                
-                if (grid[x][y] == Settings.GOLD) {
-                    
-                    for (Position p : centroids) {
-
-                        if (distance(x, y ,p.row, p.column) > settings.intraLimit) {
-                            test = true;
-                            break;
-                        }
-                        
-                    }
-
-                    if (test) {
-                        return test;
-                    }
-                }
-            }
-        }
-        
-        return test;
-    }
-    
-    private boolean inter(ArrayList<Position> centroids) { //cluster seperation
-        return centroids.stream().noneMatch((p1) -> 
-                (!centroids.stream().noneMatch((p2) -> 
-                        (distance(p2.row, p1.row, p2.column, p1.column) < settings.interLimit))));
-    }
-    
-    private double distance(double p1x, double p1y, double p2x, double p2y) {
-        return Math.sqrt(Math.pow(Math.abs(p2x - p1x), 2) + Math.pow(Math.abs(p2y - p1y),2));
-    }*/
 }
