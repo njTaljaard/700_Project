@@ -14,18 +14,23 @@ public class Grid {
     public Movement movement;
     public Settings settings;
     private final Utilities utils;
+    private final Grouping grouping;
     
     public Grid(Settings settings, Utilities util) {
-        this.settings = settings;
         this.utils = util;
-        
+        this.settings = settings;
         this.grid = new int[settings.GridSize][settings.GridSize];
+        this.grouping = new Grouping();
         
         createGrid();
         
         util.writeGrid(grid, settings, "0");
         
         movement = new Movement(this);
+    }
+    
+    public boolean isClustered() {
+        return grouping.grouped(grid);
     }
     
     public boolean complete() {
@@ -216,15 +221,6 @@ public class Grid {
     }
     
     /*
-     * Test if grid is clustered... 
-     */
-    
-    public boolean isClustered() {
-        ArrayList<Position> centroids = getCentroids();
-        
-        return intra(centroids) && inter(centroids);
-    }
-    
     public ArrayList<Position> getCentroids() {
         
         ArrayList<Position> centroids = new ArrayList<>();
@@ -353,5 +349,5 @@ public class Grid {
     
     private double distance(double p1x, double p1y, double p2x, double p2y) {
         return Math.sqrt(Math.pow(Math.abs(p2x - p1x), 2) + Math.pow(Math.abs(p2y - p1y),2));
-    }
+    }*/
 }
