@@ -4,7 +4,6 @@ import Setup.Position;
 import Setup.Settings;
 import Unit.Robot;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -12,14 +11,15 @@ import java.util.Random;
  */
 public class Cluster {
     private final Controller controller;
-    private final float gamma_1, gamma_2, alpha;
+    private final PickDrop pickDrop;
+    private final float gamma_1, gamma_2;
     private final Random r;
     
     public Cluster(Controller controller) {
+        this.pickDrop = new PickDrop(controller);
         this.controller = controller;
         this.gamma_1 = 0.5f;
         this.gamma_2 = 0.5f;
-        this.alpha = 0.8f;
         this.r = new Random();
     }
     
@@ -28,9 +28,9 @@ public class Cluster {
         
         robot.position = controller.grid.movement.getNewPosition(robot); //Get new position
         
-        ArrayList<Position> surround = getSurrounding(robot); //Get surrounding positions
+        ArrayList<Position> surround = pickDrop.getSurrounding(robot); //Get surrounding positions
         
-        robot.clusterDensity = computeDensity(robot, surround); //Compute density from surrounds
+        robot.clusterDensity = pickDrop.computeDensity(robot, surround); //Compute density from surrounds
    
         int r = controller.grid.grid[robot.position.row][robot.position.column];
         
@@ -64,72 +64,7 @@ public class Cluster {
         }
     }
     
-    private ArrayList<Position> getSurrounding(Robot robot) {
-        ArrayList<Position> tmp = new ArrayList<>();
-        
-        for (int i = -5; i <= 5; i++) {
-            
-            for (int j = -5; j <= 5; j++) {
-            
-                int tmpRow = i + robot.position.row;
-                int tmpCol = j + robot.position.column;
-                
-                if (robot.laden) {
-                    if (robot.getCarry() == Settings.ANT_GOLD || robot.getCarry() == Settings.BEE_GOLD) {
-
-                        if (!(i == 0 && j == 0) && wrap(tmpRow, tmpCol) && 
-                                (controller.grid.grid[tmpRow][tmpCol] == Settings.GOLD || 
-                                controller.grid.grid[tmpRow][tmpCol] == Settings.ANT_GOLD || 
-                                controller.grid.grid[tmpRow][tmpCol] == Settings.BEE_GOLD)) {
-
-                            tmp.add(new Position(tmpRow, tmpCol));
-                        }
-                    } else if (robot.getCarry() == Settings.ANT_ROCK || robot.getCarry() == Settings.BEE_ROCK) {
-                        if (!(i == 0 && j == 0) && wrap(tmpRow, tmpCol) && 
-                                (controller.grid.grid[tmpRow][tmpCol] == Settings.ROCK ||
-                                controller.grid.grid[tmpRow][tmpCol] == Settings.BEE_ROCK || 
-                                controller.grid.grid[tmpRow][tmpCol] == Settings.ANT_ROCK)) {
-
-                            tmp.add(new Position(tmpRow, tmpCol));
-                        }
-                    }
-                } else {
-                    if (!(i == 0 && j == 0) && wrap(tmpRow, tmpCol) && 
-                            (controller.grid.grid[tmpRow][tmpCol] == Settings.GOLD ||
-                            controller.grid.grid[tmpRow][tmpCol] == Settings.ROCK ||
-                            controller.grid.grid[tmpRow][tmpCol] == Settings.ANT_GOLD || 
-                            controller.grid.grid[tmpRow][tmpCol] == Settings.ANT_ROCK)) {
-
-                        tmp.add(new Position(tmpRow, tmpCol));
-                    }       
-                }
-            }            
-        }
-        
-        return tmp;
-    }
     
-    private float computeDensity(Robot robot, ArrayList<Position> surrounding) {
-        float lamda = (float) (1 / Math.pow(controller.grid.grid.length, 2));
-        
-        float tmp = 0.0f;
-        
-        for (Position pos : surrounding) {
-            
-            tmp += ( 1 - distance(robot.position, pos.row, pos.column) / alpha );
-            
-        }
-        
-        lamda *= tmp;
-        
-        return lamda < 0.0f ? 0.0f : lamda;
-    }
-    
-    private float distance(Position ya, int ybX, int ybY) {
-        
-        return (float) Math.abs(Math.sqrt(Math.pow(Math.abs(ybX - ya.row), 2) + Math.pow(Math.abs(ybY - ya.column), 2)));
-        
-    }
     
     private float computePickPropability(float density) {
         
@@ -141,10 +76,6 @@ public class Cluster {
         
         return density < gamma_2 ? 2 * density : 1;
         
-    }
-    
-    private boolean wrap(int p1, int p2) {
-        return p1 < controller.grid.settings.GridSize && p2 < controller.grid.settings.GridSize && p1 >= 0 && p2 >= 0;
     }
     
     private float random() {

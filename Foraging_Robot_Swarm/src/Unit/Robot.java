@@ -11,19 +11,23 @@ public class Robot {
     
     private final Controller controller;
 
-    public Position foragePostion;
     public Position position;
-    public float clusterDensity;
+    public Position baringVector;
+    
+    public boolean moveBack;
     public boolean laden;
-    public int ladenCount;
+    
     public int state;
+    public int ladenCount;
+    private int carryType;
+    
     public float pickUpDensity;    
-    protected int carryType;
+    public float clusterDensity;
         
-    public Robot(Controller controller) {
+    public Robot(Controller controller, int robotType) {
         this.controller = controller;
         this.position = new Position(controller.settings.GridSize);
-        this.state = Settings.CLUSTER;
+        this.state = robotType;
         this.carryType = Settings.EMPTY;
         this.clusterDensity = 0.0f;
         this.laden = false;
@@ -67,7 +71,8 @@ public class Robot {
                 carryType = type;
             } else {
                 carryType = type;
-                
+                //Baring vector
+                baringVector = new Position(position.row, position.column);
             }
         }
     }

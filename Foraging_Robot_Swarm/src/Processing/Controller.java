@@ -60,7 +60,7 @@ public class Controller implements Runnable {
         this.robots = new Robot[settings.RobotCount];
         
         for (int i = 0; i < settings.RobotCount; i++) {            
-            this.robots[i] = new Robot(this);
+            this.robots[i] = new Robot(this, Settings.FORAGE);
         }
     }
     

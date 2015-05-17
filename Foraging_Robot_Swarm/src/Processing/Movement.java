@@ -23,6 +23,67 @@ public class Movement {
         this.options = new ArrayList<>();
     }
     
+    /**
+     * BEE 
+     */
+    public Position moveToSink(Robot robot) {
+        ArrayList<Position> opt = new ArrayList<>();
+        
+        for (int i = 3+robot.position.row; i > -3+robot.position.row; i--) {
+            
+            if (i >= 0 && i < grid.grid.length &&
+                    grid.grid[i][robot.position.column-1] == Settings.EMPTY) {
+                
+                opt.add(new Position(i, robot.position.column-1));
+            }
+        }
+                
+        if (opt.isEmpty()) {
+            return robot.position;
+        } else {
+            Collections.shuffle(opt);
+            return opt.get(0);
+        }
+    }
+    
+    public Position moveToBare(Robot robot) {
+        options.clear();
+        
+        try {
+            getOptions(robot.position, false);
+            
+            if (options.size() > 0) {
+                Position rtn = null;
+                double dist = Double.MAX_VALUE;
+                
+                for (Position opt : options) {
+                    if (vectorAngle(robot, opt) < dist) {
+                        rtn = opt;
+                    }
+                }
+                
+                if (rtn != null) {
+                    return rtn;
+                } 
+            }
+            
+            return robot.position;
+        } finally {
+            options.clear();
+        }
+    }
+    
+    private double vectorAngle(Robot robot, Position tmp) {
+        Position tmpBare = new Position(Math.abs(robot.baringVector.row - tmp.row), 
+            Math.abs(robot.baringVector.column - tmp.column));
+        
+        return Math.sqrt(Math.abs(robot.baringVector.row - tmpBare.row) + 
+                Math.abs(robot.baringVector.column - tmpBare.column));
+    }
+    
+    /**
+     * ANT
+     */
     public Position getNewPosition(Robot robot) { // Can see 5 units ahead
         area.clear();
         options.clear();
