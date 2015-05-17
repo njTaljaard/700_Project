@@ -19,6 +19,7 @@ public class Robot {
     
     public int state;
     public int ladenCount;
+    public int forageCount;
     private int carryType;
     
     public float pickUpDensity;    
@@ -32,6 +33,7 @@ public class Robot {
         this.clusterDensity = 0.0f;
         this.laden = false;
         this.ladenCount = 0;
+        this.forageCount = 0;
     }
     
     public void update() {
@@ -54,6 +56,7 @@ public class Robot {
     public void setCarry(int type, boolean ant, float density) {
         
         ladenCount = 0;
+        forageCount = 0;
         laden = false;
 
         if (type == Settings.EMPTY) {
