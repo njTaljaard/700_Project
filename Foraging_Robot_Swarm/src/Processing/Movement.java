@@ -26,26 +26,98 @@ public class Movement {
     /*
      * BEE 
      */
+    public Position getBeeNewPosition(Robot robot) { // Can see 5 units ahead
+        area.clear();
+        options.clear();
+        
+        try {
+            getOptions(robot.position, robot.laden);
+                                     
+            if (options.isEmpty()) {
+                System.out.println("Options are empty");
+                return robot.position;
+                
+            } else {
+                
+                getBeeSurrounding(robot.position);
+                                    
+                if (!area.isEmpty()) { // no surrounding objects found       
+                    
+                    Position move = testBeeDensity(robot); //prefered direction of options
+                    
+                    if (move != null) { //Move to best position
+                        System.out.println("Found move from test");
+                        if (robot.laden) {
+                            grid.grid[robot.position.row][robot.position.column] = Settings.EMPTY;
+                            grid.grid[move.row][move.column] = robot.getCarry();
+                        }
+
+                        return move;
+                    }
+                }
+                
+                // use random movement
+                System.out.println("Surroundings empty, move random");
+                int r = (int) (robot.getRandom() * options.size());
+                Collections.shuffle(options, new Random(System.nanoTime()));
+                
+                if (robot.laden) {
+                    grid.grid[robot.position.row][robot.position.column] = Settings.EMPTY;
+                    grid.grid[options.get(r).row][options.get(r).column] = robot.getCarry();
+                }
+
+                return options.get(r);
+            }
+        } finally {
+            area.clear();
+            options.clear();
+        }
+    }   
+    
+    private void getBeeSurrounding(Position origin) {
+        int yTmp = origin.row;
+        int xTmp = origin.column;
+        
+        for (int i = -5+yTmp; i <= 5+yTmp; i++) {
+            
+            for (int j = -5+xTmp; j <= 5+xTmp; j++) {
+                
+                if (wrap(i, j) && (i != origin.row && j != origin.column)) {
+                    
+                    if (grid.grid[i][j] == Settings.GOLD || 
+                            grid.grid[i][j] == Settings.ROCK) {
+                        
+                        area.add(new Position(i, j));
+                    }
+                }
+            }            
+        }
+    }
     
     public Position moveToSink(Robot robot) {
         ArrayList<Position> opt = new ArrayList<>();
         
-        for (int i = 1+robot.position.row; i > -1+robot.position.row; i--) {
+        int yTmp = robot.position.row;
+        int xTmp = -1 + robot.position.column;
+        
+        for (int i = -1+yTmp; i < 1+yTmp; i++) {
             
             if (i >= 0 && i < grid.grid.length) {
+                System.out.println(i + " " + xTmp + " " + grid.grid[i][xTmp]);
                 
-                if (robot.position.column > 0 && grid.grid[i][robot.position.column-1] == Settings.EMPTY) {
+                if (xTmp == 0 && grid.grid[i][xTmp] == Settings.EMPTY) {
+                    
+                    return new Position(i, xTmp);
+                    
+                } else if (grid.grid[i][xTmp] == Settings.EMPTY) {
                 
-                    opt.add(new Position(i, robot.position.column-1));
-                    
-                } else if (robot.position.column == 0 && grid.grid[i][robot.position.column] == Settings.EMPTY) {
-                    
-                    opt.add(new Position(i, robot.position.column));
+                    opt.add(new Position(i, xTmp));
                 }
             }
         }
                 
         if (opt.isEmpty()) {
+            System.out.println("No options");
             return robot.position;
         } else {
             Collections.shuffle(opt);
@@ -92,86 +164,17 @@ public class Movement {
                 Math.abs(robot.baringVector.column - tmpBare.column));
     }
     
-    public Position getBeeNewPosition(Robot robot) { // Can see 5 units ahead
-        area.clear();
-        options.clear();
-        
-        try {
-            getOptions(robot.position, robot.laden);
-                        
-            if (options.isEmpty()) {
-                
-                return robot.position;
-                
-            } else {
-                
-                getBeeSurrounding(robot.position);
-
-                if (!area.isEmpty()) { // no surrounding gold found       
-                    
-                    Position move = testBeeDensity(robot); //of open options
-                    
-                    if (move != null) { //Move to best position
-                        
-                        if (robot.laden) {
-                            grid.grid[robot.position.row][robot.position.column] = Settings.EMPTY;
-                            grid.grid[move.row][move.column] = robot.getCarry();
-                        }
-
-                        return move;
-                    }
-                }
-                
-                // use random movement
-                System.out.println("No surroundings, move random");
-                int r = (int) (robot.getRandom() * options.size());
-                Collections.shuffle(options, new Random(System.nanoTime()));
-                
-                if (robot.laden) {
-                    grid.grid[robot.position.row][robot.position.column] = Settings.EMPTY;
-                    grid.grid[options.get(r).row][options.get(r).column] = robot.getCarry();
-                }
-
-                return options.get(r);
-            }
-        } finally {
-            area.clear();
-            options.clear();
-        }
-    }   
-    
-    private void getBeeSurrounding(Position origin) {
-        
-        int xStart  = wrap(-5 + origin.row);
-        int yStart  = wrap(-5 + origin.column);
-        int xEnd    = wrap(5 + origin.row);
-        int yEnd    = wrap(5 + origin.column);
-        
-        System.out.println("Columns : " + yStart + " - " + yEnd);
-        
-        for (int i = xStart; i <= xEnd; i++) {
-            
-            for (int j = yStart; j <= yEnd; j++) {
-
-                if (!(i == origin.row && j == origin.column) && 
-                        (grid.grid[i][j] == Settings.GOLD || 
-                        grid.grid[i][j] == Settings.ROCK)) {
-
-                    area.add(new Position(i, j));
-                }
-            }            
-        }
-    }
-    
     private Position testBeeDensity(Robot robot) {        
         Position pos = null;
         float tmp = 0.0f;
+        float tmp2 ;
         boolean test = true;
         
         for (Position opt : options) {
-            opt.dens = getDensity(opt, robot);
+            tmp2 = getBeeDensity(opt, robot);
+            robot.position.dens = tmp2;
             
-            if (tmp < opt.dens) {
+            if (tmp2 > tmp) {
                 pos = opt;
                 tmp = opt.dens;
                 test = false;
@@ -185,6 +188,25 @@ public class Movement {
         }
         
         return pos;
+    }
+    
+    public float getBeeDensity(Position pos, Robot robot) {
+        float alpha = (float) 0.50;
+        float lamda = (float) (1 / grid.grid.length);
+        float tmp = 0.0f;
+                
+        for (Position test : area) {
+            
+            tmp += (distance(pos, test.row, test.column) / alpha );
+                 
+        }
+        
+        tmp *= (1 / Math.pow(grid.grid.length, 2));
+          
+        if (tmp < 0)
+            return 0;
+        else 
+            return tmp;
     }
     
     /*
@@ -243,44 +265,38 @@ public class Movement {
     
     private void getAntSurrounding(Position origin, boolean laden, int carry) {
         
-        int xStart  = wrap(-5 + origin.row);
-        int yStart  = wrap(-5 + origin.column);
-        int xEnd    = wrap(5 + origin.row);
-        int yEnd    = wrap(5 + origin.column);
+        int yTmp = origin.row;
+        int xTmp = origin.column;
         
-        for (int i = xStart; i <= xEnd; i++) {
+        for (int i = -5+yTmp; i <= 5+yTmp; i++) {
             
-            for (int j = yStart; j <= yEnd; j++) {
-            
-                /*int tmpRow = i + origin.row;
-                int tmpCol = j + origin.column;*/
-                
-                if (laden) {
-                    if (carry == Settings.ANT_GOLD || carry == Settings.BEE_GOLD) {
+            for (int j = -5+xTmp; j <= -5+xTmp; j++) {
+                            
+                if (wrap(i, j) && (i != origin.row && j != origin.column)) {
+                    if (laden) {
+                        if (carry == Settings.ANT_GOLD || carry == Settings.BEE_GOLD) {
 
-                        if (!(i == origin.row && j == origin.column) && 
-                                (grid.grid[i][j] == Settings.GOLD || 
-                                grid.grid[i][j] == Settings.ANT_GOLD || 
-                                grid.grid[i][i] == Settings.BEE_GOLD)) {
+                            if (grid.grid[i][j] == Settings.GOLD || 
+                                    grid.grid[i][j] == Settings.ANT_GOLD || 
+                                    grid.grid[i][i] == Settings.BEE_GOLD) {
+
+                                area.add(new Position(i, j));
+                            }
+                        } else if (carry == Settings.ANT_ROCK || carry == Settings.BEE_ROCK) {
+                            if (grid.grid[i][j] == Settings.ROCK ||
+                                    grid.grid[i][j] == Settings.BEE_ROCK || 
+                                    grid.grid[i][j] == Settings.ANT_ROCK) {
+
+                                area.add(new Position(i, j));
+                            }
+                        }
+
+                    } else {
+                        if (grid.grid[i][j] == Settings.GOLD || 
+                                grid.grid[i][j] == Settings.ROCK) {
 
                             area.add(new Position(i, j));
                         }
-                    } else if (carry == Settings.ANT_ROCK || carry == Settings.BEE_ROCK) {
-                        if (!(i == origin.row && j == origin.column) && 
-                                (grid.grid[i][j] == Settings.ROCK ||
-                                grid.grid[i][j] == Settings.BEE_ROCK || 
-                                grid.grid[i][j] == Settings.ANT_ROCK)) {
-
-                            area.add(new Position(i, j));
-                        }
-                    }
-                    
-                } else {
-                    if (!(i == origin.row && j == origin.column) && 
-                            (grid.grid[i][j] == Settings.GOLD || 
-                            grid.grid[i][j] == Settings.ROCK)) {
-
-                        area.add(new Position(i, j));
                     }
                 }
             }            
@@ -380,6 +396,8 @@ public class Movement {
             tmp += ( distance(pos, test.row, test.column) / alpha );
                  
         }
+        
+        tmp *= (1 / Math.pow(grid.grid.length, 2));
           
         if (tmp < 0)
             return 0;
@@ -392,7 +410,7 @@ public class Movement {
     }
     
     private boolean wrap(int p1, int p2) {
-        return p1 < grid.settings.GridSize && p2 < grid.settings.GridSize && p1 >= 0 && p2 >= 0;
+        return p1 >= 0 && p2 >= 0 && p1 < grid.settings.GridSize && p2 < grid.settings.GridSize;
     }
     
 }

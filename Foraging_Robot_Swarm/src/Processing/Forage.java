@@ -31,9 +31,10 @@ public class Forage {
             signal.remove(robot);
         }
             
+        Position p;
         //Process state and update
         switch (robot.beeState) {
-            case RobotState.Bee_WAIT:
+            case RobotState.Bee_WAIT: System.out.println("Wait");
             
                 //Wait for signal within your area
                 for (Robot s : signal) {
@@ -44,15 +45,16 @@ public class Forage {
                         robot.baringVector = s.baringVector;
                     }
                 }
-                    
-                break;
-            case RobotState.Bee_SCOUT:
-            
-                robot.position = controller.grid.movement.getBeeNewPosition(robot);
-                System.out.println("Pos : " + robot.position.row + " " + robot.position.column);
                 
-                if (controller.grid.grid[robot.position.row][robot.position.column] == Settings.ROCK ||
-                        controller.grid.grid[robot.position.row][robot.position.column] == Settings.GOLD) {
+                break;
+            case RobotState.Bee_SCOUT: System.out.println("Scout");
+             
+                p = controller.grid.movement.getBeeNewPosition(robot);
+                robot.position.row = p.row;
+                robot.position.column = p.column;
+                robot.position.dens = p.dens;
+                
+                if (controller.grid.grid[robot.position.row][robot.position.column] != Settings.EMPTY) {
                         
                     if (controller.grid.pickUpItem(robot.position.row, robot.position.column, false)) {
                         
@@ -66,15 +68,20 @@ public class Forage {
                 }
                 
                 break;
-            case RobotState.Bee_FORAGE:
+            case RobotState.Bee_FORAGE: System.out.println("Forage");
                 if (robot.laden) {
                     robot.forageCount = 0;
                     
                     //move to drop off
-                    robot.position = controller.grid.movement.moveToSink(robot);
+                    System.out.println("Before " + robot.position.row + " " + robot.position.column);
+                    p = controller.grid.movement.moveToSink(robot);
+                    robot.position.row = p.row;
+                    robot.position.column = p.column;
+                    robot.position.dens = p.dens;
+                    System.out.println("After " + robot.position.row + " " + robot.position.column);
                     
-                    if (robot.position.column == 0 && controller.grid.grid[robot.position.row][robot.position.column] == Settings.EMPTY) { 
-                            
+                    if (robot.position.column == 0) { 
+                        
                         if (controller.grid.dropItem(robot.position.row, robot.position.column, Settings.EMPTY)) {
                         
                             System.out.println("Drop");
@@ -85,6 +92,7 @@ public class Forage {
                             double r = robot.getRandom();
                             System.out.println(testDanceTime(robot.pickUpDensity));
 
+                            //Signal
                             if (r > testDanceTime(robot.pickUpDensity))
                                 signal.add(robot);   
 

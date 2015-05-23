@@ -26,7 +26,9 @@ public class Cluster {
     //Store pick up location density to determine if higher location found.......??????
     public void update(Robot robot) {
         
-        robot.position = controller.grid.movement.getAntNewPosition(robot); //Get new position
+        Position p = controller.grid.movement.getAntNewPosition(robot); //Get new position
+        robot.position.row = p.row;
+        robot.position.column = p.column;
         
         ArrayList<Position> surround = pickDrop.getSurrounding(robot); //Get surrounding positions
         
