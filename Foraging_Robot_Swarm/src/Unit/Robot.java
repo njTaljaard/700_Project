@@ -2,7 +2,9 @@ package Unit;
 
 import Processing.Controller;
 import Setup.Position;
+import Setup.RobotState;
 import Setup.Settings;
+import java.util.Random;
 
 /**
  * @author Nico
@@ -17,7 +19,9 @@ public class Robot {
     public boolean moveBack;
     public boolean laden;
     
+    public int distance;
     public int state;
+    public int beeState;
     public int ladenCount;
     public int forageCount;
     private int carryType;
@@ -27,21 +31,33 @@ public class Robot {
         
     public Robot(Controller controller, int robotType) {
         this.controller = controller;
-        this.position = new Position(controller.settings.GridSize);
-        this.state = robotType;
-        this.carryType = Settings.EMPTY;
-        this.clusterDensity = 0.0f;
-        this.laden = false;
-        this.ladenCount = 0;
-        this.forageCount = 0;
+        position = new Position(controller.settings.GridSize);
+        state = robotType;
+        carryType = Settings.EMPTY;
+        clusterDensity = 0.0f;
+        laden = false;
+        ladenCount = 0;
+        forageCount = 0;
+        
+        if (state == RobotState.BEE) {
+            if (getRandom() > 0.5) {
+                state = RobotState.EMPLOYED_BEE;
+                beeState = RobotState.Bee_SCOUT;
+            } else {
+                state = RobotState.UNEMPLOYED_BEE;
+                beeState = RobotState.Bee_WAIT;
+            }            
+        }
     }
     
     public void update() {
         switch (state) {
-            case Settings.FORAGE:
+            case RobotState.BEE:
+            case RobotState.EMPLOYED_BEE:
+            case RobotState.UNEMPLOYED_BEE:
                 controller.forage.update(this);
                 break;
-            case Settings.CLUSTER:
+            case RobotState.ANT:
                 controller.cluster.update(this);
                 if (laden)
                     ladenCount++;
@@ -57,11 +73,10 @@ public class Robot {
         
         ladenCount = 0;
         forageCount = 0;
-        laden = false;
+        carryType = type;
 
         if (type == Settings.EMPTY) {
             
-            carryType = type;
             laden = false;
             pickUpDensity = 0.0f;
             
@@ -69,14 +84,12 @@ public class Robot {
             
             laden = true;
             pickUpDensity = density;
-            
-            if (ant) {                
-                carryType = type;
-            } else {
-                carryType = type;
-                //Baring vector
-                baringVector = new Position(position.row, position.column);
-            }
         }
+    }
+    
+    public double getRandom() {
+        long seed = System.nanoTime();
+        Random rand = new Random(seed);
+        return rand.nextDouble();
     }
 }

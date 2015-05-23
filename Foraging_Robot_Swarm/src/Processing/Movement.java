@@ -23,18 +23,25 @@ public class Movement {
         this.options = new ArrayList<>();
     }
     
-    /**
+    /*
      * BEE 
      */
+    
     public Position moveToSink(Robot robot) {
         ArrayList<Position> opt = new ArrayList<>();
         
-        for (int i = 3+robot.position.row; i > -3+robot.position.row; i--) {
+        for (int i = 1+robot.position.row; i > -1+robot.position.row; i--) {
             
-            if (i >= 0 && i < grid.grid.length &&
-                    grid.grid[i][robot.position.column-1] == Settings.EMPTY) {
+            if (i >= 0 && i < grid.grid.length) {
                 
-                opt.add(new Position(i, robot.position.column-1));
+                if (robot.position.column > 0 && grid.grid[i][robot.position.column-1] == Settings.EMPTY) {
+                
+                    opt.add(new Position(i, robot.position.column-1));
+                    
+                } else if (robot.position.column == 0 && grid.grid[i][robot.position.column] == Settings.EMPTY) {
+                    
+                    opt.add(new Position(i, robot.position.column));
+                }
             }
         }
                 
@@ -42,6 +49,8 @@ public class Movement {
             return robot.position;
         } else {
             Collections.shuffle(opt);
+            grid.grid[robot.position.row][robot.position.column] = Settings.EMPTY;
+            grid.grid[opt.get(0).row][opt.get(0).column] = robot.getCarry();
             return opt.get(0);
         }
     }
@@ -63,7 +72,9 @@ public class Movement {
                 }
                 
                 if (rtn != null) {
-                    return rtn;
+                    int r = (int) (robot.getRandom() * options.size());
+                    Collections.shuffle(options, new Random(System.nanoTime()));
+                    return options.get(r);
                 } 
             }
             
@@ -81,10 +92,106 @@ public class Movement {
                 Math.abs(robot.baringVector.column - tmpBare.column));
     }
     
-    /**
+    public Position getBeeNewPosition(Robot robot) { // Can see 5 units ahead
+        area.clear();
+        options.clear();
+        
+        try {
+            getOptions(robot.position, robot.laden);
+                        
+            if (options.isEmpty()) {
+                
+                return robot.position;
+                
+            } else {
+                
+                getBeeSurrounding(robot.position);
+
+                if (!area.isEmpty()) { // no surrounding gold found       
+                    
+                    Position move = testBeeDensity(robot); //of open options
+                    
+                    if (move != null) { //Move to best position
+                        
+                        if (robot.laden) {
+                            grid.grid[robot.position.row][robot.position.column] = Settings.EMPTY;
+                            grid.grid[move.row][move.column] = robot.getCarry();
+                        }
+
+                        return move;
+                    }
+                }
+                
+                // use random movement
+                System.out.println("No surroundings, move random");
+                int r = (int) (robot.getRandom() * options.size());
+                Collections.shuffle(options, new Random(System.nanoTime()));
+                
+                if (robot.laden) {
+                    grid.grid[robot.position.row][robot.position.column] = Settings.EMPTY;
+                    grid.grid[options.get(r).row][options.get(r).column] = robot.getCarry();
+                }
+
+                return options.get(r);
+            }
+        } finally {
+            area.clear();
+            options.clear();
+        }
+    }   
+    
+    private void getBeeSurrounding(Position origin) {
+        
+        int xStart  = wrap(-5 + origin.row);
+        int yStart  = wrap(-5 + origin.column);
+        int xEnd    = wrap(5 + origin.row);
+        int yEnd    = wrap(5 + origin.column);
+        
+        System.out.println("Columns : " + yStart + " - " + yEnd);
+        
+        for (int i = xStart; i <= xEnd; i++) {
+            
+            for (int j = yStart; j <= yEnd; j++) {
+
+                if (!(i == origin.row && j == origin.column) && 
+                        (grid.grid[i][j] == Settings.GOLD || 
+                        grid.grid[i][j] == Settings.ROCK)) {
+
+                    area.add(new Position(i, j));
+                }
+            }            
+        }
+    }
+    
+    private Position testBeeDensity(Robot robot) {        
+        Position pos = null;
+        float tmp = 0.0f;
+        boolean test = true;
+        
+        for (Position opt : options) {
+            opt.dens = getDensity(opt, robot);
+            
+            if (tmp < opt.dens) {
+                pos = opt;
+                tmp = opt.dens;
+                test = false;
+            }            
+        }
+        
+        if (test) {
+            System.out.println("Move random, no good surroundings");
+            //Collections.shuffle(options, new Random(System.nanoTime()));
+            return options.get((int)(robot.getRandom() * options.size()));
+        }
+        
+        return pos;
+    }
+    
+    /*
      * ANT
      */
-    public Position getNewPosition(Robot robot) { // Can see 5 units ahead
+    
+    public Position getAntNewPosition(Robot robot) { // Can see 5 units ahead
         area.clear();
         options.clear();
         
@@ -99,11 +206,11 @@ public class Movement {
                 
             } else {
                 
-                getSurrounding(robot.position, robot.laden, robot.getCarry());
+                getAntSurrounding(robot.position, robot.laden, robot.getCarry());
 
                 if (!area.isEmpty()) { // no surrounding gold found       
                     
-                    Position move = testDensity(robot); //of open options
+                    Position move = testAntDensity(robot); //of open options
                     
                     if (move != null) { //Move to best position
                         
@@ -118,15 +225,15 @@ public class Movement {
 
                 // use random movement
 
-                long seed = System.nanoTime();
-                Collections.shuffle(options, new Random(seed));
-
+                int r = (int) (robot.getRandom() * options.size());
+                Collections.shuffle(options, new Random(System.nanoTime()));
+                
                 if (robot.laden) {
                     grid.grid[robot.position.row][robot.position.column] = Settings.EMPTY;
-                    grid.grid[options.get(0).row][options.get(0).column] = robot.getCarry();
+                    grid.grid[options.get(r).row][options.get(r).column] = robot.getCarry();
                 }
 
-                return options.get(0);
+                return options.get(r);
             }
         } finally {
             area.clear();
@@ -134,7 +241,7 @@ public class Movement {
         }
     }    
     
-    private void getSurrounding(Position origin, boolean laden, int carry) {
+    private void getAntSurrounding(Position origin, boolean laden, int carry) {
         
         int xStart  = wrap(-5 + origin.row);
         int yStart  = wrap(-5 + origin.column);
@@ -220,7 +327,7 @@ public class Movement {
         }
     }
     
-    private Position testDensity(Robot robot) {        
+    private Position testAntDensity(Robot robot) {        
         Position pos = null;
         float tmp;
         float tmp2;

@@ -74,6 +74,11 @@ public class Grid {
     
     public boolean dropItem(int i, int j, int type) {
         
+        if (type == Settings.EMPTY) {
+            grid[i][j] = Settings.EMPTY;
+            return true;
+        }
+        
         if (type == Settings.ANT_GOLD || type == Settings.BEE_GOLD) {
             grid[i][j] = Settings.GOLD;
             return true;

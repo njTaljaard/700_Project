@@ -21,136 +21,117 @@ public class Forage {
         this.controller = controller;
         this.pickDrop = new PickDrop(controller);
         this.signal = new ArrayList<>();
-        this.gamma_1 = 0.5f;
+        this.gamma_1 = 0.8f;
     }
     
-    public void update(Robot robot) {        
+    public void update(Robot robot) {
         //Remove Signal
-        if (signal.contains(robot))
+        if (signal.contains(robot)) {
+            System.out.println("Remove my signal");
             signal.remove(robot);
+        }
             
         //Process state and update
-        switch (robot.state) {
-            case RobotState.Bee_FORAGE:
-                if (robot.laden) {
-                    //move to drop off
-                    robot.position = controller.grid.movement.moveToSink(robot);
-                    
-                    if (robot.position.column == 0) {
-                        //drop
-                        robot.setCarry(Settings.EMPTY, false, 0);                    
-                        //signal (recalculate baring vector do not use pick up position)
-                        robot.baringVector = new Position(Math.abs(robot.baringVector.row - robot.position.row), 
-                                Math.abs(robot.baringVector.column - robot.position.column));
-                        signal.add(robot);
-                    }
-                } else {
-                    //follow baring vector
-                    robot.position = controller.grid.movement.moveToBare(robot);
-                    
-                    //Test if found another and pick up
-                    if (testForageFound(robot)) {
-                        
-                        float density = pickDrop.computeDensity(robot, pickDrop.getSurrounding(robot));
-                        
-                        if (controller.grid.pickUpItem(robot.position.row, robot.position.column, false)) {
-                            
-                            robot.setCarry(Settings.GOLD, false, density);
-                        }
-                    }
-                    
-                    robot.forageCount++;
-                    
-                    //Follwed bair to long, scout
-                    if (robot.forageCount > 20) {
-                        robot.state = RobotState.Bee_SCOUT;
-                    }
-                }
-                break;
-            case RobotState.Bee_SOLO_FORAGE:
-                if (robot.laden) {
-                    //move to drop off
-                    robot.position = controller.grid.movement.moveToSink(robot);
-                
-                    if (robot.position.column == 0) {
-                        //drop
-                        robot.setCarry(Settings.EMPTY, false, 0);
-                    }
-            
-                } else {
-                    //follow baring vector
-                    robot.position = controller.grid.movement.moveToBare(robot);
-                    
-                    //Test if found another and pick up
-                    if (testForageFound(robot)) {
-                        
-                        float density = pickDrop.computeDensity(robot, pickDrop.getSurrounding(robot));
-                        
-                        if (controller.grid.pickUpItem(robot.position.row, robot.position.column, false)) {
-                            
-                            robot.setCarry(Settings.GOLD, false, density);
-                        }
-                    }
-                    
-                    robot.forageCount++;
-                    
-                    //Follwed bair to long, scout
-                    if (robot.forageCount > 20) {
-                        robot.state = RobotState.Bee_SCOUT;
-                    }
-                }
-                break;
-            case RobotState.Bee_SCOUT:
-                robot.position = controller.grid.movement.getNewPosition(robot);
-                
-                if (controller.grid.grid[robot.position.row][robot.position.column] != Settings.EMPTY) {
-                    
-                    //Found gold or rock
-                    ArrayList<Position> options = pickDrop.getSurrounding(robot);
-                    float density = pickDrop.computeDensity(robot, options);
-                    long seed = System.nanoTime();
-                    Random rand = new Random(seed);
-                    float r = (float) Math.abs(rand.nextGaussian());
-                    while (r > 1) r--;
-                    
-                    //Test probability of successful position found
-                    if (r > computePickPropability(density)) {
-                    
-                        //If gold forage
-                        if (controller.grid.grid[robot.position.row][robot.position.column] == Settings.GOLD) {
-                            
-                            //If forage or solo
-                            if (computePickPropability(density) > 0.5) {
-                                //Forage
-                                robot.state = RobotState.Bee_FORAGE;
-                                if (controller.grid.pickUpItem(robot.position.row, robot.position.column, false))
-                                    robot.setCarry(Settings.GOLD, false, density);   
-                                
-                            } else {
-                                //Solo
-                                robot.state = RobotState.Bee_SOLO_FORAGE;
-                                
-                            }
-                        
-                        } 
-                        //If rock solo carry...
-                        if (controller.grid.grid[robot.position.row][robot.position.column] == Settings.ROCK) {  
-                        
-                        }
-                    }
-                }
-                break;
+        switch (robot.beeState) {
             case RobotState.Bee_WAIT:
+            
                 //Wait for signal within your area
                 for (Robot s : signal) {
                     
                     if (Math.abs(s.position.column - robot.position.column) <= 5) {
-                    
-                        robot.state = RobotState.Bee_FORAGE;
+                        System.out.println("I am signaled");
+                        robot.beeState = RobotState.Bee_FORAGE;
                         robot.baringVector = s.baringVector;
                     }
                 }
                     
+                break;
+            case RobotState.Bee_SCOUT:
+            
+                robot.position = controller.grid.movement.getBeeNewPosition(robot);
+                System.out.println("Pos : " + robot.position.row + " " + robot.position.column);
+                
+                if (controller.grid.grid[robot.position.row][robot.position.column] == Settings.ROCK ||
+                        controller.grid.grid[robot.position.row][robot.position.column] == Settings.GOLD) {
+                        
+                    if (controller.grid.pickUpItem(robot.position.row, robot.position.column, false)) {
+                        
+                        robot.setCarry(controller.grid.grid[robot.position.row][robot.position.column], false, robot.position.dens);   
+                        robot.beeState = RobotState.Bee_FORAGE;
+
+                        robot.baringVector = new Position(robot.position.row, robot.position.column);
+                        robot.baringVector.distance = getDistance(robot.baringVector, robot.position);
+                        System.out.println("PickUp");
+                    }
+                }
+                
+                break;
+            case RobotState.Bee_FORAGE:
+                if (robot.laden) {
+                    robot.forageCount = 0;
+                    
+                    //move to drop off
+                    robot.position = controller.grid.movement.moveToSink(robot);
+                    
+                    if (robot.position.column == 0 && controller.grid.grid[robot.position.row][robot.position.column] == Settings.EMPTY) { 
+                            
+                        if (controller.grid.dropItem(robot.position.row, robot.position.column, Settings.EMPTY)) {
+                        
+                            System.out.println("Drop");
+                            robot.setCarry(Settings.EMPTY, false, 0);                    
+                            robot.baringVector = new Position(Math.abs(robot.baringVector.row - robot.position.row), 
+                                    Math.abs(robot.baringVector.column - robot.position.column));
+
+                            double r = robot.getRandom();
+                            System.out.println(testDanceTime(robot.pickUpDensity));
+
+                            if (r > testDanceTime(robot.pickUpDensity))
+                                signal.add(robot);   
+
+                            if (robot.state == RobotState.EMPLOYED_BEE) {
+
+                                robot.beeState = RobotState.Bee_SCOUT;
+
+                            } else if (robot.state == RobotState.UNEMPLOYED_BEE) {
+
+                                robot.beeState = RobotState.Bee_WAIT;
+
+                            }
+                        }
+                    }
+                } else {
+                    //follow baring vector
+                    robot.position = controller.grid.movement.moveToBare(robot);
+                     
+                    //Test if found another and pick up
+                    if (testForageFound(robot)) {
+                        
+                        float density = pickDrop.computeDensity(robot, pickDrop.getSurrounding(robot));
+                        
+                        if (controller.grid.pickUpItem(robot.position.row, robot.position.column, false)) {
+                            
+                            robot.setCarry(controller.grid.grid[robot.position.row][robot.position.column], false, density);
+                            robot.forageCount = 0;
+                            System.out.println("Pick up");
+                        }
+                    }
+                    
+                    robot.forageCount++;
+                    
+                    //Follwed bair to long, scout
+                    if (robot.forageCount > 20) {
+                        
+                        if (robot.state == RobotState.EMPLOYED_BEE) {
+                            
+                            robot.beeState = RobotState.Bee_SCOUT;
+                            
+                        } else if (robot.state == RobotState.UNEMPLOYED_BEE) {
+                            
+                            robot.beeState = RobotState.Bee_WAIT;
+                            
+                        }
+                    }
+                }
                 break;
         }
     }
@@ -159,6 +140,14 @@ public class Forage {
         
         return (float) Math.pow(gamma_1 / ( gamma_1 + density ), 2);
         
+    }
+    
+    private float testDanceTime(float density) {
+        return (float) Math.pow(density / 100, 2);
+    }
+    
+    private int getDistance(Position in1, Position in2) {
+        return (int) Math.abs(Math.pow(in1.row - in2.column, 2) + Math.pow(in1.column - in2.column, 2));
     }
     
     private boolean testForageFound(Robot robot) {

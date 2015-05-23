@@ -8,6 +8,7 @@ import java.util.Random;
 public class Position {
     public int row;
     public int column;
+    public int distance;
     public float dens;
     public boolean high;
 
