@@ -95,14 +95,51 @@ public class Movement {
     }
     
     public Position moveToSink(Robot robot) {
-        ArrayList<Position> opt = new ArrayList<>();
+        
+        if (grid.grid[robot.position.row][robot.position.column-1] == Settings.EMPTY) {
+            
+            return new Position(robot.position.row, robot.position.column-1);
+            
+        } else if (robot.position.row+1 < grid.grid.length) {
+            
+            if (grid.grid[robot.position.row+1][robot.position.column-1] == Settings.EMPTY) {
+                
+                return new Position(robot.position.row+1, robot.position.column-1);
+                
+            } else if (grid.grid[robot.position.row+1][robot.position.column] == Settings.EMPTY) {
+                
+                return new Position(robot.position.row+1, robot.position.column);
+                
+            }
+                
+        } else if (robot.position.row-1 > 0) {
+            
+            if (grid.grid[robot.position.row-1][robot.position.column-1] == Settings.EMPTY) {
+                
+                return new Position(robot.position.row-1, robot.position.column-1);
+                
+            } else if (grid.grid[robot.position.row-1][robot.position.column] == Settings.EMPTY) {
+                
+                return new Position(robot.position.row-1, robot.position.column);
+                
+            }
+            
+        } 
+        
+        return robot.position;
+        
+        /*ArrayList<Position> opt = new ArrayList<>();
         
         int yTmp = robot.position.row;
         int xTmp = -1 + robot.position.column;
         
+        if (xTmp < 0)
+            xTmp++;
+        
         for (int i = -1+yTmp; i < 1+yTmp; i++) {
             
             if (i >= 0 && i < grid.grid.length) {
+                
                 System.out.println(i + " " + xTmp + " " + grid.grid[i][xTmp]);
                 
                 if (xTmp == 0 && grid.grid[i][xTmp] == Settings.EMPTY) {
@@ -115,7 +152,7 @@ public class Movement {
                 }
             }
         }
-                
+        
         if (opt.isEmpty()) {
             System.out.println("No options");
             return robot.position;
@@ -124,7 +161,7 @@ public class Movement {
             grid.grid[robot.position.row][robot.position.column] = Settings.EMPTY;
             grid.grid[opt.get(0).row][opt.get(0).column] = robot.getCarry();
             return opt.get(0);
-        }
+        }*/
     }
     
     public Position moveToBare(Robot robot) {

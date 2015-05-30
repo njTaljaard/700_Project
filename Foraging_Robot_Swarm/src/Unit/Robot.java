@@ -78,7 +78,6 @@ public class Robot {
         if (type == Settings.EMPTY) {
             
             laden = false;
-            pickUpDensity = 0.0f;
             
         } else {
             

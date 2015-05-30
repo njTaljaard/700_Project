@@ -44,7 +44,7 @@ public class Controller implements Runnable {
                 robot.update();
             }
             
-            if ((itterations % 1000 == 0)){
+            if ((itterations % 10 == 0)){
                 utils.writeGrid(grid.grid, settings, String.valueOf(itterations));
                 utils.writeRobots(robots, settings, String.valueOf(itterations));
             }

@@ -1,10 +1,8 @@
 package Unit;
 
 import Processing.Movement;
-import Setup.Position;
 import Setup.Settings;
 import Setup.Utilities;
-import java.util.ArrayList;
 
 /**
  * @author Nico
@@ -52,18 +50,24 @@ public class Grid {
     public boolean pickUpItem(int i, int j, boolean ant) {
         
         if (ant) {
+            
             if (grid[i][j] == Settings.GOLD) {
+                
                 grid[i][j] = Settings.ANT_GOLD;
                 return true;
             } else if (grid[i][j] == Settings.ROCK) {
+                
                 grid[i][j] = Settings.ANT_ROCK;
                 return true;
             }
         } else {
+            
             if (grid[i][j] == Settings.GOLD) {
+                
                 grid[i][j] = Settings.BEE_GOLD;
                 return true;
             } else if (grid[i][j] == Settings.ROCK) {
+                
                 grid[i][j] = Settings.BEE_ROCK;
                 return true;
             }
@@ -75,18 +79,20 @@ public class Grid {
     public boolean dropItem(int i, int j, int type) {
         
         if (type == Settings.EMPTY) {
+            
             grid[i][j] = Settings.EMPTY;
             return true;
-        }
-        
-        if (type == Settings.ANT_GOLD || type == Settings.BEE_GOLD) {
+            
+        } else if (type == Settings.ANT_GOLD || type == Settings.BEE_GOLD) {
+            
             grid[i][j] = Settings.GOLD;
             return true;
-        } 
-        
-        if (type == Settings.ANT_ROCK || type == Settings.BEE_ROCK) {
+            
+        } else if (type == Settings.ANT_ROCK || type == Settings.BEE_ROCK) {
+            
             grid[i][j] = Settings.ROCK;
             return true;
+            
         }
         
         return false;
