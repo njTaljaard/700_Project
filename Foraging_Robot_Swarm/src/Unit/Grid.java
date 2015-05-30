@@ -1,8 +1,10 @@
 package Unit;
 
 import Processing.Movement;
+import Robot.Position;
 import Setup.Settings;
 import Setup.Utilities;
+import java.util.ArrayList;
 
 /**
  * @author Nico
@@ -97,6 +99,95 @@ public class Grid {
         
         return false;
     }
+    
+    public ArrayList<Position> getOptions(Position origin, boolean laden) {
+        
+        ArrayList<Position> options = new ArrayList<>();
+        
+        int xStart  = utils.wrap(-1 + origin.row, grid.length);
+        int yStart  = utils.wrap(-1 + origin.column, grid.length);
+        int xEnd    = utils.wrap(1 + origin.row, grid.length);
+        int yEnd    = utils.wrap(1 + origin.column, grid.length);
+        
+        for (int i = xStart; i <= xEnd; i++) {
+            
+            for (int j = yStart; j <= yEnd; j++) {
+
+                if (laden) {
+                    if (!(i == origin.row && j == origin.column) && grid[i][j] == Settings.EMPTY) {
+
+                        options.add(new Position(i, j));
+
+                    }                    
+                } else {
+                    if (!(i == origin.row && j == origin.column) && 
+                            (grid[i][j] == Settings.EMPTY || 
+                            grid[i][j] == Settings.GOLD ||
+                            grid[i][j] == Settings.ROCK)) {
+
+                        options.add(new Position(i, j));
+                    }
+                } 
+            }            
+        }
+        
+        return options;
+    }
+   
+    
+    public ArrayList<Position> getAllSurrounding(Position origin, boolean laden, int carry) {
+        
+        ArrayList<Position> area = new ArrayList<>();
+        
+        int yTmp = origin.row;
+        int xTmp = origin.column;
+        
+        for (int i = -5+yTmp; i <= 5+yTmp; i++) {
+            
+            for (int j = -5+xTmp; j <= -5+xTmp; j++) {
+                            
+                if (wrap(i, j) && (i != origin.row && j != origin.column)) {
+                    if (laden) {
+                        if (carry == Settings.ANT_GOLD || carry == Settings.BEE_GOLD) {
+
+                            if (grid[i][j] == Settings.GOLD || 
+                                grid[i][j] == Settings.ANT_GOLD || 
+                                grid[i][i] == Settings.BEE_GOLD) {
+
+                                area.add(new Position(i, j));
+                            }
+                        } else if (carry == Settings.ANT_ROCK || carry == Settings.BEE_ROCK) {
+                            if (grid[i][j] == Settings.ROCK ||
+                                grid[i][j] == Settings.BEE_ROCK || 
+                                grid[i][j] == Settings.ANT_ROCK) {
+
+                                area.add(new Position(i, j));
+                            }
+                        }
+
+                    } else {
+                        if (grid[i][j] == Settings.GOLD || 
+                            grid[i][j] == Settings.ROCK) {
+
+                            area.add(new Position(i, j));
+                        }
+                    }
+                }
+            }            
+        }
+        
+        return area;
+    }
+    
+    private boolean wrap(int x, int y) {
+        return x < grid.length && x >= 0 && y < grid.length && y >= 0;
+    }
+    
+    /**
+     * 
+     * Grid creation!!!!!!!!!!!!!!!!!!!!!!!!!
+     * 
+     */
     
     private void createGrid() {
         //init possitions of rocks & gold

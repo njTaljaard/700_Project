@@ -1,6 +1,7 @@
 package Setup;
 
 import Unit.Robot;
+import Robot.Position;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -144,5 +145,28 @@ public class Utilities {
         }
         
         return tmp;
+    }
+    
+    public double distance(Position ya, int ybX, int ybY) {        
+        return Math.sqrt(Math.pow(Math.abs(ya.row - ybX), 2) + Math.sqrt(Math.pow(Math.abs(ya.column - ybY), 2)));
+    }
+    
+    public double getRandom() {
+        long seed = System.nanoTime();
+        Random rand = new Random(seed);
+        double r = Math.abs(rand.nextGaussian());
+        while (r > 1) r--;
+        
+        return r;
+    }
+    
+    public int wrap(int x, int length) {
+        if (x < 0) {
+            return 0;
+        } else if (x >= length) {
+            return length - 1;
+        } else {
+            return x;
+        }
     }
 }

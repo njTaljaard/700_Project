@@ -5,6 +5,7 @@ import Setup.Settings;
 import Setup.Utilities;
 import Unit.Grid;
 import Unit.Robot;
+import java.util.Random;
 
 /**
  * @author Nico
@@ -14,9 +15,9 @@ public class Controller implements Runnable {
     public Forage forage;
     public Cluster cluster;
     private Robot[] robots;
-    protected Grid grid;
+    public Grid grid;
     public final Settings settings;
-    private final Utilities utils;
+    public final Utilities utils;
     
     private final String ID;
     int itterations;

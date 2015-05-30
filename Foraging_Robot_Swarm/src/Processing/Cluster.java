@@ -10,8 +10,17 @@ import java.util.Random;
  * @author Nico
  */
 public class Cluster {
-    private final Controller controller;
-    private final PickDrop pickDrop;
+    private Controller controller;
+    
+    public Cluster(Controller controller) {
+        this.controller = controller;        
+    }
+    
+    
+    
+    
+    
+    /*private final PickDrop pickDrop;
     private final float gamma_1, gamma_2;
     private final Random r;
     
@@ -84,5 +93,5 @@ public class Cluster {
         
         return r.nextFloat();
         
-    }
+    }*/
 }
