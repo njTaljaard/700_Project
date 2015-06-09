@@ -2,7 +2,6 @@ package Processing;
 
 import Setup.Position;
 import Setup.Settings;
-import Unit.Robot;
 import java.util.ArrayList;
 
 /**
@@ -10,7 +9,7 @@ import java.util.ArrayList;
  */
 public class PickDrop {
     
-    private final Controller controller;
+    /*private final Controller controller;
     private final float alpha = 0.8f;
     
     public PickDrop(Controller col) {
@@ -27,9 +26,6 @@ public class PickDrop {
         for (int i = xStart; i <= xEnd; i++) {
             
             for (int j = yStart; j <= yEnd; j++) {
-            
-                /*int tmpRow = i + origin.row;
-                int tmpCol = j + origin.column;*/
                 
                 if (robot.laden) {
                     if (robot.getCarry() == Settings.ANT_GOLD || robot.getCarry() == Settings.BEE_GOLD) {
@@ -95,5 +91,5 @@ public class PickDrop {
         
         return (float) Math.abs(Math.sqrt(Math.pow(Math.abs(ybX - ya.row), 2) + Math.pow(Math.abs(ybY - ya.column), 2)));
         
-    }
+    }*/
 }

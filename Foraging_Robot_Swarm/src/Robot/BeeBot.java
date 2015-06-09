@@ -10,14 +10,13 @@ import java.util.ArrayList;
 public class BeeBot {
     
     private Controller controller;
-    private Position position;
     private Position baringVector;
     private ArrayList<Position> signal;
     
     private int state;
     private int ladenCount;
     private int forageCount;
-    private int carryType;  
+    private int carry;  
     
     private boolean laden;
     private boolean employed;
@@ -28,11 +27,11 @@ public class BeeBot {
         this.employed = controller.utils.getRandom() > 0.5;
     }
     
-    public void update() {
-        position = getNewPosition();
+    public Position update(Position position) {
+        return getNewPosition(position);
     }
     
-    private Position getNewPosition() {
+    private Position getNewPosition(Position position) {
         Position pos = new Position(controller.settings.GridSize);
         
         switch(state) {
@@ -49,7 +48,7 @@ public class BeeBot {
                 //test drop
                 break;
             case RobotState.Bee_WAIT :
-                if (_wait()) {
+                if (_wait(position)) {
                     //got signalled
                 }
                 break;
@@ -61,12 +60,26 @@ public class BeeBot {
         return pos;
     }
     
-    public Position getPosition() {
-        return position;
+    public void setCarry(Position pos, int type) {
+        if (laden) {
+            pos.dropDensity = pos.currentDensity;
+            pos.pickupDensity = 0;
+        } else {
+            pos.pickupDensity = pos.currentDensity;
+            pos.dropDensity = 0;
+        }
+        
+        carry = type;
+        ladenCount = 0;
+        laden = !laden;
     }
-    
+        
     public int getState() {
         return state;
+    }
+    
+    public int getCarry() {
+        return carry;
     }
     
     public boolean getLaden() {
@@ -77,10 +90,10 @@ public class BeeBot {
      * Movement functions
      */
     
-    private boolean _wait() {
+    private boolean _wait(Position position) {
         
         for (int i = 0; i < signal.size(); i++) {
-            if (controller.utils.distance(position, signal.get(i)) < 4.0f) {
+            if (controller.utils.distance(position, signal.get(i).row, signal.get(i).column) < 4.0f) {
                 state = RobotState.Bee_FORAGE;
                 // set baring vector
                 return true;

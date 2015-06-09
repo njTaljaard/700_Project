@@ -3,7 +3,6 @@ package Processing;
 import Setup.Position;
 import Setup.RobotState;
 import Setup.Settings;
-import Unit.Robot;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -12,7 +11,7 @@ import java.util.Random;
  */
 public class Forage {
     
-    private final Controller controller;
+    /*private final Controller controller;
     private final PickDrop pickDrop;
     private final ArrayList<Robot> signal;
     private final float gamma_1;
@@ -202,5 +201,5 @@ public class Forage {
         }
         
         return false;
-    }
+    }*/
 }

@@ -1,7 +1,7 @@
 package Setup;
 
-import Unit.Robot;
 import Robot.Position;
+import Robot.Robot;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -75,10 +75,10 @@ public class Utilities {
         
         for (Robot bot : bots) {
                         
-            if (bot.laden) {
-                grid[bot.position.row][bot.position.column] = bot.getCarry();
+            if (bot.getLaden()) {
+                grid[bot.getPosition().row][bot.getPosition().column] = bot.getCarry();
             } else {
-                grid[bot.position.row][bot.position.column] = Settings.ANT;
+                grid[bot.getPosition().row][bot.getPosition().column] = Settings.ANT;
             }
         }
         

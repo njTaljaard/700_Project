@@ -1,4 +1,4 @@
-package Unit;
+package Board;
 
 import Processing.Movement;
 import Robot.Position;
@@ -49,50 +49,60 @@ public class Grid {
         return true;
     }
     
-    public boolean pickUpItem(int i, int j, boolean ant) {
+    public int getPoint(Position pos) {
+        return grid[pos.row][pos.column];
+    }
+    
+    public void setPoint(Position pos, int type) {
+        grid[pos.row][pos.column] = type;
+    }
+    
+    public int pickUpItem(Position pos, boolean ant) {
         
         if (ant) {
             
-            if (grid[i][j] == Settings.GOLD) {
+            if (grid[pos.row][pos.column] == Settings.GOLD) {
                 
-                grid[i][j] = Settings.ANT_GOLD;
-                return true;
-            } else if (grid[i][j] == Settings.ROCK) {
+                grid[pos.row][pos.column] = Settings.ANT_GOLD;
+                return Settings.ANT_GOLD;
                 
-                grid[i][j] = Settings.ANT_ROCK;
-                return true;
+            } else if (grid[pos.row][pos.column] == Settings.ROCK) {
+                
+                grid[pos.row][pos.column] = Settings.ANT_ROCK;
+                return Settings.ANT_ROCK;
             }
         } else {
             
-            if (grid[i][j] == Settings.GOLD) {
+            if (grid[pos.row][pos.column] == Settings.GOLD) {
                 
-                grid[i][j] = Settings.BEE_GOLD;
-                return true;
-            } else if (grid[i][j] == Settings.ROCK) {
+                grid[pos.row][pos.column] = Settings.BEE_GOLD;
+                return Settings.BEE_GOLD;
                 
-                grid[i][j] = Settings.BEE_ROCK;
-                return true;
+            } else if (grid[pos.row][pos.column] == Settings.ROCK) {
+                
+                grid[pos.row][pos.column] = Settings.BEE_ROCK;
+                return Settings.BEE_ROCK;
             }
         }
         
-        return false;
+        return Settings.EMPTY;
     }
     
-    public boolean dropItem(int i, int j, int type) {
+    public boolean dropItem(Position pos, int type) {
         
         if (type == Settings.EMPTY) {
             
-            grid[i][j] = Settings.EMPTY;
+            grid[pos.row][pos.column] = Settings.EMPTY;
             return true;
             
         } else if (type == Settings.ANT_GOLD || type == Settings.BEE_GOLD) {
             
-            grid[i][j] = Settings.GOLD;
+            grid[pos.row][pos.column] = Settings.GOLD;
             return true;
             
         } else if (type == Settings.ANT_ROCK || type == Settings.BEE_ROCK) {
             
-            grid[i][j] = Settings.ROCK;
+            grid[pos.row][pos.column] = Settings.ROCK;
             return true;
             
         }
@@ -144,8 +154,8 @@ public class Grid {
         
         for (int i = -5+yTmp; i <= 5+yTmp; i++) {
             
-            for (int j = -5+xTmp; j <= -5+xTmp; j++) {
-                            
+            for (int j = -5+xTmp; j <= 5+xTmp; j++) {
+                
                 if (wrap(i, j) && (i != origin.row && j != origin.column)) {
                     if (laden) {
                         if (carry == Settings.ANT_GOLD || carry == Settings.BEE_GOLD) {
@@ -177,6 +187,25 @@ public class Grid {
         }
         
         return area;
+    }
+    
+    public float getDensity(Position pos, ArrayList<Position> area) {
+        float alpha = (float) 0.80;
+        float lamda = (float) (1 / grid.length);
+        float tmp = 0.0f;
+                
+        for (Position test : area) {
+            
+            tmp += ( utils.distance(pos, test.row, test.column) / alpha );
+                 
+        }
+        
+        tmp *= (1 / Math.pow(grid.length, 2));
+          
+        if (tmp < 0)
+            return 0;
+        else 
+            return tmp;
     }
     
     private boolean wrap(int x, int y) {

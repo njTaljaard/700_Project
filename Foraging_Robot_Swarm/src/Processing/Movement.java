@@ -2,8 +2,7 @@ package Processing;
 
 import Setup.Position;
 import Setup.Settings;
-import Unit.Grid;
-import Unit.Robot;
+import Board.Grid;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -26,7 +25,7 @@ public class Movement {
     /*
      * BEE 
      */
-    public Position getBeeNewPosition(Robot robot) { // Can see 5 units ahead
+    /*public Position getBeeNewPosition(Robot robot) { // Can see 5 units ahead
         area.clear();
         options.clear();
         
@@ -127,41 +126,6 @@ public class Movement {
         } 
         
         return robot.position;
-        
-        /*ArrayList<Position> opt = new ArrayList<>();
-        
-        int yTmp = robot.position.row;
-        int xTmp = -1 + robot.position.column;
-        
-        if (xTmp < 0)
-            xTmp++;
-        
-        for (int i = -1+yTmp; i < 1+yTmp; i++) {
-            
-            if (i >= 0 && i < grid.grid.length) {
-                
-                System.out.println(i + " " + xTmp + " " + grid.grid[i][xTmp]);
-                
-                if (xTmp == 0 && grid.grid[i][xTmp] == Settings.EMPTY) {
-                    
-                    return new Position(i, xTmp);
-                    
-                } else if (grid.grid[i][xTmp] == Settings.EMPTY) {
-                
-                    opt.add(new Position(i, xTmp));
-                }
-            }
-        }
-        
-        if (opt.isEmpty()) {
-            System.out.println("No options");
-            return robot.position;
-        } else {
-            Collections.shuffle(opt);
-            grid.grid[robot.position.row][robot.position.column] = Settings.EMPTY;
-            grid.grid[opt.get(0).row][opt.get(0).column] = robot.getCarry();
-            return opt.get(0);
-        }*/
     }
     
     public Position moveToBare(Robot robot) {
@@ -244,7 +208,7 @@ public class Movement {
             return 0;
         else 
             return tmp;
-    }
+    }*/
     
     /*
      * ANT

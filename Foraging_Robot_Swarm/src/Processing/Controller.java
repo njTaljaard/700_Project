@@ -1,10 +1,10 @@
 package Processing;
 
+import Robot.Robot;
 import Setup.RobotState;
 import Setup.Settings;
 import Setup.Utilities;
-import Unit.Grid;
-import Unit.Robot;
+import Board.Grid;
 import java.util.Random;
 
 /**
@@ -57,12 +57,13 @@ public class Controller implements Runnable {
     
     private void setup() {
         this.grid = new Grid(settings,utils);
-        this.forage = new Forage(this);
-        this.cluster = new Cluster(this);
+        //this.forage = new Forage(this);
+        //this.cluster = new Cluster(this);
         this.robots = new Robot[settings.RobotCount];
         
-        for (int i = 0; i < settings.RobotCount; i++) {            
-            this.robots[i] = new Robot(this, RobotState.BEE);
+        for (int i = 0; i < settings.RobotCount; i++) {  
+            this.robots[i] = new Robot(this, RobotState.ANT);
+            //this.robots[i] = new Robot(this, RobotState.BEE);
         }
     }
     
@@ -72,6 +73,6 @@ public class Controller implements Runnable {
         }
         
         return false;*/
-        return itterations != 400000 && !grid.isClustered();// || !grid.complete();
+        return !grid.isClustered();// && !grid.complete();
     }
 }

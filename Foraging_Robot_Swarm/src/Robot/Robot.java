@@ -1,6 +1,7 @@
 package Robot;
 
 import Processing.Controller;
+import Setup.RobotState;
 import Setup.Settings;
 
 /**
@@ -10,6 +11,7 @@ public class Robot {
     
     private AntBot antBot;
     private BeeBot beeBot;
+    private Position position;
     private Controller controller;
     
     private int robotType;
@@ -20,18 +22,25 @@ public class Robot {
         
         this.antBot = new AntBot(controller);
         this.beeBot = new BeeBot(controller);
+        
+        this.position = new Position(controller.settings.GridSize);
     }
     
     public void update() {
-        if (robotType == Settings.ANT) {
-            antBot.update();
+        
+        Position newPos;
+        if (robotType == RobotState.ANT) {
+            newPos = antBot.update(position);
         } else {
-            beeBot.update();
+            newPos = beeBot.update(position);
         }
+                
+        position.row = newPos.row;
+        position.column = newPos.column;
     }
     
     public boolean getLaden() {
-        if (robotType == Settings.ANT) {
+        if (robotType == RobotState.ANT) {
             return antBot.getLaden();
         } else {
             return beeBot.getLaden();
@@ -39,10 +48,14 @@ public class Robot {
     }
     
     public Position getPosition() {
+        return position;
+    }
+    
+    public int getCarry() {
         if (robotType == Settings.ANT) {
-            return antBot.getPosition();
+            return antBot.getCarry();
         } else {
-            return beeBot.getPosition();
+            return beeBot.getCarry();
         }
     }
     
