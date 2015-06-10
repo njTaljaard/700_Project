@@ -1,7 +1,9 @@
 package Board;
 
 import Processing.Movement;
+import Robot.BeeBot;
 import Robot.Position;
+import Robot.Robot;
 import Setup.Settings;
 import Setup.Utilities;
 import java.util.ArrayList;
@@ -15,12 +17,14 @@ public class Grid {
     public Settings settings;
     private final Utilities utils;
     private final Grouping grouping;
+    public ArrayList<Robot> dancers;
     
     public Grid(Settings settings, Utilities util) {
         this.utils = util;
         this.settings = settings;
         this.grid = new int[settings.GridSize][settings.GridSize];
         this.grouping = new Grouping();
+        this.dancers = new ArrayList<>();
         
         createGrid();
         
@@ -55,6 +59,12 @@ public class Grid {
     
     public void setPoint(Position pos, int type) {
         grid[pos.row][pos.column] = type;
+    }
+    
+    public boolean testDanceNotification(Position point) {
+        
+        
+        return false;
     }
     
     public int pickUpItem(Position pos, boolean ant) {

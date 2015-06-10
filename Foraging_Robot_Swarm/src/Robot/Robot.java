@@ -32,7 +32,7 @@ public class Robot {
         if (robotType == RobotState.ANT) {
             newPos = antBot.update(position);
         } else {
-            newPos = beeBot.update(position);
+            newPos = beeBot.update(this, position);
         }
                 
         position.row = newPos.row;
@@ -49,6 +49,14 @@ public class Robot {
     
     public Position getPosition() {
         return position;
+    }
+    
+    public Robot getBot() {
+        return this;
+    }
+    
+    public Position getBareing() {
+        return beeBot.getBareing();
     }
     
     public int getCarry() {

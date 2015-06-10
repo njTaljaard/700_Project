@@ -68,11 +68,7 @@ public class Controller implements Runnable {
     }
     
     private boolean testStoppingCondition() {
-        /*if (!grid.complete()) {
-            return true;
-        }
         
-        return false;*/
         return !grid.isClustered();// && !grid.complete();
     }
 }

@@ -26,7 +26,7 @@ public class Grouping {
             
             for (int x = 0; x < spaces[y].length; x++) {
                 
-                if (!spaces[x][y].parented && spaces[x][y].object != Settings.EMPTY) {
+                if (spaces[x][y].object != Settings.EMPTY && !spaces[x][y].parented) {
                     setChildren(x, y); 
                 }
             }            
@@ -39,12 +39,16 @@ public class Grouping {
         //Get centroids...
         ArrayList<Space> centroids = getCentroids();
                 
+        
+        
         //Test if all are clustered...
         for (int i = 0; i < spaces.length; i++) {
             
             for (int j = 0; j < spaces[i].length; j++) {
                 
-                if (!spaces[i][j].parented && (spaces[i][j].object == Settings.GOLD || spaces[i][j].object == Settings.ANT_GOLD)) {
+                if (!spaces[i][j].parented /*&& (spaces[i][j].object == Settings.GOLD || 
+                        spaces[i][j].object == Settings.ANT_GOLD || spaces[i][j].object == Settings.BEE_GOLD)*/) {
+                    
                     return false;
                 }
             }
@@ -70,14 +74,14 @@ public class Grouping {
         cluster.add(spaces[x][y]);
         spaces[x][y].parented = true;
         
-        for (int i = e - x; i < e + x; i++) {
+        for (int i = x - e; i < e + x; i++) {
             
-            for (int j = e - y; j < e + y; j++) {
+            for (int j = y - e; j < e + y; j++) {
                 
-                if (wrap(i, j) && !spaces[i][j].parented && spaces[i][j].object != Settings.EMPTY)  {
+                if (wrap(i, j) && !spaces[i][j].parented && spaces[i][j].object == spaces[x][y].object)  {
                     
-                    cluster.add(spaces[i][j]);
                     spaces[i][j].parented = true;
+                    cluster.add(spaces[i][j]);
                     
                 }
             }            

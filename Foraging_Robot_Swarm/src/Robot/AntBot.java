@@ -44,7 +44,7 @@ public class AntBot {
             ArrayList<Position> area = controller.grid.getAllSurrounding(position, laden, carry);
             
             int r = (int) (controller.utils.getRandom() * options.size());
-            Collections.shuffle(options, new Random(System.nanoTime()));
+            //Collections.shuffle(options, new Random(System.nanoTime()));
 
             if (!area.isEmpty()) {
                 
@@ -69,7 +69,7 @@ public class AntBot {
                         
                         controller.grid.setPoint(options.get(r), carry);
                         return tmp;
-                    } else {
+                    } else if (tmp != null) {
                         
                         controller.grid.setPoint(tmp, carry);
                         return tmp;
@@ -129,7 +129,17 @@ public class AntBot {
     }
     
     private Position _carry(ArrayList<Position> option, ArrayList<Position> area) {
+        
         Position tmp = getHighestDensity(option, area);
+        ladenCount++;
+        
+        if (ladenCount > 10) {
+            
+            if (controller.grid.dropItem(tmp, carry)) {
+                
+                setCarry(tmp, Settings.EMPTY);
+            }
+        }
         
         if (controller.grid.getPoint(tmp) != Settings.EMPTY) {
             
