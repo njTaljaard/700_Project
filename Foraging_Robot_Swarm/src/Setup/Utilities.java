@@ -152,9 +152,7 @@ public class Utilities {
     }
     
     public double getRandom() {
-        long seed = System.nanoTime();
-        Random rand = new Random(seed);
-        double r = Math.abs(rand.nextGaussian());
+        double r = Math.abs(new Random(System.nanoTime()).nextGaussian());
         while (r > 1) r--;
         
         return r;

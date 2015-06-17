@@ -9,6 +9,7 @@ public class Position {
     
     public int row;
     public int column;
+    public int bareCount;
     public double currentDensity;
     public double pickupDensity;
     public double dropDensity;
@@ -23,10 +24,15 @@ public class Position {
         currentDensity = 0.0;
         pickupDensity = 0.0;
         dropDensity = 0.0f;
+        bareCount = 0;
     }
     
     public Position(int r, int c) {
         row = r;
         column = c;
+    }
+    
+    public String print() {
+        return row + " " + column;
     }
 }

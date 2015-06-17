@@ -22,9 +22,9 @@ public class Grouping {
         createSpace(grid);
         
         //Set object clusters...
-        for (int y = 0; y < spaces.length; y++) {
+        for (int x = 0; x < spaces.length; x++) {
             
-            for (int x = 0; x < spaces[y].length; x++) {
+            for (int y = 0; y < spaces[x].length; y++) {
                 
                 if (spaces[x][y].object != Settings.EMPTY && !spaces[x][y].parented) {
                     setChildren(x, y); 
@@ -36,24 +36,22 @@ public class Grouping {
             return false;
         }
         
-        //Get centroids...
-        ArrayList<Space> centroids = getCentroids();
-                
-        
-        
         //Test if all are clustered...
         for (int i = 0; i < spaces.length; i++) {
             
             for (int j = 0; j < spaces[i].length; j++) {
                 
-                if (!spaces[i][j].parented /*&& (spaces[i][j].object == Settings.GOLD || 
-                        spaces[i][j].object == Settings.ANT_GOLD || spaces[i][j].object == Settings.BEE_GOLD)*/) {
-                    
+                if (!spaces[i][j].parented && (spaces[i][j].object == Settings.GOLD || 
+                        spaces[i][j].object == Settings.ANT_GOLD || spaces[i][j].object == Settings.BEE_GOLD)) {
+                    System.out.println("Not parented " + i + " " + j);
                     return false;
                 }
             }
         }
         
+        //Get centroids...
+        ArrayList<Space> centroids = getCentroids();
+                
         //Test inter & intra cluster
         /*for (int i = 0; i < centroids.size(); i++) {
             

@@ -62,13 +62,13 @@ public class Controller implements Runnable {
         this.robots = new Robot[settings.RobotCount];
         
         for (int i = 0; i < settings.RobotCount; i++) {  
-            this.robots[i] = new Robot(this, RobotState.ANT);
-            //this.robots[i] = new Robot(this, RobotState.BEE);
+            //this.robots[i] = new Robot(this, RobotState.ANT);
+            this.robots[i] = new Robot(this, RobotState.BEE);
         }
     }
     
     private boolean testStoppingCondition() {
         
-        return !grid.isClustered();// && !grid.complete();
+        return itterations < 50000;//!grid.isClustered();// && !grid.complete();
     }
 }

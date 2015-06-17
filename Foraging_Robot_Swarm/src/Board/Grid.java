@@ -61,12 +61,6 @@ public class Grid {
         grid[pos.row][pos.column] = type;
     }
     
-    public boolean testDanceNotification(Position point) {
-        
-        
-        return false;
-    }
-    
     public int pickUpItem(Position pos, boolean ant) {
         
         if (ant) {
@@ -124,15 +118,15 @@ public class Grid {
         
         ArrayList<Position> options = new ArrayList<>();
         
-        int xStart  = utils.wrap(-1 + origin.row, grid.length);
-        int yStart  = utils.wrap(-1 + origin.column, grid.length);
-        int xEnd    = utils.wrap(1 + origin.row, grid.length);
-        int yEnd    = utils.wrap(1 + origin.column, grid.length);
+        int xStart  = utils.wrap(origin.row - 1, grid.length);
+        int yStart  = utils.wrap(origin.column - 1, grid.length);
+        int xEnd    = utils.wrap(origin.row + 1, grid.length);
+        int yEnd    = utils.wrap(origin.column + 1, grid.length);
         
         for (int i = xStart; i <= xEnd; i++) {
             
             for (int j = yStart; j <= yEnd; j++) {
-
+                
                 if (laden) {
                     if (!(i == origin.row && j == origin.column) && grid[i][j] == Settings.EMPTY) {
 
@@ -202,20 +196,28 @@ public class Grid {
     public float getDensity(Position pos, ArrayList<Position> area) {
         float alpha = (float) 0.80;
         float lamda = (float) (1 / grid.length);
-        float tmp = 0.0f;
-                
+        double tmp = 0.0f;
+        double add;    
+        
         for (Position test : area) {
             
-            tmp += ( utils.distance(pos, test.row, test.column) / alpha );
-                 
+            add = 1 - utils.distance(pos, test.row, test.column) / alpha ;
+            
+            if (getPoint(test) == Settings.ROCK || getPoint(test) == Settings.BEE_ROCK || getPoint(test) == Settings.ANT_ROCK) {
+                add /= 2;
+            }
+            
+            tmp += add;
         }
         
-        tmp *= (1 / Math.pow(grid.length, 2));
-          
-        if (tmp < 0)
+        tmp = Math.abs( tmp * (1 / Math.pow(grid.length, 2)));
+        
+        if (tmp <= 0)
             return 0;
-        else 
-            return tmp;
+        
+        tmp = 1 - tmp;
+        
+        return (float) tmp;
     }
     
     private boolean wrap(int x, int y) {

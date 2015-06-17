@@ -24,6 +24,7 @@ public class Robot {
         this.beeBot = new BeeBot(controller);
         
         this.position = new Position(controller.settings.GridSize);
+        this.position.pickupDensity = 0.0;
     }
     
     public void update() {
@@ -34,9 +35,14 @@ public class Robot {
         } else {
             newPos = beeBot.update(this, position);
         }
-                
-        position.row = newPos.row;
-        position.column = newPos.column;
+        
+        if (newPos != null) {
+            position.row = newPos.row;
+            position.column = newPos.column;
+            position.currentDensity = newPos.currentDensity;
+            position.pickupDensity = newPos.pickupDensity;
+            System.out.println("newPos != null -> " + position.print() + " " + position.currentDensity);
+        }
     }
     
     public boolean getLaden() {
