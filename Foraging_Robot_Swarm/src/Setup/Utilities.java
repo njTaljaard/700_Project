@@ -54,7 +54,6 @@ public class Utilities {
                     }
                 }
                 
-                System.out.println("Write " + IT);
             } else {
                 System.out.println("creat write error");
             }

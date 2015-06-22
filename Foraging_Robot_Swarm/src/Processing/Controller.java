@@ -5,7 +5,6 @@ import Setup.RobotState;
 import Setup.Settings;
 import Setup.Utilities;
 import Board.Grid;
-import java.util.Random;
 
 /**
  * @author Nico
@@ -34,7 +33,7 @@ public class Controller implements Runnable {
                 "\nAntGold: " + Settings.ANT_GOLD + " AntRock: " + Settings.ANT_ROCK);
         
         setup();
-        utils.writeRobots(robots, settings, ID);
+        //utils.writeRobots(robots, settings, ID);
         
         do {
             itterations++;
@@ -43,20 +42,22 @@ public class Controller implements Runnable {
                 robot.update();
             }
             
-            if ((itterations % 50 == 0)){
+            if ((itterations % 100 == 0)){
+                System.out.println("Iteration " + String.valueOf(itterations));
+                System.out.println("\tRemainding objects : " + String.valueOf(grid.countRemainder()));
                 utils.writeGrid(grid.grid, settings, String.valueOf(itterations));
-                utils.writeRobots(robots, settings, String.valueOf(itterations));
+                //utils.writeRobots(robots, settings, String.valueOf(itterations));
             }
             
         } while (testStoppingCondition());
                 
-        utils.writeGrid(grid.grid, settings, "DONE...");
+        utils.writeGrid(grid.grid, settings, "DONE... " + String.valueOf(itterations));
+        System.out.println("Done... " + String.valueOf(itterations));
+        System.exit(0);
     }
     
     private void setup() {
         this.grid = new Grid(settings,utils);
-        //this.forage = new Forage(this);
-        //this.cluster = new Cluster(this);
         this.robots = new Robot[settings.RobotCount];
         
         for (int i = 0; i < settings.RobotCount; i++) {  
@@ -67,6 +68,6 @@ public class Controller implements Runnable {
     
     private boolean testStoppingCondition() {
         
-        return itterations < 50000;//!grid.isClustered();// && !grid.complete();
+        return !grid.complete() && itterations < 100000;//!grid.isClustered();
     }
 }

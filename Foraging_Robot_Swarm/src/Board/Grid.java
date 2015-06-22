@@ -28,6 +28,17 @@ public class Grid {
         util.writeGrid(grid, settings, "0");
     }
     
+    public int countRemainder() {
+        int c = 0;
+        
+        for (int i = 0; i < grid.length; i++)
+            for (int j = 0; j < grid.length; j++)
+                if (grid[i][j] != Settings.EMPTY)
+                    c++;
+        
+        return c;
+    }
+    
     public boolean isClustered() {
         return grouping.grouped(grid);
     }
@@ -37,7 +48,8 @@ public class Grid {
             
             for (int j = 0; j < settings.GridSize; j++) {
                 
-                if (grid[i][j] == Settings.GOLD) {
+                if (grid[i][j] == Settings.GOLD || grid[i][j] == Settings.ANT_GOLD || 
+                        grid[i][j] == Settings.BEE_GOLD) {
                     return false;
                 }
                 
