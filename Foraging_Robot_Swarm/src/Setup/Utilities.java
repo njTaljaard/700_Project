@@ -29,7 +29,7 @@ public class Utilities {
 
             if (create && write) {
                 BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-                String line = "----------------------------\n";
+                String line = "-------------------------------------------------------------\n";
                 writer.write(line);
 
                 for (int i = 0; i < grid.length; i++) {
@@ -54,7 +54,7 @@ public class Utilities {
                     }
                 }
                 
-                System.out.println(IT);
+                System.out.println("Write " + IT);
             } else {
                 System.out.println("creat write error");
             }

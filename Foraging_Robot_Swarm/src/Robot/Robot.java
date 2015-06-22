@@ -37,11 +37,13 @@ public class Robot {
         }
         
         if (newPos != null) {
+            
             position.row = newPos.row;
             position.column = newPos.column;
             position.currentDensity = newPos.currentDensity;
-            position.pickupDensity = newPos.pickupDensity;
-            System.out.println("newPos != null -> " + position.print() + " " + position.currentDensity);
+            
+            if (newPos.pickupDensity > position.pickupDensity)
+                position.pickupDensity = newPos.pickupDensity;
         }
     }
     

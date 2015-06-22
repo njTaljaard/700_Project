@@ -12,8 +12,6 @@ import java.util.Random;
  */
 public class Controller implements Runnable {
     
-    public Forage forage;
-    public Cluster cluster;
     private Robot[] robots;
     public Grid grid;
     public final Settings settings;
@@ -45,7 +43,7 @@ public class Controller implements Runnable {
                 robot.update();
             }
             
-            if ((itterations % 10 == 0)){
+            if ((itterations % 50 == 0)){
                 utils.writeGrid(grid.grid, settings, String.valueOf(itterations));
                 utils.writeRobots(robots, settings, String.valueOf(itterations));
             }

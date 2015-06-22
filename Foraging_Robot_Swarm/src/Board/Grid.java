@@ -1,7 +1,5 @@
 package Board;
 
-import Processing.Movement;
-import Robot.BeeBot;
 import Robot.Position;
 import Robot.Robot;
 import Setup.Settings;
@@ -13,7 +11,6 @@ import java.util.ArrayList;
  */
 public class Grid {
     public int[][] grid;
-    public Movement movement;
     public Settings settings;
     private final Utilities utils;
     private final Grouping grouping;
@@ -29,8 +26,6 @@ public class Grid {
         createGrid();
         
         util.writeGrid(grid, settings, "0");
-        
-        movement = new Movement(this);
     }
     
     public boolean isClustered() {
@@ -182,6 +177,32 @@ public class Grid {
                     } else {
                         if (grid[i][j] == Settings.GOLD || 
                             grid[i][j] == Settings.ROCK) {
+
+                            area.add(new Position(i, j));
+                        }
+                    }
+                }
+            }            
+        }
+        
+        return area;
+    }
+    
+    public ArrayList<Position> getSurrounding(Position origin, boolean laden, int carry) {
+        
+        ArrayList<Position> area = new ArrayList<>();
+        
+        int yTmp = origin.row;
+        int xTmp = origin.column;
+        
+        for (int i = -5+yTmp; i <= 5+yTmp; i++) {
+            
+            for (int j = -5+xTmp; j <= 5+xTmp; j++) {
+                
+                if (wrap(i, j) && (i != origin.row && j != origin.column)) {
+                    if (laden) {
+                        
+                        if (grid[i][j] == Settings.GOLD || grid[i][j] == Settings.ROCK) {
 
                             area.add(new Position(i, j));
                         }

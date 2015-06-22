@@ -32,6 +32,12 @@ public class Position {
         column = c;
     }
     
+    public Position() {
+        row = 0;
+        column = 0;
+        
+    }
+    
     public String print() {
         return row + " " + column;
     }

@@ -1,6 +1,5 @@
 package Robot;
 
-import Processing.Cluster;
 import Processing.Controller;
 import Setup.RobotState;
 import Setup.Settings;
@@ -14,7 +13,6 @@ import java.util.Random;
 public class AntBot {
     
     private Controller controller;
-    private Cluster cluster;
     
     private int state;
     private int carry;
