@@ -39,6 +39,9 @@ public class Settings {
     public double ratio;     //r = 0.2, 0.25, 0.333, 0.5, 0.667, 0.75, 0.8, 1
     public static double[] ratios = new double[] {0.2,0.25,0.33,0.5,0.667,0.75,0.8,1};
     
+    public double weight;
+    public static double[] weights = new double[] {0.2,0.25,0.33,0.5,0.667,0.75,0.8,1};
+    
     //@TODO: need stopping condition & max iterations...
     
     //Honey Bee foraging

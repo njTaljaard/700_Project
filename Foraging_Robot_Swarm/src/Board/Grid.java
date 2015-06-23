@@ -237,7 +237,11 @@ public class Grid {
             add = 1 - utils.distance(pos, test.row, test.column) / alpha ;
             
             if (getPoint(test) == Settings.ROCK || getPoint(test) == Settings.BEE_ROCK || getPoint(test) == Settings.ANT_ROCK) {
-                add /= 2;
+                /**
+                 * @TODO: 
+                 *  Change to variable pulled from settings... Weight ratio...
+                 */
+                add *= 0.5; 
             }
             
             tmp += add;

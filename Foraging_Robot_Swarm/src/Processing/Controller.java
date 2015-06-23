@@ -17,7 +17,8 @@ public class Controller implements Runnable {
     public final Utilities utils;
     
     private final String ID;
-    int itterations;
+    private int itterations;
+    private int lastCarryItt;
     
     public Controller(Settings settings, int id) {
         this.settings = settings;
@@ -28,12 +29,18 @@ public class Controller implements Runnable {
     @Override
     public void run() {
         itterations = 0;
-        
-        System.out.println("Gold: " + Settings.GOLD + " Rock: " + Settings.ROCK + 
-                "\nAntGold: " + Settings.ANT_GOLD + " AntRock: " + Settings.ANT_ROCK);
+        lastCarryItt = 0;
         
         setup();
         //utils.writeRobots(robots, settings, ID);
+        
+        System.out.println("Grid Size: " + grid.grid.length + 
+                "\nGold: " + Settings.GOLD + " Rock: " + Settings.ROCK + 
+                "\nAntGold: " + Settings.ANT_GOLD + " AntRock: " + Settings.ANT_ROCK);
+        
+        System.out.println("Starting positions:");
+        for (Robot r : robots)
+            System.out.println("\t" + r.getPosition().print());
         
         do {
             itterations++;
@@ -51,8 +58,8 @@ public class Controller implements Runnable {
             
         } while (testStoppingCondition());
                 
-        utils.writeGrid(grid.grid, settings, "DONE... " + String.valueOf(itterations));
-        System.out.println("Done... " + String.valueOf(itterations));
+        utils.writeGrid(grid.grid, settings, "DONE");
+        System.out.println("Done... " + String.valueOf(itterations) + " " + String.valueOf(grid.countRemainder()));
         System.exit(0);
     }
     
@@ -61,13 +68,29 @@ public class Controller implements Runnable {
         this.robots = new Robot[settings.RobotCount];
         
         for (int i = 0; i < settings.RobotCount; i++) {  
-            //this.robots[i] = new Robot(this, RobotState.ANT);
-            this.robots[i] = new Robot(this, RobotState.BEE);
+            this.robots[i] = new Robot(this, RobotState.ANT);
+            //this.robots[i] = new Robot(this, RobotState.BEE);
         }
     }
     
     private boolean testStoppingCondition() {
         
-        return !grid.complete() && itterations < 100000;//!grid.isClustered();
+        updateCarryItt();
+        return !testStagnation() && itterations < 100000;//!grid.complete() !grid.isClustered()
+    }
+    
+    public void updateCarryItt() { 
+        
+        for (Robot r : robots) {
+            if (r.getLaden()) {
+                lastCarryItt = itterations;
+                return;
+            }
+        }
+    }
+    
+    public boolean testStagnation() {
+        
+        return (itterations - lastCarryItt) > (grid.grid.length * 20);
     }
 }

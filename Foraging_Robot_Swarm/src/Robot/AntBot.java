@@ -4,7 +4,6 @@ import Processing.Controller;
 import Setup.RobotState;
 import Setup.Settings;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Random;
 
 /**

@@ -56,7 +56,8 @@ public class BeeBot {
                 break;
             case RobotState.Bee_SCOUT :
                 pos = _scout(position);
-                //System.out.println("Scout " + this.toString() + " " + position.print() + " -> " + pos.print());
+                /*System.out.println("Scout\n\t " + this.toString() + " " + position.print() 
+                        + " -> " + pos.print() + " : " + controller.grid.getPoint(pos));*/
                 
                 break;
             case RobotState.Bee_FORAGE :
@@ -64,9 +65,13 @@ public class BeeBot {
                 
                 /*if (pos != null) {
                     if (laden)
-                        System.out.println("Forage home " + this.toString() + " " + position.print() + " -> " + pos.print());
+                        System.out.println("Forage home\n\t " //+ this.toString() + " " 
+                                + position.print() + " -> " + pos.print() + " : " 
+                                + controller.grid.getPoint(pos));
                     else 
-                        System.out.println("Forage bare " + this.toString() + " " + position.print() + " -> " + pos.print());
+                        System.out.println("Forage bare\n\t " //+ this.toString() + " " 
+                                + position.print() + " -> " + pos.print() + " : "
+                                + controller.grid.getPoint(pos));
                 }*/
                 
                 break;
@@ -222,7 +227,7 @@ public class BeeBot {
         } else {
             
             bareCount++;       
-            if (bareCount > (baringVector.bareCount * 1.4)) {
+            if (bareCount > (baringVector.bareCount * 1.5)) {
                 
                 //System.out.println("\nForage - Revert to scout\n");
                 this.state = RobotState.Bee_SCOUT;
@@ -290,10 +295,12 @@ public class BeeBot {
             float tmp = Float.MIN_VALUE; 
             float tmp2;
             
+            //System.out.println("Options");
             for (Position opt : options) {
                 
                 tmp2 = controller.grid.getDensity(opt, area);
                 opt.currentDensity = tmp2;
+                //System.out.println("\t" + opt.print() + " " + tmp2);
                 
                 if (tmp2 > tmp) {
                     pos = opt;
