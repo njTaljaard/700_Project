@@ -1,5 +1,6 @@
 package Board;
 
+import Processing.Controller;
 import Robot.Position;
 import Robot.Robot;
 import Setup.Settings;
@@ -241,7 +242,7 @@ public class Grid {
                  * @TODO: 
                  *  Change to variable pulled from settings... Weight ratio...
                  */
-                add *= 0.5; 
+                add *= settings.weight; 
             }
             
             tmp += add;
@@ -300,27 +301,16 @@ public class Grid {
                 }
                     
                 break;
-            case Settings.CLUSTERD: //@TODO: CHANGE
-                System.out.println("Clustered");
-                for (place = 0; place < gold;) {
-                    x = 0;
-                    y = 0;
-                    
-                    if (grid[x][y] == Settings.EMPTY) {
-                        grid[x][y] = Settings.GOLD;
-                        place++;
-                    }
-                }
+            case Settings.CLUSTERD: 
+                System.out.println("Clusterd");
                 
-                for (place = 0; place < rock;) {
-                    x = 0;
-                    y = 0;
-                    
-                    if (grid[x][y] == Settings.EMPTY) {
-                        grid[x][y] = Settings.ROCK;
-                        place++;
-                    }
-                }
+                Controller control = new Controller(settings, 0, false, true);
+                control.preCluster();
+                
+                while(!control.done){}
+                
+                settings.scatterType = 1;
+                grid = control.grid.grid;
                 
                 break;
             case Settings.VEIN:

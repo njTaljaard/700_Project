@@ -20,10 +20,17 @@ public class Controller implements Runnable {
     private int itterations;
     private int lastCarryItt;
     
-    public Controller(Settings settings, int id) {
+    public boolean done;
+    private boolean print;
+    private boolean preCluster;
+    
+    public Controller(Settings settings, int id, boolean print, boolean preCluster) {
         this.settings = settings;
         this.utils = new Utilities();
         this.ID = String.valueOf(id);
+        this.done = false;
+        this.print = print;
+        this.preCluster = preCluster;
     }
         
     @Override
@@ -34,13 +41,11 @@ public class Controller implements Runnable {
         setup();
         //utils.writeRobots(robots, settings, ID);
         
-        System.out.println("Grid Size: " + grid.grid.length + 
-                "\nGold: " + Settings.GOLD + " Rock: " + Settings.ROCK + 
-                "\nAntGold: " + Settings.ANT_GOLD + " AntRock: " + Settings.ANT_ROCK);
-        
-        System.out.println("Starting positions:");
-        for (Robot r : robots)
-            System.out.println("\t" + r.getPosition().print());
+        if (print) {
+            System.out.println("Grid Size: " + grid.grid.length + 
+                    "\nGold: " + Settings.GOLD + " Rock: " + Settings.ROCK + 
+                    "\nAntGold: " + Settings.ANT_GOLD + " AntRock: " + Settings.ANT_ROCK);
+        } 
         
         do {
             itterations++;
@@ -49,34 +54,56 @@ public class Controller implements Runnable {
                 robot.update();
             }
             
-            if ((itterations % 100 == 0)){
-                System.out.println("Iteration " + String.valueOf(itterations));
-                System.out.println("\tRemainding objects : " + String.valueOf(grid.countRemainder()));
-                utils.writeGrid(grid.grid, settings, String.valueOf(itterations));
-                //utils.writeRobots(robots, settings, String.valueOf(itterations));
-            }
+            if (print)
+                if ((itterations % 100 == 0)){
+                    System.out.println("Iteration " + String.valueOf(itterations));
+                    System.out.println("\tRemainding objects : " + String.valueOf(grid.countRemainder()));
+                    utils.writeGrid(grid.grid, settings, String.valueOf(itterations));
+                    //utils.writeRobots(robots, settings, String.valueOf(itterations));
+                }
             
         } while (testStoppingCondition());
-                
-        utils.writeGrid(grid.grid, settings, "DONE");
-        System.out.println("Done... " + String.valueOf(itterations) + " " + String.valueOf(grid.countRemainder()));
+            
+        if (print) {
+            utils.writeGrid(grid.grid, settings, "DONE");
+            System.out.println("Done... " + String.valueOf(itterations) + " " + String.valueOf(grid.countRemainder()));
+        } else {
+            System.out.println("Cluster done...");
+        }
+        
         System.exit(0);
+        
+        this.done = true;
     }
     
     private void setup() {
-        this.grid = new Grid(settings,utils);
+        
+        if (preCluster) {
+            settings.scatterType = 1;
+            System.out.println("Create grid : " + settings.scatterType);
+            this.grid = new Grid(settings, utils);
+        } else {
+            System.out.println("Create grid : " + settings.scatterType);
+            this.grid = new Grid(settings,utils);
+        }
+        
         this.robots = new Robot[settings.RobotCount];
         
         for (int i = 0; i < settings.RobotCount; i++) {  
-            this.robots[i] = new Robot(this, RobotState.ANT);
-            //this.robots[i] = new Robot(this, RobotState.BEE);
+            if (preCluster)
+                this.robots[i] = new Robot(this, RobotState.ANT);
+            else
+                this.robots[i] = new Robot(this, RobotState.BEE);
         }
     }
     
     private boolean testStoppingCondition() {
         
         updateCarryItt();
-        return !testStagnation() && itterations < 100000;//!grid.complete() !grid.isClustered()
+        if (preCluster) 
+            return !testStagnation() && itterations < 100000;
+        else
+            return !grid.complete() && !testStagnation() && itterations < 100000;
     }
     
     public void updateCarryItt() { 
@@ -92,5 +119,32 @@ public class Controller implements Runnable {
     public boolean testStagnation() {
         
         return (itterations - lastCarryItt) > (grid.grid.length * 20);
+    }
+    
+    
+    /**
+     * Side line
+     */
+    public void preCluster() {
+        itterations = 0;
+        lastCarryItt = 0;
+        
+        setup();
+        //utils.writeRobots(robots, settings, ID);
+        
+        System.out.println("PreCluster");
+        utils.writeGrid(grid.grid, settings, "PreCluster");
+        
+        do {
+            itterations++;
+        
+            for (Robot robot : robots) {
+                robot.update();
+            }
+            
+        } while (testStoppingCondition());
+            
+        System.out.println("Cluster done...");
+        this.done = true;
     }
 }

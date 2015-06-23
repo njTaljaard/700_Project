@@ -63,7 +63,7 @@ public class Main {
             }            
         }*/
         
-        executorService.execute(new Controller(new Settings(0, 0, 3, 0, 0), id++));
+        executorService.execute(new Controller(new Settings(0, 0, 3, 0, 3, 1), id++, true, false));
         
         //while (queue.remainingCapacity() > 0) {}
         

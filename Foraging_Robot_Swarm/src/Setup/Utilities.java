@@ -55,7 +55,7 @@ public class Utilities {
                 }
                 
             } else {
-                System.out.println("creat write error");
+                System.out.println("creat write error " + IT);
             }
         } catch (IOException ex) {
             Logger.getLogger(Utilities.class.getName()).log(Level.SEVERE, null, ex);

@@ -49,13 +49,17 @@ public class AntBot {
                     case RobotState.Ant_SEARCH :
                         tmp = _search(options, area);
                         
-                        if (tmp == position) {
+                        if (tmp.row == position.row && tmp.column == position.column) {
+                            //System.out.println("Search Random : \n\t" + position.print() + " -> " + options.get(r).print());
                             return options.get(r);
                         }
+                        
+                        //System.out.println("Search Directed : \n\t" + position.print() + " -> " + tmp.print());
                         
                         break;
                     case RobotState.Ant_CARRY :
                         tmp = _carry(options, area);
+                        //System.out.println("Carry : \n\t" + position.print() + " -> " + tmp.print());
                         break;
                 }
             

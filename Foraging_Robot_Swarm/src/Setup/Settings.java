@@ -54,12 +54,13 @@ public class Settings {
     public double interLimit = 12.0;
     public double intraLimit = 5.0;   
     
-    public Settings(int gSize, int rCount, int cover, int ratio, int scatter) {
+    public Settings(int gSize, int rCount, int cover, int ratio, int weight, int scatter) {
         this.GridSize = gridSizes[gSize];
         this.RobotCount = robotCounts[rCount];
         this.coverage = coverages[cover];
         this.ratio = ratios[ratio];
         this.scatterType = scatterTypes[scatter];
+        this.weight = weights[weight];
         this.interLimit = GridSize / 25;
         this.intraLimit = GridSize / 25;
     }
