@@ -65,8 +65,23 @@ public class Grid {
         return grid[pos.row][pos.column];
     }
     
-    public void setPoint(Position pos, int type) {
-        grid[pos.row][pos.column] = type;
+    public void setPoint(Position pos, int type, boolean ANT) {
+        if (ANT) {
+            if (type == Settings.GOLD)
+                grid[pos.row][pos.column] = Settings.ANT_GOLD;
+            else if (type == Settings.ROCK)
+                grid[pos.row][pos.column] = Settings.ANT_ROCK;
+            else
+                grid[pos.row][pos.column] = Settings.EMPTY;
+        } else {
+            if (type == Settings.GOLD)
+                grid[pos.row][pos.column] = Settings.BEE_GOLD;
+            else if (type == Settings.ROCK)
+                grid[pos.row][pos.column] = Settings.BEE_ROCK;
+            else
+                grid[pos.row][pos.column] = Settings.EMPTY;
+        }
+            
     }
     
     public int pickUpItem(Position pos, boolean ant) {
@@ -76,24 +91,24 @@ public class Grid {
             if (grid[pos.row][pos.column] == Settings.GOLD) {
                 
                 grid[pos.row][pos.column] = Settings.ANT_GOLD;
-                return Settings.ANT_GOLD;
+                return Settings.GOLD;
                 
             } else if (grid[pos.row][pos.column] == Settings.ROCK) {
                 
                 grid[pos.row][pos.column] = Settings.ANT_ROCK;
-                return Settings.ANT_ROCK;
+                return Settings.ROCK;
             }
         } else {
             
             if (grid[pos.row][pos.column] == Settings.GOLD) {
                 
                 grid[pos.row][pos.column] = Settings.BEE_GOLD;
-                return Settings.BEE_GOLD;
+                return Settings.GOLD;
                 
             } else if (grid[pos.row][pos.column] == Settings.ROCK) {
                 
                 grid[pos.row][pos.column] = Settings.BEE_ROCK;
-                return Settings.BEE_ROCK;
+                return Settings.ROCK;
             }
         }
         
@@ -107,12 +122,12 @@ public class Grid {
             grid[pos.row][pos.column] = Settings.EMPTY;
             return true;
             
-        } else if (type == Settings.ANT_GOLD || type == Settings.BEE_GOLD) {
+        } else if (type == Settings.GOLD) {
             
             grid[pos.row][pos.column] = Settings.GOLD;
             return true;
             
-        } else if (type == Settings.ANT_ROCK || type == Settings.BEE_ROCK) {
+        } else if (type == Settings.ROCK) {
             
             grid[pos.row][pos.column] = Settings.ROCK;
             return true;
@@ -136,12 +151,16 @@ public class Grid {
             for (int j = yStart; j <= yEnd; j++) {
                 
                 if (laden) {
-                    if (!(i == origin.row && j == origin.column) && grid[i][j] == Settings.EMPTY) {
+                    
+                    if (!(i == origin.row && j == origin.column) && 
+                            grid[i][j] == Settings.EMPTY) {
 
                         options.add(new Position(i, j));
 
                     }                    
+                    
                 } else {
+                    
                     if (!(i == origin.row && j == origin.column) && 
                             (grid[i][j] == Settings.EMPTY || 
                             grid[i][j] == Settings.GOLD ||
@@ -161,16 +180,20 @@ public class Grid {
         
         ArrayList<Position> area = new ArrayList<>();
         
-        int yTmp = origin.row;
-        int xTmp = origin.column;
+        int xStart  = utils.wrap(origin.row - 5, grid.length);
+        int yStart  = utils.wrap(origin.column - 5, grid.length);
+        int xEnd    = utils.wrap(origin.row + 5, grid.length);
+        int yEnd    = utils.wrap(origin.column + 5, grid.length);
         
-        for (int i = -5+yTmp; i <= 5+yTmp; i++) {
+        for (int i = xStart; i <= xEnd; i++) {
             
-            for (int j = -5+xTmp; j <= 5+xTmp; j++) {
+            for (int j = yStart; j <= yEnd; j++) {
                 
-                if (wrap(i, j) && (i != origin.row && j != origin.column)) {
+                if (i != origin.row && j != origin.column) {
+                    
                     if (laden) {
-                        if (carry == Settings.ANT_GOLD || carry == Settings.BEE_GOLD) {
+                        
+                        if (carry == Settings.GOLD) {
 
                             if (grid[i][j] == Settings.GOLD || 
                                 grid[i][j] == Settings.ANT_GOLD || 
@@ -178,7 +201,8 @@ public class Grid {
 
                                 area.add(new Position(i, j));
                             }
-                        } else if (carry == Settings.ANT_ROCK || carry == Settings.BEE_ROCK) {
+                        } else if (carry == Settings.ROCK) {
+                            
                             if (grid[i][j] == Settings.ROCK ||
                                 grid[i][j] == Settings.BEE_ROCK || 
                                 grid[i][j] == Settings.ANT_ROCK) {
@@ -188,6 +212,7 @@ public class Grid {
                         }
 
                     } else {
+                        
                         if (grid[i][j] == Settings.GOLD || 
                             grid[i][j] == Settings.ROCK) {
 
@@ -205,20 +230,21 @@ public class Grid {
         
         ArrayList<Position> area = new ArrayList<>();
         
-        int yTmp = origin.row;
-        int xTmp = origin.column;
+        int xStart  = utils.wrap(origin.row - 5, grid.length);
+        int yStart  = utils.wrap(origin.column - 5, grid.length);
+        int xEnd    = utils.wrap(origin.row + 5, grid.length);
+        int yEnd    = utils.wrap(origin.column + 5, grid.length);
         
-        for (int i = -5+yTmp; i <= 5+yTmp; i++) {
+        for (int i = xStart; i <= xEnd; i++) {
             
-            for (int j = -5+xTmp; j <= 5+xTmp; j++) {
+            for (int j = yStart; j <= yEnd; j++) {
                 
-                if (wrap(i, j) && (i != origin.row && j != origin.column)) {
-                    if (laden) {
+                if (i != origin.row && j != origin.column) {
+                    
+                    if (grid[i][j] == Settings.GOLD || 
+                            grid[i][j] == Settings.ROCK) {
                         
-                        if (grid[i][j] == Settings.GOLD || grid[i][j] == Settings.ROCK) {
-
-                            area.add(new Position(i, j));
-                        }
+                        area.add(new Position(i, j));
                     }
                 }
             }            
@@ -237,11 +263,8 @@ public class Grid {
             
             add = 1 - utils.distance(pos, test.row, test.column) / alpha ;
             
-            if (getPoint(test) == Settings.ROCK || getPoint(test) == Settings.BEE_ROCK || getPoint(test) == Settings.ANT_ROCK) {
-                /**
-                 * @TODO: 
-                 *  Change to variable pulled from settings... Weight ratio...
-                 */
+            if (getPoint(test) == Settings.ROCK || getPoint(test) == Settings.BEE_ROCK
+                    || getPoint(test) == Settings.ANT_ROCK) {
                 add *= settings.weight; 
             }
             
@@ -254,7 +277,7 @@ public class Grid {
             return 0;
         
         tmp = 1 - tmp;
-        
+        //System.out.println("Found dens " + tmp);
         return (float) tmp;
     }
     

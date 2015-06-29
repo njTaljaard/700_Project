@@ -39,7 +39,7 @@ public class Controller implements Runnable {
         lastCarryItt = 0;
         
         setup();
-        //utils.writeRobots(robots, settings, ID);
+        utils.writeRobots(robots, settings, ID);
         
         if (print) {
             System.out.println("Grid Size: " + grid.grid.length + 
@@ -59,7 +59,7 @@ public class Controller implements Runnable {
                     System.out.println("Iteration " + String.valueOf(itterations));
                     System.out.println("\tRemainding objects : " + String.valueOf(grid.countRemainder()));
                     utils.writeGrid(grid.grid, settings, String.valueOf(itterations));
-                    //utils.writeRobots(robots, settings, String.valueOf(itterations));
+                    utils.writeRobots(robots, settings, String.valueOf(itterations));
                 }
             
         } while (testStoppingCondition());
@@ -117,10 +117,11 @@ public class Controller implements Runnable {
     }
     
     public boolean testStagnation() {
+        if (preCluster)
+            return (itterations - lastCarryItt) > (grid.grid.length * 20) && itterations < 20000;
         
         return (itterations - lastCarryItt) > (grid.grid.length * 20);
     }
-    
     
     /**
      * Side line
@@ -132,7 +133,7 @@ public class Controller implements Runnable {
         setup();
         //utils.writeRobots(robots, settings, ID);
         
-        System.out.println("PreCluster");
+        System.out.println("PreCluster " + grid.countRemainder());
         utils.writeGrid(grid.grid, settings, "PreCluster");
         
         do {
@@ -142,9 +143,15 @@ public class Controller implements Runnable {
                 robot.update();
             }
             
+            if (itterations % 5 == 0) {
+                System.out.println("Cluster IT: " + itterations);
+                utils.writeGrid(grid.grid, settings, String.valueOf(itterations) + " cluster");
+            }
+            
         } while (testStoppingCondition());
             
-        System.out.println("Cluster done...");
+        utils.writeGrid(grid.grid, settings, "PreCluster Done");
+        System.out.println("PreCluster Done " + grid.countRemainder());
         this.done = true;
     }
 }

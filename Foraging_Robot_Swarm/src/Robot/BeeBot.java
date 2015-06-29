@@ -87,11 +87,11 @@ public class BeeBot {
         }
         
         if (laden) {
-            controller.grid.setPoint(position, Settings.EMPTY);
+            controller.grid.setPoint(position, Settings.EMPTY, false);
 
             if (pos != null && pos != position) {
 
-                controller.grid.setPoint(pos, carry);
+                controller.grid.setPoint(pos, carry, false);
                 return pos;
             }
         }
@@ -142,8 +142,8 @@ public class BeeBot {
             
             for (Robot r : dances) {
                                 
-                if (controller.utils.distance(position, r.getPosition().row, r.getPosition().column) < 6) {
-                //if (controller.utils.getRandom() > 0.6) {                    
+                if (controller.utils.distance(position, r.getPosition().row, r.getPosition().column) < 6) {               
+                    
                     baringVector = r.getBareing();
                     state = RobotState.Bee_FORAGE;
                     return getNewPosition(bot, position);
@@ -191,12 +191,13 @@ public class BeeBot {
             
             if (ladenCount > (controller.grid.grid.length * 1.4)) {
                 
-                if (pos != null && controller.grid.dropItem(pos, carry)) {
+                if (pos != null && controller.grid.getPoint(pos) == Settings.EMPTY &&
+                        controller.grid.dropItem(pos, carry)) {
                     
                     //System.out.println("\nDrop - Revert to scouting\n");
                     setCarry(pos, Settings.EMPTY);
-                    controller.grid.setPoint(pos, carry);
-                    controller.grid.setPoint(position, Settings.EMPTY);
+                    controller.grid.setPoint(pos, carry, false);
+                    controller.grid.setPoint(position, Settings.EMPTY, false);
                     
                     this.state = RobotState.Bee_SCOUT;
                     position.pickupDensity = 0.0;
@@ -212,7 +213,7 @@ public class BeeBot {
                         //System.out.println("Drop\n");
                         
                         setCarry(pos, Settings.EMPTY);
-                        controller.grid.setPoint(position, Settings.EMPTY);
+                        controller.grid.setPoint(position, Settings.EMPTY, false);
                         useBaring = true;
                         
                         if (position.pickupDensity > 0.5) {
@@ -295,12 +296,10 @@ public class BeeBot {
             float tmp = Float.MIN_VALUE; 
             float tmp2;
             
-            //System.out.println("Options");
             for (Position opt : options) {
                 
                 tmp2 = controller.grid.getDensity(opt, area);
                 opt.currentDensity = tmp2;
-                //System.out.println("\t" + opt.print() + " " + tmp2);
                 
                 if (tmp2 > tmp) {
                     pos = opt;
@@ -309,8 +308,10 @@ public class BeeBot {
             }
             
             if (pos != null) {
+                
                 return pos;
             } else {
+                
                 Collections.shuffle(options);
                 return options.get((int) (controller.utils.getRandom() * options.size()));
             }
