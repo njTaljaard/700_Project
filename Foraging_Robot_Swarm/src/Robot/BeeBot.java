@@ -56,14 +56,14 @@ public class BeeBot {
                 break;
             case RobotState.Bee_SCOUT :
                 pos = _scout(position);
-                System.out.println("Scout\n\t " + this.toString() + " " + position.print() 
-                        + " -> " + pos.print() + " : " + controller.grid.getPoint(pos));
+                //System.out.println("Scout\n\t " + this.toString() + " " + position.print() 
+                //        + " -> " + pos.print() + " : " + controller.grid.getPoint(pos));
                 
                 break;
             case RobotState.Bee_FORAGE :
                 pos = _forage(bot, position);
                 
-                if (pos != null) {
+                /*if (pos != null) {
                     if (laden)
                         System.out.println("Forage home\n\t " //+ this.toString() + " " 
                                 + position.print() + " -> " + pos.print() + " : " 
@@ -72,7 +72,7 @@ public class BeeBot {
                         System.out.println("Forage bare\n\t " //+ this.toString() + " " 
                                 + position.print() + " -> " + pos.print() + " : "
                                 + controller.grid.getPoint(pos));
-                }
+                }*/
                 
                 break;
             case RobotState.Bee_DANCE :
@@ -278,8 +278,12 @@ public class BeeBot {
             }
         }        
         
-        Collections.shuffle(options);
-        return options.get((int) controller.utils.getRandom() * options.size());
+        if (options.size() > 0) {
+            //Collections.shuffle(options);
+            return options.get((int) controller.utils.getRandom() * options.size());
+        }
+        
+        return position;
     }
     
     private Position _dance(Robot bot, Position position) {

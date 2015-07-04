@@ -21,7 +21,7 @@ public class AntBot {
     private boolean laden;
     
     private float gamma_1 = 0.5f;
-    private float gamma_2 = 0.95f;
+    private float gamma_2 = 0.975f;
     
     public AntBot(Controller controller) {
         this.state = RobotState.Ant_SEARCH;
@@ -105,7 +105,7 @@ public class AntBot {
     public void setCarry(Position pos, int type) {
         if (laden) {
             pos.dropDensity = pos.currentDensity;
-            pos.pickupDensity = pos.currentDensity;
+            pos.pickupDensity = 0;
             laden = false;
         } else {
             pos.pickupDensity = pos.currentDensity;
@@ -140,7 +140,7 @@ public class AntBot {
                 int c = controller.grid.pickUpItem(tmp, true);
                 
                 if (c != Settings.EMPTY) {
-                    //System.out.println("Pick-Up");
+                    System.out.println(this.toString() + " Pick-Up " + tmp.print());
                     setCarry(tmp, c);
                     state = RobotState.Ant_CARRY;
                 }
@@ -152,18 +152,15 @@ public class AntBot {
     
     private Position _carry(Position position, ArrayList<Position> option, ArrayList<Position> area) {
         
-        Position tmp = getHighestDensity(option, area);
+        Position tmp = getHighestDensity(position, option, area);
         ladenCount++; 
-        
-        if (tmp == null) 
-            return position;
-            
+                    
         if (ladenCount > controller.grid.grid.length) {
             //System.out.println("Laden to long " + controller.grid.getPoint(tmp) + " " + carry);
             if (controller.grid.getPoint(tmp) == Settings.EMPTY &&
                     controller.grid.dropItem(tmp, carry)) {
                 
-                //System.out.println("Drop Tired");
+                System.out.println(this.toString() + " Drop Tired " + tmp.print());
                 controller.grid.setPoint(position, Settings.EMPTY, true);
                 controller.grid.setPoint(tmp, carry, true);
                 
@@ -177,11 +174,11 @@ public class AntBot {
             
             /*System.out.println("\tTest2 " + tmp.currentDensity + " " + tmp.pickupDensity 
                     + " " + computeDropPropability(tmp.currentDensity));*/
-            if (computeDropPropability(tmp.currentDensity) == 1.0) { //tmp.currentDensity > tmp.pickupDensity
+            if (computeDropPropability(tmp.currentDensity) == 1.0) { //&& tmp.currentDensity > tmp.pickupDensity) {
                 
                 if (controller.grid.dropItem(tmp, carry)) {
                     
-                    //System.out.println("Drop");                    
+                    System.out.println(this.toString() + " Drop " + tmp.print());                    
                     controller.grid.setPoint(position, Settings.EMPTY, true);
                     controller.grid.setPoint(tmp, carry, true);
                     
@@ -192,10 +189,13 @@ public class AntBot {
             }
         } 
         
+        controller.grid.setPoint(position, Settings.EMPTY, true);
+        controller.grid.setPoint(tmp, carry, true);
+        
         return tmp;
     }
     
-    private Position getHighestDensity(ArrayList<Position> options, ArrayList<Position> area) {
+    private Position getHighestDensity(Position position, ArrayList<Position> options, ArrayList<Position> area) {
         Position pos = null;
         float tmp = 0;
         float tmp2;
@@ -215,11 +215,13 @@ public class AntBot {
         if (pos != null) {
             
             return pos;
-        } else {
+        } else if (options.size() > 0) {
             
-            Collections.shuffle(options);
+            //Collections.shuffle(options);
             return options.get((int) (controller.utils.getRandom() * options.size()));
-        }
+        } 
+        
+        return position;
     }
     
     private Position getLowestDensity(ArrayList<Position> options, ArrayList<Position> area) {
