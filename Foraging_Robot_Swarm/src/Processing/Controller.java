@@ -59,7 +59,7 @@ public class Controller implements Runnable {
                     System.out.println("Iteration " + String.valueOf(itterations));
                     System.out.println("\tRemainding objects : " + String.valueOf(grid.countRemainder()));
                     utils.writeGrid(grid.grid, settings, String.valueOf(itterations));
-                    utils.writeRobots(robots, settings, String.valueOf(itterations));
+                    //utils.writeRobots(robots, settings, String.valueOf(itterations));
                 }
             
         } while (testStoppingCondition());
@@ -100,8 +100,9 @@ public class Controller implements Runnable {
     private boolean testStoppingCondition() {
         
         updateCarryItt();
+        
         if (preCluster) 
-            return !testStagnation() && itterations < 100000;
+            return !testStagnation() && itterations < 20000;
         else
             return !grid.complete() && !testStagnation() && itterations < 100000;
     }
@@ -117,8 +118,6 @@ public class Controller implements Runnable {
     }
     
     public boolean testStagnation() {
-        if (preCluster)
-            return (itterations - lastCarryItt) > (grid.grid.length * 20) && itterations < 20000;
         
         return (itterations - lastCarryItt) > (grid.grid.length * 20);
     }
@@ -143,12 +142,13 @@ public class Controller implements Runnable {
                 robot.update();
             }
             
-            if (itterations % 5 == 0) {
-                System.out.println("Cluster IT: " + itterations);
+            if (itterations % 100 == 0) {
                 utils.writeGrid(grid.grid, settings, String.valueOf(itterations) + " cluster");
             }
             
         } while (testStoppingCondition());
+        
+        grid.clear();
             
         utils.writeGrid(grid.grid, settings, "PreCluster Done");
         System.out.println("PreCluster Done " + grid.countRemainder());

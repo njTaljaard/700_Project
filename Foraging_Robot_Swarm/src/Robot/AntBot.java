@@ -47,7 +47,7 @@ public class AntBot {
             switch (state) {
                 case RobotState.Ant_SEARCH :
                     
-                    area = controller.grid.getSurrounding(position, laden, carry);
+                    area = controller.grid.getAllSurrounding(position, laden, carry);
                     tmp = _search(options, area);
 
                     if (tmp.row == position.row && tmp.column == position.column) {
@@ -69,25 +69,31 @@ public class AntBot {
                     /*System.out.println("Carry : \n\t" + controller.grid.getPoint(tmp) 
                             + " : " + position.print() + " -> " + tmp.print() + " " + tmp.currentDensity);*/
                     
-                    if (tmp != null && tmp.row != position.row && tmp.column != position.column) {
-                        return tmp;
+                    if (laden) {
+                        controller.grid.setPoint(position, Settings.EMPTY, true);
+
+                        if (tmp == position) {
+
+                            controller.grid.setPoint(options.get(r), carry, true);
+                            options.get(r).pickupDensity = position.pickupDensity;
+                            return options.get(r);
+                            
+                        } else if (tmp != null) {
+                            
+                            controller.grid.setPoint(tmp, carry, true);
+                            tmp.pickupDensity = position.pickupDensity;
+                            return tmp;
+                        }
                     }
                     
-                    break;
-            }
-            
-            if (laden) {
-                controller.grid.setPoint(position, Settings.EMPTY, true);
-
-                if (tmp == position) {
-
-                    controller.grid.setPoint(options.get(r), carry, true);
-                    return tmp;
-                } else if (tmp != null) {
-
-                    controller.grid.setPoint(tmp, carry, true);
-                    return tmp;
-                }
+                    if (tmp != null && tmp.row != position.row && tmp.column != position.column) {
+                        
+                        return tmp;
+                    } else {
+                        
+                        options.get(r).pickupDensity = position.pickupDensity;
+                        return options.get(r);
+                    }
             }
             
             return options.get(r);
@@ -97,9 +103,9 @@ public class AntBot {
     }
     
     public void setCarry(Position pos, int type) {
-        if (type == Settings.EMPTY && laden) {
+        if (laden) {
             pos.dropDensity = pos.currentDensity;
-            pos.pickupDensity = 0;
+            pos.pickupDensity = pos.currentDensity;
             laden = false;
         } else {
             pos.pickupDensity = pos.currentDensity;
@@ -131,10 +137,10 @@ public class AntBot {
                     + computePickPropability(tmp.currentDensity) + " " + tmp.currentDensity);*/
             if (computePickPropability(tmp.currentDensity) < 0.119) {
                 
-                int c = controller.grid.pickUpItem(tmp, laden);
+                int c = controller.grid.pickUpItem(tmp, true);
                 
                 if (c != Settings.EMPTY) {
-                    System.out.println("Pick-Up");
+                    //System.out.println("Pick-Up");
                     setCarry(tmp, c);
                     state = RobotState.Ant_CARRY;
                 }
@@ -153,17 +159,13 @@ public class AntBot {
             return position;
             
         if (ladenCount > controller.grid.grid.length) {
-            System.out.println("Laden to long " + controller.grid.getPoint(tmp) + " " + carry);
+            //System.out.println("Laden to long " + controller.grid.getPoint(tmp) + " " + carry);
             if (controller.grid.getPoint(tmp) == Settings.EMPTY &&
                     controller.grid.dropItem(tmp, carry)) {
                 
-                System.out.println("Drop Tired");
-                if (tmp == position) {
-                    controller.grid.setPoint(position, carry, true);
-                } else {
-                    controller.grid.setPoint(position, Settings.EMPTY, true);
-                    controller.grid.setPoint(tmp, carry, true);
-                }
+                //System.out.println("Drop Tired");
+                controller.grid.setPoint(position, Settings.EMPTY, true);
+                controller.grid.setPoint(tmp, carry, true);
                 
                 setCarry(tmp, Settings.EMPTY);
                 state = RobotState.Ant_SEARCH;
@@ -179,9 +181,10 @@ public class AntBot {
                 
                 if (controller.grid.dropItem(tmp, carry)) {
                     
-                    System.out.println("Drop");                    
+                    //System.out.println("Drop");                    
                     controller.grid.setPoint(position, Settings.EMPTY, true);
                     controller.grid.setPoint(tmp, carry, true);
+                    
                     setCarry(tmp, Settings.EMPTY);
                     state = RobotState.Ant_SEARCH;
                     return tmp;

@@ -52,13 +52,25 @@ public class Grid {
                 if (grid[i][j] == Settings.GOLD || grid[i][j] == Settings.ANT_GOLD || 
                         grid[i][j] == Settings.BEE_GOLD) {
                     return false;
-                }
-                
-            }
-            
+                }                
+            }            
         }
         
         return true;
+    }
+    
+    public void clear() {
+        for (int i = 0; i < settings.GridSize; i++) {
+            
+            for (int j = 0; j < settings.GridSize; j++) {
+                
+                if (grid[i][j] == Settings.ANT_GOLD) {
+                    grid[i][j] = Settings.GOLD;
+                } else if (grid[i][j] == Settings.ANT_ROCK) {
+                    grid[i][j] = Settings.ROCK;
+                }                
+            }            
+        }
     }
     
     public int getPoint(Position pos) {
@@ -179,6 +191,7 @@ public class Grid {
     public ArrayList<Position> getAllSurrounding(Position origin, boolean laden, int carry) {
         
         ArrayList<Position> area = new ArrayList<>();
+        area.clear();
         
         int xStart  = utils.wrap(origin.row - 5, grid.length);
         int yStart  = utils.wrap(origin.column - 5, grid.length);
@@ -225,34 +238,7 @@ public class Grid {
         
         return area;
     }
-    
-    public ArrayList<Position> getSurrounding(Position origin, boolean laden, int carry) {
-        
-        ArrayList<Position> area = new ArrayList<>();
-        
-        int xStart  = utils.wrap(origin.row - 5, grid.length);
-        int yStart  = utils.wrap(origin.column - 5, grid.length);
-        int xEnd    = utils.wrap(origin.row + 5, grid.length);
-        int yEnd    = utils.wrap(origin.column + 5, grid.length);
-        
-        for (int i = xStart; i <= xEnd; i++) {
-            
-            for (int j = yStart; j <= yEnd; j++) {
-                
-                if (i != origin.row && j != origin.column) {
-                    
-                    if (grid[i][j] == Settings.GOLD || 
-                            grid[i][j] == Settings.ROCK) {
-                        
-                        area.add(new Position(i, j));
-                    }
-                }
-            }            
-        }
-        
-        return area;
-    }
-    
+   
     public float getDensity(Position pos, ArrayList<Position> area) {
         float alpha = (float) 0.80;
         float lamda = (float) (1 / grid.length);
