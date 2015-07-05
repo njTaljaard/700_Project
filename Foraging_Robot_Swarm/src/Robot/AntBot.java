@@ -23,12 +23,15 @@ public class AntBot {
     private float gamma_1 = 0.5f;
     private float gamma_2 = 0.975f;
     
+    private int iteration = 0;
+    
     public AntBot(Controller controller) {
         this.state = RobotState.Ant_SEARCH;
         this.controller = controller;
     }
     
-    public Position update(Position position) {
+    public Position update(Position position, int it) {        
+        iteration = it;
         return getNewPosition(position);
     }
     
@@ -140,7 +143,7 @@ public class AntBot {
                 int c = controller.grid.pickUpItem(tmp, true);
                 
                 if (c != Settings.EMPTY) {
-                    System.out.println(this.toString() + " Pick-Up " + tmp.print());
+                    System.out.println(this.toString() + " Pick-Up " + tmp.print() + "\t" + iteration);
                     setCarry(tmp, c);
                     state = RobotState.Ant_CARRY;
                 }
@@ -160,7 +163,7 @@ public class AntBot {
             if (controller.grid.getPoint(tmp) == Settings.EMPTY &&
                     controller.grid.dropItem(tmp, carry)) {
                 
-                System.out.println(this.toString() + " Drop Tired " + tmp.print());
+                System.out.println(this.toString() + " Drop Tired " + tmp.print() + "\t" + iteration);
                 controller.grid.setPoint(position, Settings.EMPTY, true);
                 controller.grid.setPoint(tmp, carry, true);
                 
@@ -178,7 +181,7 @@ public class AntBot {
                 
                 if (controller.grid.dropItem(tmp, carry)) {
                     
-                    System.out.println(this.toString() + " Drop " + tmp.print());                    
+                    System.out.println(this.toString() + " Drop " + tmp.print() + "\t" + iteration);                    
                     controller.grid.setPoint(position, Settings.EMPTY, true);
                     controller.grid.setPoint(tmp, carry, true);
                     

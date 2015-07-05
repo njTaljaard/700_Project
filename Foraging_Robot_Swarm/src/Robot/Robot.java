@@ -27,11 +27,12 @@ public class Robot {
         this.position.pickupDensity = 0.0;
     }
     
-    public void update() {
+    public void update(int iteration) {
         
-        Position newPos;
+        Position newPos = null;
+        
         if (robotType == RobotState.ANT) {
-            newPos = antBot.update(position);
+            newPos = antBot.update(position, iteration);
         } else {
             newPos = beeBot.update(this, position);
         }

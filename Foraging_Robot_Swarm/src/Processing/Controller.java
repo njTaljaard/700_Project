@@ -35,31 +35,32 @@ public class Controller implements Runnable {
         
     @Override
     public void run() {
-        itterations = 0;
-        lastCarryItt = 0;
         
         setup();
         utils.writeRobots(robots, settings, ID);
         
-        if (print) {
+        //if (print) {
             System.out.println("Grid Size: " + grid.grid.length + 
                     "\nGold: " + Settings.GOLD + " Rock: " + Settings.ROCK + 
                     "\nAntGold: " + Settings.ANT_GOLD + " AntRock: " + Settings.ANT_ROCK);
-        } 
+        //} 
+        
+        itterations = 0;
+        lastCarryItt = 0;
         
         do {
             itterations++;
         
             for (Robot robot : robots) {
-                robot.update();
+                robot.update(itterations);
             }
             
-            if (print)
+            //if (print)
                 if ((itterations % 100 == 0)){
                     System.out.println("Iteration " + String.valueOf(itterations));
                     System.out.println("\tRemainding objects : " + String.valueOf(grid.countRemainder()));
                     utils.writeGrid(grid.grid, settings, String.valueOf(itterations));
-                    //utils.writeRobots(robots, settings, String.valueOf(itterations));
+                    utils.writeRobots(robots, settings, String.valueOf(itterations));
                 }
             
         } while (testStoppingCondition());
@@ -139,7 +140,7 @@ public class Controller implements Runnable {
             itterations++;
         
             for (Robot robot : robots) {
-                robot.update();
+                robot.update(itterations);
             }
             
             if (itterations % 100 == 0) {
