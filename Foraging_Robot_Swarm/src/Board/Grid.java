@@ -238,6 +238,32 @@ public class Grid {
         
         return area;
     }
+    
+    public ArrayList<Position> getSurrounding(Position origin, boolean laden, int carry) {
+        
+        ArrayList<Position> area = new ArrayList<>();
+        
+        int yTmp = origin.row;
+        int xTmp = origin.column;
+        
+        for (int i = -5+yTmp; i <= 5+yTmp; i++) {
+            
+            for (int j = -5+xTmp; j <= 5+xTmp; j++) {
+                
+                if (wrap(i, j) && (i != origin.row && j != origin.column)) {
+                    if (laden) {
+                        
+                        if (grid[i][j] == Settings.GOLD || grid[i][j] == Settings.ROCK) {
+
+                            area.add(new Position(i, j));
+                        }
+                    }
+                }
+            }            
+        }
+        
+        return area;
+    }
    
     public float getDensity(Position pos, ArrayList<Position> area) {
         float alpha = (float) 0.80;

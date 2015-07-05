@@ -200,9 +200,9 @@ public class BeeBot {
             baringVector.bareCount++;
             ladenCount++;
             
-            if (ladenCount > (controller.grid.grid.length * 1.5)) {
+            if (ladenCount > (controller.grid.grid.length * 1.4)) {
                 
-                if (pos != null && controller.grid.getPoint(pos) == Settings.EMPTY &&
+                if (pos != null && //controller.grid.getPoint(pos) == Settings.EMPTY &&
                         controller.grid.dropItem(pos, carry)) {
                     
                     System.out.println("\n" + this.toString() + " Drop - Revert to scouting " + pos.print() + "\n");
@@ -234,15 +234,46 @@ public class BeeBot {
                             }
                         }
                     }
-                } else {
+                } /*else {
                     return pos;
-                }
+                }*/
                 
             }
             
         } else { //MOVE TO BARE...
             
-            pos = moveToBare(position, options, controller.grid.getAllSurrounding(position, laden, carry));
+		bareCount++;       
+            if (bareCount > (baringVector.bareCount * 1.4)) {
+                
+                //System.out.println("\nForage - Revert to scout\n");
+                this.state = RobotState.Bee_SCOUT;
+                position.pickupDensity = 0.0;
+                bareCount = 0;
+                
+            } else {
+                
+                pos = moveToBare(position, controller.grid.getOptions(position, laden), controller.grid.getSurrounding(position, laden, carry));
+                
+                if (pos != null && controller.grid.getPoint(pos) != Settings.EMPTY) {
+                    
+                    if (computePickPropability(pos.currentDensity) > 0.1) {
+                
+                        setCarry(pos, controller.grid.pickUpItem(pos, false));
+                        pos.pickupDensity = pos.currentDensity;
+                        
+                        baringVector = new Position(pos.row, pos.column);
+                        baringVector.bareCount = 0;
+                        baringVector.currentDensity = pos.currentDensity;
+                        
+                        this.state = RobotState.Bee_FORAGE;
+                        //System.out.println("PICK-UP");
+                    }
+                }
+            }
+        }        
+        
+        return pos;
+            /*pos = moveToBare(position, options, controller.grid.getAllSurrounding(position, laden, carry));
                 
             bareCount++;       
             if (bareCount > (baringVector.bareCount * 1.5)) {
@@ -285,7 +316,7 @@ public class BeeBot {
             return options.get((int) controller.utils.getRandom() * options.size());
         }
         
-        return position;
+        return position;*/
     }
     
     private Position _dance(Robot bot, Position position) {
@@ -301,17 +332,17 @@ public class BeeBot {
         } else {
             
             //determine solo forage...
-            /*if (position.pickupDensity > 0.35) { // solo forage
+            if (position.pickupDensity > 0.35) { // solo forage
                 
                 state = RobotState.Bee_SOLO_FORAGE;
                 return getNewPosition(bot, position);
                 
-            } else {*/
+            } else {
                 
                 controller.grid.dancers.add(bot);
                 dancing = true;
                 
-            //}
+            }
         }
         
         return position;
@@ -381,8 +412,49 @@ public class BeeBot {
     }
     
     private Position moveToBare(Position position, ArrayList<Position> options, ArrayList<Position> area) {
-                
+
+	ArrayList<Position> use = new ArrayList<>();
         Position pos = getHighestDensity(position, options, area);
+        
+        if (useBaring) {
+            
+            if (pos.currentDensity > (position.pickupDensity * 0.4)) {
+                System.out.println(this.toString() + " Leave bare " + pos.print());
+                useBaring = false;
+                return pos;
+
+            } else {
+                
+                double dist = Double.MAX_VALUE;
+                double tmp;
+                
+                for (Position p : options) {
+                    
+                    tmp = controller.utils.distance(p, baringVector.row, baringVector.column);
+
+                    if (tmp < dist) {
+                        
+                        dist = tmp;
+                        pos = p;
+
+                        use.clear();
+                        use.add(p);
+
+                    } else if (tmp == dist) {
+                        use.add(p);
+                    }
+                }
+
+                if (!use.isEmpty()) {
+                    Collections.shuffle(use);
+                    pos = use.get((int) (controller.utils.getRandom() * use.size()));
+                }   
+            }      
+        } 
+
+        return pos;
+	    
+        /*Position pos = getHighestDensity(position, options, area);
         
         if (useBaring) {
             
@@ -420,12 +492,9 @@ public class BeeBot {
                     pos = use.get((int) (controller.utils.getRandom() * use.size()));
                 }
             }      
-        } /*else {
-            Collections.shuffle(options);
-            pos = options.get((int) (controller.utils.getRandom() * options.size()));
-        }*/
+        }
         
-        return pos;
+        return pos;*/
     }
     
     private double computePickPropability(double density) {

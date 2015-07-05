@@ -119,17 +119,14 @@ public class Utilities {
     }
     
     public int getNextGausion(Settings settings) {
-        int tmp = 0;
         
-        while (tmp <= 0) {
-            double tmp2 = Math.abs(random.nextGaussian());
-            if (tmp2 < 0) 
-                continue;
+        double tmp = Math.abs(random.nextGaussian());
+        while (tmp > 1) 
+            tmp -= 1;
             
-            tmp = (int) (tmp2 * settings.GridSize);
-        }
+        tmp = tmp * settings.GridSize;
         
-        return tmp;
+        return (int) tmp;
     }
     
     public int getBetween(int start, int end, Settings settings) {
