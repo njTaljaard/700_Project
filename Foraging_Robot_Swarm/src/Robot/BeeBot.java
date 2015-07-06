@@ -163,12 +163,11 @@ public class BeeBot {
                 controller.grid.getAllSurrounding(position, laden, carry));
          
         if (pos == position) {
-            System.out.println("No high");
             return position;
         }
 
         if (controller.grid.getPoint(pos) != Settings.EMPTY) {
-            System.out.println(computePickPropability(pos.currentDensity));
+            //System.out.println(computePickPropability(pos.currentDensity));
             if (computePickPropability(pos.currentDensity) > 0.1) {
                 
                 setCarry(pos, controller.grid.pickUpItem(pos, false));
@@ -179,13 +178,9 @@ public class BeeBot {
                 baringVector.currentDensity = pos.currentDensity;
                 
                 this.state = RobotState.Bee_FORAGE;
-                System.out.println(this.toString() + " PICK-UP " + pos.print());
+                //System.out.println(this.toString() + " PICK-UP " + pos.print());
             }
-        } /*else {
-            System.out.println("Random scout");
-            Collections.shuffle(options);
-            pos = options.get((int) (controller.utils.getRandom() * options.size()));
-        }*/
+        }
         
         return pos;
     }
@@ -205,7 +200,7 @@ public class BeeBot {
                 if (pos != null && //controller.grid.getPoint(pos) == Settings.EMPTY &&
                         controller.grid.dropItem(pos, carry)) {
                     
-                    System.out.println("\n" + this.toString() + " Drop - Revert to scouting " + pos.print() + "\n");
+                    //System.out.println("\n" + this.toString() + " Drop - Revert to scouting " + pos.print() + "\n");
                     setCarry(pos, Settings.EMPTY);
                     controller.grid.setPoint(pos, carry, false);
                     controller.grid.setPoint(position, Settings.EMPTY, false);
@@ -243,7 +238,7 @@ public class BeeBot {
         } else { //MOVE TO BARE...
             
 		bareCount++;       
-            if (bareCount > (baringVector.bareCount * 1.4)) {
+            if (bareCount > (baringVector.bareCount * 1.5)) {
                 
                 //System.out.println("\nForage - Revert to scout\n");
                 this.state = RobotState.Bee_SCOUT;
@@ -273,50 +268,6 @@ public class BeeBot {
         }        
         
         return pos;
-            /*pos = moveToBare(position, options, controller.grid.getAllSurrounding(position, laden, carry));
-                
-            bareCount++;       
-            if (bareCount > (baringVector.bareCount * 1.5)) {
-                
-                System.out.println("\n" + this.toString() + " Forage - Revert to scout " + pos.print() + "\n");
-                this.state = RobotState.Bee_SCOUT;
-                position.pickupDensity = 0.0;
-                ladenCount = 0;
-                bareCount = 0;
-                
-            } else {
-                
-                if (pos != null) {
-                        
-                    if (controller.grid.getPoint(pos) != Settings.EMPTY) {
-                        System.out.println(computePickPropability(pos.currentDensity));
-                        if (computePickPropability(pos.currentDensity) > 0.1) {
-
-                            setCarry(pos, controller.grid.pickUpItem(pos, false));
-                            pos.pickupDensity = pos.currentDensity;
-
-                            baringVector = new Position(pos.row, pos.column);
-                            baringVector.bareCount = 0;
-                            baringVector.currentDensity = pos.currentDensity;
-                            ladenCount = 1;
-                            bareCount = 0;
-
-                            this.state = RobotState.Bee_FORAGE;
-                            System.out.println(this.toString() + " PICK-UP " + pos.print());
-                        }
-                    }
-                
-                    return pos;
-                }
-            }
-        }        
-        
-        if (options.size() > 0) {
-            //Collections.shuffle(options);
-            return options.get((int) controller.utils.getRandom() * options.size());
-        }
-        
-        return position;*/
     }
     
     private Position _dance(Robot bot, Position position) {
@@ -332,17 +283,18 @@ public class BeeBot {
         } else {
             
             //determine solo forage...
-            if (position.pickupDensity > 0.35) { // solo forage
+            /*System.out.println("Test this " + position.pickupDensity);
+            if (position.pickupDensity < 0.99) { // solo forage
                 
                 state = RobotState.Bee_SOLO_FORAGE;
                 return getNewPosition(bot, position);
                 
-            } else {
+            } else {*/
                 
                 controller.grid.dancers.add(bot);
                 dancing = true;
                 
-            }
+            //}
         }
         
         return position;

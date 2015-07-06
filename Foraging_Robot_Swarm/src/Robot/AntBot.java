@@ -24,6 +24,7 @@ public class AntBot {
     private float gamma_2 = 0.975f;
     
     private int iteration = 0;
+    private int avoid = 0;
     
     public AntBot(Controller controller) {
         this.state = RobotState.Ant_SEARCH;
@@ -51,7 +52,7 @@ public class AntBot {
                 case RobotState.Ant_SEARCH :
                     
                     area = controller.grid.getAllSurrounding(position, laden, carry);
-                    tmp = _search(options, area);
+                    tmp = _search(position, options, area);
 
                     if (tmp.row == position.row && tmp.column == position.column) {
                         /*System.out.println("Search Random : \n\t" + controller.grid.getPoint(options.get(r)) 
@@ -132,25 +133,34 @@ public class AntBot {
         return laden;
     }
     
-    private Position _search(ArrayList<Position> option, ArrayList<Position> area) {
-        Position tmp = getLowestDensity(option, area);
+    private Position _search(Position position, ArrayList<Position> option, ArrayList<Position> area) {
         
-        if (controller.grid.getPoint(tmp) != Settings.EMPTY) {
-            /*System.out.println("\tTest " + controller.grid.getPoint(tmp) + " " 
-                    + computePickPropability(tmp.currentDensity) + " " + tmp.currentDensity);*/
-            if (computePickPropability(tmp.currentDensity) < 0.119) {
-                
-                int c = controller.grid.pickUpItem(tmp, true);
-                
-                if (c != Settings.EMPTY) {
-                    System.out.println(this.toString() + " Pick-Up " + tmp.print() + "\t" + iteration);
-                    setCarry(tmp, c);
-                    state = RobotState.Ant_CARRY;
+        if (avoid > 0) {
+            Position tmp = fatherest(position, option);
+            
+            avoid--;
+            return tmp;
+        } else {
+            
+            Position tmp = getLowestDensity(option, area);
+
+            if (controller.grid.getPoint(tmp) != Settings.EMPTY) {
+                /*System.out.println("\tTest " + controller.grid.getPoint(tmp) + " " 
+                        + computePickPropability(tmp.currentDensity) + " " + tmp.currentDensity);*/
+                if (computePickPropability(tmp.currentDensity) < 0.119) {
+
+                    int c = controller.grid.pickUpItem(tmp, true);
+
+                    if (c != Settings.EMPTY) {
+                        //System.out.println(this.toString() + " Pick-Up " + tmp.print() + "\t" + iteration);
+                        setCarry(tmp, c);
+                        state = RobotState.Ant_CARRY;
+                    }
                 }
             }
+
+            return tmp;
         }
-        
-        return tmp;
     }
     
     private Position _carry(Position position, ArrayList<Position> option, ArrayList<Position> area) {
@@ -163,12 +173,14 @@ public class AntBot {
             if (controller.grid.getPoint(tmp) == Settings.EMPTY &&
                     controller.grid.dropItem(tmp, carry)) {
                 
-                System.out.println(this.toString() + " Drop Tired " + tmp.print() + "\t" + iteration);
+                //System.out.println(this.toString() + " Drop Tired " + tmp.print() + "\t" + iteration);
                 controller.grid.setPoint(position, Settings.EMPTY, true);
                 controller.grid.setPoint(tmp, carry, true);
                 
                 setCarry(tmp, Settings.EMPTY);
                 state = RobotState.Ant_SEARCH;
+                avoid = (int) (controller.settings.GridSize * 0.1);
+                
                 return tmp;
             }
         }
@@ -181,12 +193,14 @@ public class AntBot {
                 
                 if (controller.grid.dropItem(tmp, carry)) {
                     
-                    System.out.println(this.toString() + " Drop " + tmp.print() + "\t" + iteration);                    
+                    //System.out.println(this.toString() + " Drop " + tmp.print() + "\t" + iteration);                    
                     controller.grid.setPoint(position, Settings.EMPTY, true);
                     controller.grid.setPoint(tmp, carry, true);
                     
                     setCarry(tmp, Settings.EMPTY);
                     state = RobotState.Ant_SEARCH;
+                    avoid = (int) (controller.settings.GridSize * 0.1);
+                    
                     return tmp;
                 }
             }
@@ -253,6 +267,32 @@ public class AntBot {
             
             return options.get((int) (controller.utils.getRandom() * options.size()));
         }
+    }
+    
+    public Position fatherest(Position position, ArrayList<Position> options) {
+        
+        Position tmp = null;
+        double dist = 0;
+        double dist2 = 0;
+        
+        for (Position p : options) {
+            
+            if (controller.grid.getPoint(p) == Settings.EMPTY) {
+                
+                dist2 = controller.utils.distance(position, p.row, p.column);
+                if (dist2 > dist) {
+                    dist = dist2;
+                    tmp = p;
+                }
+            }
+        }
+        
+        if (tmp == null) {
+            Collections.shuffle(options);
+            tmp = options.get((int) (controller.utils.getRandom() * options.size()));
+        }
+        
+        return tmp;
     }
     
     private double computePickPropability(double density) {

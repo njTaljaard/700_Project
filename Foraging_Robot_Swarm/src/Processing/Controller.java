@@ -60,7 +60,7 @@ public class Controller implements Runnable {
                     System.out.println("Iteration " + String.valueOf(itterations));
                     System.out.println("\tRemainding objects : " + String.valueOf(grid.countRemainder()));
                     utils.writeGrid(grid.grid, settings, String.valueOf(itterations));
-                    utils.writeRobots(robots, settings, String.valueOf(itterations));
+                    //utils.writeRobots(robots, settings, String.valueOf(itterations));
                 }
             
         } while (testStoppingCondition());
