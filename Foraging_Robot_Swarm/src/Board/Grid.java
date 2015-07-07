@@ -131,17 +131,17 @@ public class Grid {
         
         if (type == Settings.EMPTY) {
             
-            grid[pos.row][pos.column] = Settings.EMPTY;
+            //grid[pos.row][pos.column] = Settings.EMPTY;
             return true;
             
         } else if (type == Settings.GOLD) {
             
-            grid[pos.row][pos.column] = Settings.GOLD;
+            //grid[pos.row][pos.column] = Settings.GOLD;
             return true;
             
         } else if (type == Settings.ROCK) {
             
-            grid[pos.row][pos.column] = Settings.ROCK;
+            //grid[pos.row][pos.column] = Settings.ROCK;
             return true;
             
         }

@@ -216,7 +216,7 @@ public class BeeBot {
                 if (pos.column == 0) {
                     //System.out.println("Home base");
                     if (controller.grid.dropItem(pos, Settings.EMPTY)) {
-                        System.out.println(this.toString() + " Drop " + pos.print() + "\n");
+                        //System.out.println(this.toString() + " Drop " + pos.print() + "\n");
                         
                         setCarry(pos, Settings.EMPTY);
                         controller.grid.setPoint(position, Settings.EMPTY, false);
@@ -371,7 +371,7 @@ public class BeeBot {
         if (useBaring) {
             
             if (pos.currentDensity > (position.pickupDensity * 0.4)) {
-                System.out.println(this.toString() + " Leave bare " + pos.print());
+                //System.out.println(this.toString() + " Leave bare " + pos.print());
                 useBaring = false;
                 return pos;
 
