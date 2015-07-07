@@ -131,17 +131,14 @@ public class Grid {
         
         if (type == Settings.EMPTY) {
             
-            //grid[pos.row][pos.column] = Settings.EMPTY;
             return true;
             
         } else if (type == Settings.GOLD) {
             
-            //grid[pos.row][pos.column] = Settings.GOLD;
             return true;
             
         } else if (type == Settings.ROCK) {
             
-            //grid[pos.row][pos.column] = Settings.ROCK;
             return true;
             
         }
@@ -289,7 +286,7 @@ public class Grid {
             return 0;
         
         tmp = 1 - tmp;
-        //System.out.println("Found dens " + tmp);
+        
         return (float) tmp;
     }
     

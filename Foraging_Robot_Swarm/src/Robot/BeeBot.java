@@ -64,18 +64,7 @@ public class BeeBot {
                 break;
             case RobotState.Bee_FORAGE :
                 pos = _forage(bot, position);
-                
-                /*if (pos != null) {
-                    if (laden)
-                        System.out.println("Forage home\n\t " //+ this.toString() + " " 
-                                + position.print() + " -> " + pos.print() + " : " 
-                                + controller.grid.getPoint(pos));
-                    else 
-                        System.out.println("Forage bare\n\t " //+ this.toString() + " " 
-                                + position.print() + " -> " + pos.print() + " : "
-                                + controller.grid.getPoint(pos));
-                }*/
-                
+                                
                 break;
             case RobotState.Bee_DANCE :
                 pos = _dance(bot, position);
@@ -229,9 +218,7 @@ public class BeeBot {
                             }
                         }
                     }
-                } /*else {
-                    return pos;
-                }*/
+                } 
                 
             }
             
@@ -405,48 +392,6 @@ public class BeeBot {
         } 
 
         return pos;
-	    
-        /*Position pos = getHighestDensity(position, options, area);
-        
-        if (useBaring) {
-            
-            if (pos.currentDensity > (baringVector.pickupDensity * 0.5)) {
-                System.out.println(this.toString() + " Leave bare " + pos.print());
-                useBaring = false;
-                return pos;
-
-            } else {
-                
-                ArrayList<Position> use = new ArrayList<>();
-                Position spare = pos;
-                double dist = Double.MAX_VALUE;
-                double tmp;
-                
-                for (Position p : options) {
-                    
-                    tmp = controller.utils.distance(p, baringVector.row, baringVector.column);
-                    
-                    if (tmp < dist) {
-                        
-                        dist = tmp;
-                        pos = p;
-
-                        use.clear();
-                        use.add(p);
-
-                    } else if (tmp == dist) {
-                        use.add(p);
-                    }
-                }
-
-                if (use.size() > 1) {
-                    Collections.shuffle(use);
-                    pos = use.get((int) (controller.utils.getRandom() * use.size()));
-                }
-            }      
-        }
-        
-        return pos;*/
     }
     
     private double computePickPropability(double density) {

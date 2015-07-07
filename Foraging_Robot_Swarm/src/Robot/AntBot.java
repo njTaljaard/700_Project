@@ -96,15 +96,6 @@ public class AntBot {
                         
                         controller.grid.setPoint(position, carryTemp, true);
                     }
-                    
-                    /*if (tmp != null && tmp.row != position.row && tmp.column != position.column) {
-                        
-                        return tmp;
-                    } else {
-                        
-                        options.get(r).pickupDensity = position.pickupDensity;
-                        return options.get(r);
-                    }*/
             }
         }
                         
@@ -181,8 +172,6 @@ public class AntBot {
                     controller.grid.dropItem(tmp, carry)) {
                 
                 //System.out.println(this.toString() + " Drop Tired " + tmp.print() + "\t" + iteration);
-                //controller.grid.setPoint(position, Settings.EMPTY, true);
-                //controller.grid.setPoint(tmp, carry, true);
                 
                 setCarry(tmp, Settings.EMPTY);
                 state = RobotState.Ant_SEARCH;
@@ -201,8 +190,6 @@ public class AntBot {
                 if (controller.grid.dropItem(tmp, carry)) {
                     
                     //System.out.println(this.toString() + " Drop " + tmp.print() + "\t" + iteration);                    
-                    //controller.grid.setPoint(position, Settings.EMPTY, true);
-                    //controller.grid.setPoint(tmp, carry, true);
                     
                     setCarry(tmp, Settings.EMPTY);
                     state = RobotState.Ant_SEARCH;
@@ -211,10 +198,7 @@ public class AntBot {
                     return tmp;
                 }
             }
-        } 
-        
-        //controller.grid.setPoint(position, Settings.EMPTY, true);
-        //controller.grid.setPoint(tmp, carry, true);
+        }
         
         return tmp;
     }
@@ -241,7 +225,7 @@ public class AntBot {
             return pos;
         } else if (options.size() > 0) {
             
-            //Collections.shuffle(options);
+            Collections.shuffle(options);
             return options.get((int) (controller.utils.getRandom() * options.size()));
         } 
         
