@@ -25,13 +25,13 @@ public class Main {
     public void runSimulation() {
         int id = 0;
         
-        final BlockingQueue<Runnable> queue = new ArrayBlockingQueue<>(57600);
-        ExecutorService executorService = new ThreadPoolExecutor(12, 57600,
+        final BlockingQueue<Runnable> queue = new ArrayBlockingQueue<>(5000000);
+        ExecutorService executorService = new ThreadPoolExecutor(12, 5000000,
                 0L, TimeUnit.MILLISECONDS,
                 queue);
                 
         //Grid size
-        /*for (int gSize = 0; gSize <= 2; gSize++) {
+        for (int gSize = 0; gSize <= 2; gSize++) {
             
             //Amount of robots
             for (int rCount = 0; rCount <= 4; rCount++) {
@@ -42,30 +42,29 @@ public class Main {
                     //Gold : Rock
                     for (int ratio = 0; ratio <= 7; ratio++) {
                         
-                        //Grid pattern
-                        for (int scatter = 0; scatter <= 3; scatter++) {
-                                                        
-                            if (Settings.scatterTypes[scatter] == Settings.UNIFORM ||  //Remove
-                                    Settings.scatterTypes[scatter] == Settings.GAUSSIAN) { //Remove
-                                
+                        for (int weight = 0; weight <= 7; weight++) {
+
+                            //Grid pattern
+                            for (int scatter = 0; scatter <= 3; scatter++) {
+
                                 //Run a single configuration
                                 for (int tests = 0; tests < 30; tests++) {
                                     executorService.execute(
                                             new Controller(
                                                 new Settings(gSize, rCount, cover, 
-                                                        ratio, scatter),
-                                                id++));
+                                                        ratio, weight, scatter),
+                                                id++, false, false));
                                 }
-                            }                            
-                        }                        
+                            }                        
+                        }
                     }                    
                 }                
             }            
-        }*/
+        }
         
-        executorService.execute(new Controller(new Settings(0, 0, 3, 0, 3, 1), id++, false, false));
+        //executorService.execute(new Controller(new Settings(0, 0, 3, 0, 3, 1), id++, false, false));
         
-        //while (queue.remainingCapacity() > 0) {}
+        while (queue.remainingCapacity() > 0) {}
         
     }
     

@@ -26,7 +26,7 @@ public class Grid {
         
         createGrid();
         
-        util.writeGrid(grid, settings, "0");
+        //util.writeGrid(grid, settings, "0");
     }
     
     public int countRemainder() {
@@ -307,11 +307,11 @@ public class Grid {
         int rock = (int) (settings.ratio * gold);
         int place, x, y;
         
-        System.out.println("Size : " + Math.pow(settings.GridSize, 2) + " Place : " + placement + " Rock : " + rock + " Gold : " + gold);
+        //System.out.println("Size : " + Math.pow(settings.GridSize, 2) + " Place : " + placement + " Rock : " + rock + " Gold : " + gold);
         
         switch (settings.scatterType) {
             case Settings.UNIFORM:
-                System.out.println("Uniform");
+                //System.out.println("Uniform");
                 for (place = 0; place < gold;) {
                     x = utils.getNextUniform(settings);
                     y = utils.getNextUniform(settings);
@@ -334,7 +334,7 @@ public class Grid {
                     
                 break;
             case Settings.CLUSTERD: 
-                System.out.println("Clusterd");
+                //System.out.println("Clusterd");
                 
                 Controller control = new Controller(settings, 0, false, true);
                 control.preCluster();
@@ -346,11 +346,11 @@ public class Grid {
                 
                 break;
             case Settings.VEIN:
-                System.out.println("Vein");
+                //System.out.println("Vein");
                 int start = (int) ( (settings.GridSize / 2) - (settings.GridSize * (settings.coverage / 2)) );
                 int end = (int) ( (settings.GridSize / 2) + (settings.GridSize * (settings.coverage / 2)) ); 
                 
-                System.out.println(start + " " + end);
+                //System.out.println(start + " " + end);
                 
                 for (place = 0; place < gold;) {
                     x = utils.getNextUniform(settings);
@@ -374,7 +374,7 @@ public class Grid {
                 
                 break;
             case Settings.GAUSSIAN:
-                System.out.println("Gaussian");
+                //System.out.println("Gaussian");
                 for (place = 0; place < gold;) {
                     x = utils.getNextGausion(settings);
                     y = utils.getNextGausion(settings);

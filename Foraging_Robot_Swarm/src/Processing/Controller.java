@@ -37,13 +37,13 @@ public class Controller implements Runnable {
     public void run() {
         
         setup();
-        utils.writeRobots(robots, settings, ID);
+        //utils.writeRobots(robots, settings, ID);
         
-        //if (print) {
+        /*if (print) {
             System.out.println("Grid Size: " + grid.grid.length + 
                     "\nGold: " + Settings.GOLD + " Rock: " + Settings.ROCK + 
                     "\nAntGold: " + Settings.ANT_GOLD + " AntRock: " + Settings.ANT_ROCK);
-        //} 
+        } */
         
         itterations = 0;
         lastCarryItt = 0;
@@ -55,24 +55,26 @@ public class Controller implements Runnable {
                 robot.update(itterations);
             }
             
-            //if (print)
+            /*if (print) {
                 if ((itterations % 100 == 0)){
                     System.out.println("Iteration " + String.valueOf(itterations));
                     System.out.println("\tRemainding objects : " + String.valueOf(grid.countRemainder()));
                     utils.writeGrid(grid.grid, settings, String.valueOf(itterations));
                     //utils.writeRobots(robots, settings, String.valueOf(itterations));
                 }
+            }*/
             
         } while (testStoppingCondition());
             
-        if (print) {
+        /*if (print) {
             utils.writeGrid(grid.grid, settings, "DONE");
             System.out.println("Done... " + String.valueOf(itterations) + " " + String.valueOf(grid.countRemainder()));
         } else {
             System.out.println("Cluster done...");
-        }
+        }*/
         
-        System.exit(0);
+        System.out.println(this.toString() + " " + String.valueOf(itterations) + " " + String.valueOf(grid.countRemainder()));
+        //System.exit(0);
         
         this.done = true;
     }
@@ -81,10 +83,10 @@ public class Controller implements Runnable {
         
         if (preCluster) {
             settings.scatterType = 1;
-            System.out.println("Create grid : " + settings.scatterType);
+            //System.out.println("Create grid : " + settings.scatterType);
             this.grid = new Grid(settings, utils);
         } else {
-            System.out.println("Create grid : " + settings.scatterType);
+            //System.out.println("Create grid : " + settings.scatterType);
             this.grid = new Grid(settings,utils);
         }
         
@@ -133,8 +135,8 @@ public class Controller implements Runnable {
         setup();
         //utils.writeRobots(robots, settings, ID);
         
-        System.out.println("PreCluster " + grid.countRemainder());
-        utils.writeGrid(grid.grid, settings, "PreCluster");
+        //System.out.println("PreCluster " + grid.countRemainder());
+        //utils.writeGrid(grid.grid, settings, "PreCluster");
         
         do {
             itterations++;
@@ -143,16 +145,18 @@ public class Controller implements Runnable {
                 robot.update(itterations);
             }
             
-            if (itterations % 100 == 0) {
-                utils.writeGrid(grid.grid, settings, String.valueOf(itterations) + " cluster");
-            }
+            /*if (print) {
+                if (itterations % 100 == 0) {
+                    utils.writeGrid(grid.grid, settings, String.valueOf(itterations) + " cluster");
+                }
+            }*/
             
         } while (testStoppingCondition());
         
         grid.clear();
             
-        utils.writeGrid(grid.grid, settings, "PreCluster Done");
-        System.out.println("PreCluster Done " + grid.countRemainder());
+        //utils.writeGrid(grid.grid, settings, "PreCluster Done");
+        //System.out.println("PreCluster Done " + grid.countRemainder());
         this.done = true;
     }
 }
