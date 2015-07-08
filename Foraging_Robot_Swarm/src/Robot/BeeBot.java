@@ -19,6 +19,7 @@ public class BeeBot {
     private int ladenCount;
     private int forageCount;
     private int carry;  
+    private int tWait = 30;
     
     private boolean laden;
     private boolean dancing;

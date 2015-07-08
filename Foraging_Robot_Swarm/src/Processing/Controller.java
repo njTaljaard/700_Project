@@ -5,6 +5,8 @@ import Setup.RobotState;
 import Setup.Settings;
 import Setup.Utilities;
 import Board.Grid;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Nico
@@ -74,9 +76,9 @@ public class Controller implements Runnable {
         }*/
         
         System.out.println(this.toString() + " " + String.valueOf(itterations) + " " + String.valueOf(grid.countRemainder()));
-        //System.exit(0);
         
-        this.done = true;
+        this.done = true;        
+        return;
     }
     
     private void setup() {
