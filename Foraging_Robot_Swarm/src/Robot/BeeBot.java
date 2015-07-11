@@ -19,7 +19,9 @@ public class BeeBot {
     private int ladenCount;
     private int forageCount;
     private int carry;  
-    private int tWait = 30;
+    
+    private int tWait = 50;
+    private int waitTime = 0;
     
     private boolean laden;
     private boolean dancing;
@@ -37,7 +39,7 @@ public class BeeBot {
         this.baringVector = new Position();
         this.employed = controller.utils.getRandom() > 0.45;
         
-        if (controller.utils.getRandom() > 0.45) {
+        if (employed) {
             this.state = RobotState.Bee_SCOUT;
         } else {
             this.state = RobotState.Bee_WAIT;
@@ -139,10 +141,22 @@ public class BeeBot {
                     
                     baringVector = r.getBareing();
                     state = RobotState.Bee_FORAGE;
+                    controller.totalWaited += waitTime;
+                    employed = true;
+                    waitTime = 0;
+                    
                     return getNewPosition(bot, position);
                 }
             }
         }   
+        
+        waitTime++;
+        if (waitTime > tWait) {
+            employed = true;
+            state = RobotState.Bee_FORAGE;
+            controller.totalWaited += waitTime;
+            waitTime = 0;
+        }
         
         return position;
     }
@@ -179,9 +193,20 @@ public class BeeBot {
         Position pos = null;
         ArrayList<Position> options = controller.grid.getOptions(position, laden);
         
+        if (!employed) {
+            
+            pos = moveToHome(position, options);
+            
+            if (pos.column == 0) {
+                this.state = RobotState.Bee_WAIT;
+                this.waitTime = 0;
+            }
+        }
+        
         if (laden) {
             
             pos = moveToHome(position, options);
+            
             baringVector.bareCount++;
             ladenCount++;
             
@@ -195,7 +220,7 @@ public class BeeBot {
                     controller.grid.setPoint(pos, carry, false);
                     controller.grid.setPoint(position, Settings.EMPTY, false);
                     
-                    this.state = RobotState.Bee_SCOUT;
+                    this.employed = false;
                     position.pickupDensity = 0.0;
                     bareCount = 0;
                 }
@@ -347,6 +372,9 @@ public class BeeBot {
             Collections.shuffle(use);
             pos = use.get((int) (controller.utils.getRandom() * use.size()));
         }
+        
+        if (pos == null)
+            return position;
         
         return pos;
     }

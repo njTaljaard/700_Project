@@ -5,8 +5,6 @@ import Setup.RobotState;
 import Setup.Settings;
 import Setup.Utilities;
 import Board.Grid;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * @author Nico
@@ -19,17 +17,31 @@ public class Controller implements Runnable {
     public final Utilities utils;
     
     private final String ID;
-    private int itterations;
     private int lastCarryItt;
+    public int itterations;
     
     public boolean done;
     private boolean print;
     private boolean preCluster;
     
-    public Controller(Settings settings, int id, boolean print, boolean preCluster) {
+    /* Stats values */
+    public int test;
+    public int totalWaited = 0;
+    
+    public int totalForagedGold = 0;
+    public int totalPlacedGold = 0;
+    public int ittGoldFinished = 0;
+    
+    public int totalForagedRock = 0;
+    public int totalPlacedRock = 0;
+    public int ittRockFinished = 0;
+    /****************/
+    
+    public Controller(Settings settings, int id, boolean print, boolean preCluster, int test) {
         this.settings = settings;
         this.utils = new Utilities();
         this.ID = String.valueOf(id);
+        this.test = test;
         this.done = false;
         this.print = print;
         this.preCluster = preCluster;
@@ -39,6 +51,8 @@ public class Controller implements Runnable {
     public void run() {
         
         setup();
+        totalPlacedGold = grid.countGold();
+        totalPlacedRock = grid.countRock();
         //utils.writeRobots(robots, settings, ID);
         
         /*if (print) {
@@ -66,6 +80,12 @@ public class Controller implements Runnable {
                 }
             }*/
             
+            if (ittGoldFinished == 0 && grid.countGold() == 0)
+                ittGoldFinished = itterations;
+            
+            if (ittRockFinished == 0 && grid.countRock() == 0) 
+                ittRockFinished = itterations;
+            
         } while (testStoppingCondition());
             
         /*if (print) {
@@ -76,6 +96,17 @@ public class Controller implements Runnable {
         }*/
         
         System.out.println(this.toString() + " " + String.valueOf(itterations) + " " + String.valueOf(grid.countRemainder()));
+        
+        totalForagedGold = totalPlacedGold - grid.countGold();
+        totalForagedRock = totalPlacedRock - grid.countRock();
+        
+        if (ittGoldFinished != 0)
+            ittGoldFinished = itterations;
+        
+        if (ittRockFinished != 0)
+            ittRockFinished = itterations;
+        
+        utils.writeState(this, settings);
         
         this.done = true;        
         return;

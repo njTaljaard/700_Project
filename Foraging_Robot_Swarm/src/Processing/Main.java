@@ -31,7 +31,7 @@ public class Main {
                 queue);
                 
         //Grid size
-        /*for (int gSize = 0; gSize <= 2; gSize++) {
+        for (int gSize = 0; gSize <= 2; gSize++) {
             
             //Amount of robots
             for (int rCount = 0; rCount <= 4; rCount++) {
@@ -46,7 +46,7 @@ public class Main {
 
                             //Grid pattern
                             for (int scatter = 0; scatter <= 3; scatter++) {//*/
-
+                                
                                 //Run a single configuration
                                 for (int tests = 0; tests < 30; tests++) {
                                     /*executorService.execute(
@@ -55,9 +55,9 @@ public class Main {
                                                         ratio, weight, scatter),
                                                 id++, false, false));//*/
                                     
-                                    executorService.execute(new Controller(new Settings(0, 0, 3, 0, 3, 1), id++, false, false));
+                                    executorService.execute(new Controller(new Settings(0, 0, 3, 0, 3, 1), id++, false, false, tests));
                                 }
-                            /*}                        
+                            }                        
                         }
                     }                    
                 }                

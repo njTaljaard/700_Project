@@ -1,5 +1,7 @@
 package Setup;
 
+import Processing.Controller;
+import Processing.Stats;
 import Robot.Position;
 import Robot.Robot;
 import java.io.BufferedWriter;
@@ -17,6 +19,33 @@ public class Utilities {
     private static final Random random = new Random();
     
     public Utilities() {}
+    
+    public void writeState(Controller controller, Settings settings) {
+        File file = new File("./Stats/" + settings.GridSize + "-" 
+                + settings.RobotCount + "-" + settings.coverage + "-" 
+                + settings.ratio + "-" + settings.scatterType+ "-" 
+                + settings.weight + "/" + controller.test + ".txt");
+
+        String write = controller.itterations + "," + controller.totalWaited +
+                "," + controller.totalPlacedGold + "," + controller.totalForagedGold +
+                "," + controller.ittGoldFinished + "," + controller.totalPlacedRock +
+                "," + controller.totalForagedRock + "," + controller.ittRockFinished;
+            
+        //Stats.writeState(file, write);
+        try {            
+            if (file.createNewFile()) {
+                
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+                    writer.write(write);
+                }
+                
+            } else {
+                System.out.println("Could not create file " + file.getCanonicalPath());
+            }        
+        } catch (IOException ex) {
+            Logger.getLogger(Stats.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
     public void writeGrid(int[][] grid, Settings settings, String IT) {
         try {

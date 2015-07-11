@@ -40,6 +40,30 @@ public class Grid {
         return c;
     }
     
+    public int countGold() {
+        int c = 0;
+        
+        for (int i = 0; i < grid.length; i++)
+            for (int j = 0; j < grid.length; j++)
+                if (grid[i][j] != Settings.EMPTY && grid[i][j] == Settings.ANT_GOLD
+                        && grid[i][j] == Settings.BEE_GOLD)
+                    c++;
+        
+        return c;
+    }
+    
+    public int countRock() {
+        int c = 0;
+        
+        for (int i = 0; i < grid.length; i++)
+            for (int j = 0; j < grid.length; j++)
+                if (grid[i][j] == Settings.ROCK && grid[i][j] == Settings.ANT_ROCK
+                        && grid[i][j] == Settings.BEE_ROCK)
+                    c++;
+        
+        return c;
+    }
+    
     public boolean isClustered() {
         return grouping.grouped(grid);
     }
@@ -336,7 +360,7 @@ public class Grid {
             case Settings.CLUSTERD: 
                 //System.out.println("Clusterd");
                 
-                Controller control = new Controller(settings, 0, false, true);
+                Controller control = new Controller(settings, 0, false, true, 0);
                 control.preCluster();
                 
                 while(!control.done){}
