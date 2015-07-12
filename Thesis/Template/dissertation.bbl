@@ -1,0 +1,77 @@
+\newcommand{\noopsort}[1]{} \newcommand{\singleletter}[1]{#1}
+\begin{thebibliography}{10}
+
+\bibitem{ref:Aha:1998}
+David~W. Aha, Catherine~L. Blake, Seth~J. Hettich, Eamonn~J. Keogh,
+  Christopher~J. Merz, and Patrick~M. Murphy.
+\newblock {UCI} repository of machine learning databases, 1998.
+\newblock Department of Information and Computer Sciences, University of
+  California, Irvine, United States of America. Available online:
+  [\url{http://www.ics.uci.edu/~mlearn/MLRepository.html}] (Accessed:
+  13~February~2004).
+
+\bibitem{ref:Alahakoon:2000}
+Damminda Alahakoon, Saman~K. Halgamuge, and Bala Srinivasan.
+\newblock Dynamic self-organizing maps with controlled growth for knowledge
+  discovery.
+\newblock {\em IEEE Transactions on Neural Networks}, 11(3):601--614, May 2000.
+\newblock Available online: [\url{doi:10.1109/72.846732}].
+
+\bibitem{ref:Alhoniemi:1999b}
+Esa Alhoniemi, Johan Himberg, and Juha Vesanto.
+\newblock Probabilistic measures for responses of {Self-Organizing Map} units.
+\newblock In {\em Proceedings of the International ICSC Congress on
+  Computational Intelligence Methods and Applications (CIMA'99)}, pages
+  286--290. ICSC Academic Press, 1999.
+
+\bibitem{ref:Alhoniemi:1999a}
+Esa Alhoniemi, Jaakko Hollm{\'{e}}n, Olli Simula, and Juha Vesanto.
+\newblock Process monitoring and modeling using the self-organizing map.
+\newblock {\em Integrated Computer-Aided Engineering}, 6(1):3--14, 1999.
+
+\bibitem{ref:Clark:1989}
+Peter Clark.
+\newblock Knowledge representation in machine learning.
+\newblock In Yves Kodratoff and Alan Hutchinson, editors, {\em Machine and
+  Human Learning}, pages 35--49. Kogan Page, London, England, 1989.
+
+\bibitem{ref:Engelbrecht:2002}
+Andries~P. Engelbrecht.
+\newblock {\em Computational Intelligence: An Introduction}.
+\newblock John Wiley \& Sons, Chichester, England, December 2002.
+
+\bibitem{ref:Fasulo:1999}
+Daniel Fasulo.
+\newblock An analysis of recent work on clustering algorithms.
+\newblock Technical Report 01-03-02, Department of Computer Science and
+  Engineering, University of Washington, Seattle, Washington, United States of
+  America, 26~April 1999.
+
+\bibitem{ref:Kaski:1997}
+Samuel{\noopsort{.}} Kaski.
+\newblock {\em Data Exploration Using Self-Organizing Maps}.
+\newblock Doctoral thesis, Acta Polytechnica Scandinavica, number 82 of {\em
+  Mathematics, Computing and Management in Engineering Series}, Helsinki
+  University of Technology, Department of Computer Science and Engineering,
+  Espoo, Finland, February 1997.
+\newblock Published by the Finnish Academies of Technology.
+
+\bibitem{ref:Kaski:1995}
+S{\noopsort{amuel}}. Kaski and T.~Kohonen.
+\newblock Exploratory data analysis by the self-organizing map: Structures of
+  welfare and poverty in the world.
+\newblock In Apostolos-Paul~N. Refenes, Yaser Abu-Mostafa, John Moody, and
+  Andreas Weigend, editors, {\em Neural Networks in Financial Engineering:
+  Proceedings of the Third International Conference on Neural Networks in the
+  Capital Markets}, pages 498--507, London, England, \linebreak 11--13~October
+  1995. World Scientific.
+
+\bibitem{ref:Oja:2003}
+Merja Oja, Samuel Kaski, and Teuvo Kohonen.
+\newblock Bibliography of {Self-Organizing Map} ({SOM}) papers: 1998--2001
+  addendum.
+\newblock {\em Neural Computing Surveys}, 3:1--156, 2003.
+\newblock Electronic journal. Available online:
+  [\url{http://www.cse.ucsc.edu/NCS/vol3.html}] (Accessed: 21~July~2003).
+
+\end{thebibliography}

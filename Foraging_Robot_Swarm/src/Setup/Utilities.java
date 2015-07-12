@@ -21,6 +21,11 @@ public class Utilities {
     public Utilities() {}
     
     public void writeState(Controller controller, Settings settings) {
+        File dir = new File("./Stats/" + settings.GridSize + "-" 
+                + settings.RobotCount + "-" + settings.coverage + "-" 
+                + settings.ratio + "-" + settings.scatterType+ "-" 
+                + settings.weight   );
+        
         File file = new File("./Stats/" + settings.GridSize + "-" 
                 + settings.RobotCount + "-" + settings.coverage + "-" 
                 + settings.ratio + "-" + settings.scatterType+ "-" 
@@ -33,17 +38,33 @@ public class Utilities {
             
         //Stats.writeState(file, write);
         try {            
-            if (file.createNewFile()) {
+            /*if (!dir.isAbsolute()) {
+                dir.mkdirs();
+            }//*/
+            
+            if (!file.exists()) {
+                 
+                if (file.createNewFile()) {
                 
-                try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-                    writer.write(write);
+                    try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+                        writer.write(write);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    System.out.println(controller.ID + "\tCould not create " 
+                        + file.getAbsolutePath() + " " + write);
+                    return;
                 }
                 
             } else {
-                System.out.println("Could not create file " + file.getCanonicalPath());
+                System.out.println(controller.ID + "\tFile exists " 
+                        + file.getAbsolutePath() + " " + write);
+                return;
             }        
         } catch (IOException ex) {
-            Logger.getLogger(Stats.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+            return;
         }
     }
     

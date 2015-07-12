@@ -1,0 +1,734 @@
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2015.2.24)  12 JUL 2015 18:12
+entering extended mode
+**dissertation.tex
+("D:\Documents\UP\2015\700 Project\700_Project\Thesis\Template\dissertation.tex
+"
+LaTeX2e <2011/06/27>
+Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ar
+abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
+croatian, czech, danish, dutch, esperanto, estonian, farsi, finnish, french, ga
+lician, german, german-x-2013-05-26, greek, gujarati, hindi, hungarian, iceland
+ic, indonesian, interlingua, irish, italian, kannada, kurmanji, latin, latvian,
+ lithuanian, malayalam, marathi, mongolian, mongolianlmc, monogreek, ngerman, n
+german-x-2013-05-26, nynorsk, oriya, panjabi, pinyin, polish, portuguese, roman
+ian, russian, sanskrit, serbian, slovak, slovenian, spanish, swedish, swissgerm
+an, tamil, telugu, turkish, turkmen, ukenglish, ukrainian, uppersorbian, usengl
+ishmax, welsh, loaded.
+("F:\Program Files\MikTeX\tex\latex\base\report.cls"
+Document Class: report 2007/10/19 v1.4h Standard LaTeX document class
+("F:\Program Files\MikTeX\tex\latex\base\size12.clo"
+File: size12.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@chapter=\count80
+\c@section=\count81
+\c@subsection=\count82
+\c@subsubsection=\count83
+\c@paragraph=\count84
+\c@subparagraph=\count85
+\c@figure=\count86
+\c@table=\count87
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+("F:\Program Files\MikTeX\tex\latex\float\float.sty"
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count88
+\float@exts=\toks14
+\float@box=\box26
+\@float@everytoks=\toks15
+\@floatcapt=\box27
+)
+(C:\Users\Nico\AppData\Roaming\MiKTeX\2.9\tex\latex\fancyhdr\fancyhdr.sty
+\fancy@headwidth=\skip43
+\f@ncyO@elh=\skip44
+\f@ncyO@erh=\skip45
+\f@ncyO@olh=\skip46
+\f@ncyO@orh=\skip47
+\f@ncyO@elf=\skip48
+\f@ncyO@erf=\skip49
+\f@ncyO@olf=\skip50
+\f@ncyO@orf=\skip51
+)
+("F:\Program Files\MikTeX\tex\latex\amsfonts\amssymb.sty"
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+
+("F:\Program Files\MikTeX\tex\latex\amsfonts\amsfonts.sty"
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\@emptytoks=\toks16
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+))
+("F:\Program Files\MikTeX\tex\latex\amsmath\amsmath.sty"
+Package: amsmath 2013/01/14 v2.14 AMS math features
+\@mathmargin=\skip52
+
+For additional information on amsmath, use the `?' option.
+("F:\Program Files\MikTeX\tex\latex\amsmath\amstext.sty"
+Package: amstext 2000/06/29 v2.01
+
+("F:\Program Files\MikTeX\tex\latex\amsmath\amsgen.sty"
+File: amsgen.sty 1999/11/30 v2.0
+\@emptytoks=\toks17
+\ex@=\dimen103
+))
+("F:\Program Files\MikTeX\tex\latex\amsmath\amsbsy.sty"
+Package: amsbsy 1999/11/29 v1.2d
+\pmbraise@=\dimen104
+)
+("F:\Program Files\MikTeX\tex\latex\amsmath\amsopn.sty"
+Package: amsopn 1999/12/14 v2.01 operator names
+)
+\inf@bad=\count89
+LaTeX Info: Redefining \frac on input line 210.
+\uproot@=\count90
+\leftroot@=\count91
+LaTeX Info: Redefining \overline on input line 306.
+\classnum@=\count92
+\DOTSCASE@=\count93
+LaTeX Info: Redefining \ldots on input line 378.
+LaTeX Info: Redefining \dots on input line 381.
+LaTeX Info: Redefining \cdots on input line 466.
+\Mathstrutbox@=\box28
+\strutbox@=\box29
+\big@size=\dimen105
+LaTeX Font Info:    Redeclaring font encoding OML on input line 566.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 567.
+\macc@depth=\count94
+\c@MaxMatrixCols=\count95
+\dotsspace@=\muskip10
+\c@parentequation=\count96
+\dspbrk@lvl=\count97
+\tag@help=\toks18
+\row@=\count98
+\column@=\count99
+\maxfields@=\count100
+\andhelp@=\toks19
+\eqnshift@=\dimen106
+\alignsep@=\dimen107
+\tagshift@=\dimen108
+\tagwidth@=\dimen109
+\totwidth@=\dimen110
+\lineht@=\dimen111
+\@envbody=\toks20
+\multlinegap=\skip53
+\multlinetaggap=\skip54
+\mathdisplay@stack=\toks21
+LaTeX Info: Redefining \[ on input line 2665.
+LaTeX Info: Redefining \] on input line 2666.
+)
+("F:\Program Files\MikTeX\tex\latex\base\makeidx.sty"
+Package: makeidx 2000/03/29 v1.0m Standard LaTeX package
+)
+(C:\Users\Nico\AppData\Roaming\MiKTeX\2.9\tex\latex\url\url.sty
+\Urlmuskip=\muskip11
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+("F:\Program Files\MikTeX\tex\generic\misc\texnames.sty"
+This is texnames.sty, Version 1.09 <16 March 1993>
+) ("F:\Program Files\MikTeX\tex\latex\tools\verbatim.sty"
+Package: verbatim 2003/08/22 v1.5q LaTeX2e package for verbatim enhancements
+\every@verbatim=\toks22
+\verbatim@line=\toks23
+\verbatim@in@stream=\read1
+)
+("F:\Program Files\MikTeX\tex\generic\oberdiek\ifpdf.sty"
+Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
+Package ifpdf Info: pdfTeX in PDF mode is detected.
+)
+("D:\Documents\UP\2015\700 Project\700_Project\Thesis\Template\glossary.sty"
+Package: glossary 
+
+("F:\Program Files\MikTeX\tex\latex\base\ifthen.sty"
+Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
+)
+("F:\Program Files\MikTeX\tex\latex\graphics\keyval.sty"
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks24
+)
+\gls@cols=\count101
+\namewidth=\skip55
+\istfile=\write3
+)
+("F:\Program Files\MikTeX\tex\latex\hyperref\hyperref.sty"
+Package: hyperref 2012/11/06 v6.83m Hypertext links for LaTeX
+
+("F:\Program Files\MikTeX\tex\generic\oberdiek\hobsub-hyperref.sty"
+Package: hobsub-hyperref 2012/04/25 v1.12 Bundle oberdiek, subset hyperref (HO)
+
+
+("F:\Program Files\MikTeX\tex\generic\oberdiek\hobsub-generic.sty"
+Package: hobsub-generic 2012/04/25 v1.12 Bundle oberdiek, subset generic (HO)
+Package: hobsub 2012/04/25 v1.12 Construct package bundles (HO)
+Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
+Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
+Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+Package: ifvtex 2010/03/01 v1.5 Detect VTeX and its facilities (HO)
+Package ifvtex Info: VTeX not detected.
+Package: intcalc 2007/09/27 v1.1 Expandable calculations with integers (HO)
+Package hobsub Info: Skipping package `ifpdf' (already loaded).
+Package: etexcmds 2011/02/16 v1.5 Avoid name clashes with e-TeX commands (HO)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+Package: kvsetkeys 2012/04/25 v1.16 Key value parser (HO)
+Package: kvdefinekeys 2011/04/07 v1.3 Define keys (HO)
+Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+Package: pdfescape 2011/11/25 v1.13 Implements pdfTeX's escape features (HO)
+Package: bigintcalc 2012/04/08 v1.3 Expandable calculations on big integers (HO
+)
+Package: bitset 2011/01/30 v1.1 Handle bit-vector datatype (HO)
+Package: uniquecounter 2011/01/30 v1.2 Provide unlimited unique counter (HO)
+)
+Package hobsub Info: Skipping package `hobsub' (already loaded).
+Package: letltxmacro 2010/09/02 v1.4 Let assignment for LaTeX macros (HO)
+Package: hopatch 2011/06/24 v1.1 Wrapper for package hooks (HO)
+Package: xcolor-patch 2011/01/30 xcolor patch
+Package: atveryend 2011/06/30 v1.8 Hooks at the very end of document (HO)
+Package atveryend Info: \enddocument detected (standard20110627).
+Package: atbegshi 2011/10/05 v1.16 At begin shipout hook (HO)
+Package: refcount 2011/10/16 v3.4 Data extraction from label references (HO)
+Package: hycolor 2011/01/30 v1.7 Color options for hyperref/bookmark (HO)
+)
+("F:\Program Files\MikTeX\tex\generic\ifxetex\ifxetex.sty"
+Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
+)
+("F:\Program Files\MikTeX\tex\latex\oberdiek\auxhook.sty"
+Package: auxhook 2011/03/04 v1.3 Hooks for auxiliary files (HO)
+)
+("F:\Program Files\MikTeX\tex\latex\oberdiek\kvoptions.sty"
+Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
+)
+\@linkdim=\dimen112
+\Hy@linkcounter=\count102
+\Hy@pagecounter=\count103
+
+("F:\Program Files\MikTeX\tex\latex\hyperref\pd1enc.def"
+File: pd1enc.def 2012/11/06 v6.83m Hyperref: PDFDocEncoding definition (HO)
+)
+\Hy@SavedSpaceFactor=\count104
+
+("F:\Program Files\MikTeX\tex\latex\00miktex\hyperref.cfg"
+File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
+)
+Package hyperref Info: Option `bookmarks' set `true' on input line 4319.
+Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 4319
+.
+Package hyperref Info: Hyper figures OFF on input line 4443.
+Package hyperref Info: Link nesting OFF on input line 4448.
+Package hyperref Info: Hyper index ON on input line 4451.
+Package hyperref Info: Plain pages OFF on input line 4458.
+Package hyperref Info: Backreferencing OFF on input line 4463.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4688.
+\c@Hy@tempcnt=\count105
+LaTeX Info: Redefining \url on input line 5041.
+\XeTeXLinkMargin=\dimen113
+\Fld@menulength=\count106
+\Field@Width=\dimen114
+\Fld@charsize=\dimen115
+Package hyperref Info: Hyper figures OFF on input line 6295.
+Package hyperref Info: Link nesting OFF on input line 6300.
+Package hyperref Info: Hyper index ON on input line 6303.
+Package hyperref Info: backreferencing OFF on input line 6310.
+Package hyperref Info: Link coloring OFF on input line 6315.
+Package hyperref Info: Link coloring with OCG OFF on input line 6320.
+Package hyperref Info: PDF/A mode OFF on input line 6325.
+LaTeX Info: Redefining \ref on input line 6365.
+LaTeX Info: Redefining \pageref on input line 6369.
+\Hy@abspage=\count107
+\c@Item=\count108
+\c@Hfootnote=\count109
+)
+
+Package hyperref Message: Driver: hpdftex.
+
+("F:\Program Files\MikTeX\tex\latex\hyperref\hpdftex.def"
+File: hpdftex.def 2012/11/06 v6.83m Hyperref driver for pdfTeX
+\Fld@listcount=\count110
+\c@bookmark@seq@number=\count111
+
+("F:\Program Files\MikTeX\tex\latex\oberdiek\rerunfilecheck.sty"
+Package: rerunfilecheck 2011/04/15 v1.7 Rerun checks for auxiliary files (HO)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+82.
+)
+\Hy@SectionHShift=\skip56
+)
+(C:\Users\Nico\AppData\Roaming\MiKTeX\2.9\tex\latex\pdfpages\pdfpages.sty
+Package: pdfpages 2015/06/15 v0.4y Insert pages of external PDF documents (AM)
+
+("F:\Program Files\MikTeX\tex\latex\tools\calc.sty"
+Package: calc 2007/08/22 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count112
+\calc@Bcount=\count113
+\calc@Adimen=\dimen116
+\calc@Bdimen=\dimen117
+\calc@Askip=\skip57
+\calc@Bskip=\skip58
+LaTeX Info: Redefining \setlength on input line 76.
+LaTeX Info: Redefining \addtolength on input line 77.
+\calc@Ccount=\count114
+\calc@Cskip=\skip59
+)
+(C:\Users\Nico\AppData\Roaming\MiKTeX\2.9\tex\latex\eso-pic\eso-pic.sty
+Package: eso-pic 2015/04/20 v2.0e eso-pic (RN)
+
+(C:\Users\Nico\AppData\Roaming\MiKTeX\2.9\tex\latex\xcolor\xcolor.sty
+Package: xcolor 2007/01/21 v2.11 LaTeX color extensions (UK)
+
+("F:\Program Files\MikTeX\tex\latex\00miktex\color.cfg"
+File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
+)
+Package xcolor Info: Driver file: pdftex.def on input line 225.
+
+("F:\Program Files\MikTeX\tex\latex\pdftex-def\pdftex.def"
+File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
+\Gread@gobject=\count115
+)
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1337.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1341.
+Package xcolor Info: Model `RGB' extended on input line 1353.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1355.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1356.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1357.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1358.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1359.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1360.
+))
+("F:\Program Files\MikTeX\tex\latex\graphics\graphicx.sty"
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+("F:\Program Files\MikTeX\tex\latex\graphics\graphics.sty"
+Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+
+("F:\Program Files\MikTeX\tex\latex\graphics\trig.sty"
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+("F:\Program Files\MikTeX\tex\latex\00miktex\graphics.cfg"
+File: graphics.cfg 2007/01/18 v1.5 graphics configuration of teTeX/TeXLive
+)
+Package graphics Info: Driver file: pdftex.def on input line 91.
+)
+\Gin@req@height=\dimen118
+\Gin@req@width=\dimen119
+)
+\AM@pagewidth=\dimen120
+\AM@pageheight=\dimen121
+
+(C:\Users\Nico\AppData\Roaming\MiKTeX\2.9\tex\latex\pdfpages\pppdftex.def
+File: pppdftex.def 2015/06/15 v0.4y Pdfpages driver for pdfTeX (AM)
+)
+("F:\Program Files\MikTeX\tex\latex\oberdiek\pdflscape.sty"
+Package: pdflscape 2008/08/11 v0.10 Display of landscape pages in PDF (HO)
+
+("F:\Program Files\MikTeX\tex\latex\graphics\lscape.sty"
+Package: lscape 2000/10/22 v3.01 Landscape Pages (DPC)
+)
+Package pdflscape Info: Auto-detected driver: pdftex on input line 80.
+)
+\AM@pagebox=\box30
+\AM@toc@title=\toks25
+\c@AM@survey=\count116
+\AM@templatesizebox=\box31
+)
+("F:\Program Files\MikTeX\tex\latex\oberdiek\epstopdf.sty"
+Package: epstopdf 2010/02/09 v2.5 Conversion with epstopdf on the fly (HO)
+
+("F:\Program Files\MikTeX\tex\latex\oberdiek\epstopdf-base.sty"
+Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
+
+("F:\Program Files\MikTeX\tex\latex\oberdiek\grfext.sty"
+Package: grfext 2010/08/19 v1.1 Manage graphics extensions (HO)
+)
+Package grfext Info: Graphics extension search list:
+(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 452.
+))
+("F:\Program Files\MikTeX\tex\generic\thumbpdf\thumbpdf.sty"
+Package: thumbpdf 2012/04/18 v3.15 Inclusion of thumbnails (HO)
+
+
+Package thumbpdf Warning: Thumbnail data file `dissertation.tpt' not found.
+
+) ("F:\Program Files\MikTeX\tex\latex\oberdiek\hypcap.sty"
+Package: hypcap 2011/02/16 v1.11 Adjusting the anchors of captions (HO)
+)
+Package hyperref Info: Option `pdffitwindow' set `true' on input line 60.
+Package hyperref Info: Option `plainpages' set `false' on input line 60.
+Package hyperref Info: Option `breaklinks' set `true' on input line 60.
+Package hyperref Info: Option `colorlinks' set `true' on input line 60.
+Package hyperref Info: Option `pageanchor' set `false' on input line 60.
+
+
+Package hyperref Warning: Option `pagecolor' is not available anymore.
+
+\originalbaselineskip=\skip60
+\c@listcount=\count117
+\@glossaryfile=\write4
+Writing glossary file dissertation.glo 
+\@indexfile=\write5
+Writing index file dissertation.idx
+\@float@every@graph=\toks26
+\c@graph=\count118
+\@float@every@algorithm=\toks27
+\c@algorithm=\count119
+\abovesubfiglabelskip=\skip61
+("D:\Documents\UP\2015\700 Project\700_Project\Thesis\Template\dissertation.aux
+"
+("D:\Documents\UP\2015\700 Project\700_Project\Thesis\Template\coverpages/main.
+aux")
+("D:\Documents\UP\2015\700 Project\700_Project\Thesis\Template\chapters/introdu
+ction/main.aux")
+("D:\Documents\UP\2015\700 Project\700_Project\Thesis\Template\chapters/chapter
+1/main.aux")
+("D:\Documents\UP\2015\700 Project\700_Project\Thesis\Template\chapters/chapter
+2/main.aux")
+("D:\Documents\UP\2015\700 Project\700_Project\Thesis\Template\chapters/conclus
+ions/main.aux")
+("D:\Documents\UP\2015\700 Project\700_Project\Thesis\Template\appendices/appen
+dix1/main.aux")
+("D:\Documents\UP\2015\700 Project\700_Project\Thesis\Template\appendices/appen
+dix2/main.aux")
+("D:\Documents\UP\2015\700 Project\700_Project\Thesis\Template\appendices/acron
+yms/main.aux")
+("D:\Documents\UP\2015\700 Project\700_Project\Thesis\Template\appendices/symbo
+ls/main.aux")
+("D:\Documents\UP\2015\700 Project\700_Project\Thesis\Template\appendices/deriv
+ed_publications/main.aux"))
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 173.
+LaTeX Font Info:    ... okay on input line 173.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 173.
+LaTeX Font Info:    ... okay on input line 173.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 173.
+LaTeX Font Info:    ... okay on input line 173.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 173.
+LaTeX Font Info:    ... okay on input line 173.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 173.
+LaTeX Font Info:    ... okay on input line 173.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 173.
+LaTeX Font Info:    ... okay on input line 173.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 173.
+LaTeX Font Info:    ... okay on input line 173.
+\AtBeginShipoutBox=\box32
+Package hyperref Info: Link coloring ON on input line 173.
+
+("F:\Program Files\MikTeX\tex\latex\hyperref\nameref.sty"
+Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
+
+("F:\Program Files\MikTeX\tex\generic\oberdiek\gettitlestring.sty"
+Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
+)
+\c@section@level=\count120
+)
+LaTeX Info: Redefining \ref on input line 173.
+LaTeX Info: Redefining \pageref on input line 173.
+LaTeX Info: Redefining \nameref on input line 173.
+
+("D:\Documents\UP\2015\700 Project\700_Project\Thesis\Template\dissertation.out
+")
+("D:\Documents\UP\2015\700 Project\700_Project\Thesis\Template\dissertation.out
+")
+\@outlinefile=\write6
+ (C:\Users\Nico\AppData\Roaming\MiKTeX\2.9\tex\context\base\supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count121
+\scratchdimen=\dimen122
+\scratchbox=\box33
+\nofMPsegments=\count122
+\nofMParguments=\count123
+\everyMPshowfont=\toks28
+\MPscratchCnt=\count124
+\MPscratchDim=\dimen123
+\MPnumerator=\count125
+\makeMPintoPDFobject=\count126
+\everyMPtoPDFconversion=\toks29
+)
+("D:\Documents\UP\2015\700 Project\700_Project\Thesis\Template\coverpages/main.
+tex"
+\negativetitlepageoffset=\skip62
+ [1
+
+
+{C:/Users/Nico/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
+LaTeX Font Info:    Try loading font information for U+msa on input line 56.
+
+("F:\Program Files\MikTeX\tex\latex\amsfonts\umsa.fd"
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 56.
+
+("F:\Program Files\MikTeX\tex\latex\amsfonts\umsb.fd"
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+Underfull \hbox (badness 10000) in paragraph at lines 56--57
+
+ []
+
+[1] [2] [3]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 127.
+
+ ("F:\Program Files\MikTeX\tex\latex\base\omscmr.fd"
+File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 127.
+ [4]
+("D:\Documents\UP\2015\700 Project\700_Project\Thesis\Template\dissertation.toc
+" [1
+
+
+])
+\tf@toc=\write7
+ [2]
+("D:\Documents\UP\2015\700 Project\700_Project\Thesis\Template\dissertation.lof
+")
+\tf@lof=\write8
+ [3
+
+
+]
+("D:\Documents\UP\2015\700 Project\700_Project\Thesis\Template\dissertation.lgf
+")
+\tf@lgf=\write9
+ [4
+
+
+]
+("D:\Documents\UP\2015\700 Project\700_Project\Thesis\Template\dissertation.loa
+")
+\tf@loa=\write10
+ [5
+
+
+]
+("D:\Documents\UP\2015\700 Project\700_Project\Thesis\Template\dissertation.lot
+")
+\tf@lot=\write11
+) [6
+
+
+]
+Package hyperref Info: Option `pageanchor' set `true' on input line 202.
+
+("D:\Documents\UP\2015\700 Project\700_Project\Thesis\Template\chapters/introdu
+ction/main.tex"
+Chapter 1.
+
+Package Fancyhdr Warning: \fancyhead's `E' option without twoside option is use
+less on input line 6.
+
+
+Package Fancyhdr Warning: \fancyhead's `E' option without twoside option is use
+less on input line 6.
+
+[1
+
+
+
+]
+
+LaTeX Warning: Reference `index' on page 2 undefined on input line 66.
+
+[2] [3]
+
+LaTeX Warning: Reference `index' on page 4 undefined on input line 87.
+
+) [4]
+("D:\Documents\UP\2015\700 Project\700_Project\Thesis\Template\chapters/chapter
+1/main.tex"
+Chapter 2.
+Package epstopdf Info: Source file: <chapters/chapter1/figures/fig1.eps>
+(epstopdf)                    date: 2008-04-25 19:19:02
+(epstopdf)                    size: 3499 bytes
+(epstopdf)             Output file: <chapters/chapter1/figures/fig1-eps-convert
+ed-to.pdf>
+(epstopdf)                    date: 2015-07-12 18:12:40
+(epstopdf)                    size: 2769 bytes
+(epstopdf)             Command: <epstopdf --outfile=chapters/chapter1/figures/f
+ig1-eps-converted-to.pdf chapters/chapter1/figures/fig1.eps>
+(epstopdf)             \includegraphics on input line 30.
+Package epstopdf Info: Output file is already uptodate.
+
+<chapters/chapter1/figures/fig1-eps-converted-to.pdf, id=294, 186.6975pt x 144.
+54pt>
+File: chapters/chapter1/figures/fig1-eps-converted-to.pdf Graphic file (type pd
+f)
+ <use chapters/chapter1/figures/fig1-eps-converted-to.pdf>
+Package pdftex.def Info: chapters/chapter1/figures/fig1-eps-converted-to.pdf us
+ed on input line 30.
+(pdftex.def)             Requested size: 186.69704pt x 144.53963pt.
+ [5
+
+
+
+]
+Package epstopdf Info: Source file: <chapters/chapter1/graphs/graph1.eps>
+(epstopdf)                    date: 2008-04-25 19:21:05
+(epstopdf)                    size: 204236 bytes
+(epstopdf)             Output file: <chapters/chapter1/graphs/graph1-eps-conver
+ted-to.pdf>
+(epstopdf)                    date: 2015-07-12 18:12:41
+(epstopdf)                    size: 3152 bytes
+(epstopdf)             Command: <epstopdf --outfile=chapters/chapter1/graphs/gr
+aph1-eps-converted-to.pdf chapters/chapter1/graphs/graph1.eps>
+(epstopdf)             \includegraphics on input line 37.
+Package epstopdf Info: Output file is already uptodate.
+
+<chapters/chapter1/graphs/graph1-eps-converted-to.pdf, id=302, 180.675pt x 126.
+4725pt>
+File: chapters/chapter1/graphs/graph1-eps-converted-to.pdf Graphic file (type p
+df)
+ <use chapters/chapter1/graphs/graph1-eps-converted-to.pdf>
+Package pdftex.def Info: chapters/chapter1/graphs/graph1-eps-converted-to.pdf u
+sed on input line 37.
+(pdftex.def)             Requested size: 180.67455pt x 126.47218pt.
+Package hyperref Info: bookmark level for unknown graph defaults to 0 on input 
+line 39.
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
+put line 75.
+ [6 <D:/Documents/UP/2015/700 Project/700_Project/Thesis/Template/chapters/chap
+ter1/figures/fig1-eps-converted-to.pdf>] [7 <D:/Documents/UP/2015/700 Project/7
+00_Project/Thesis/Template/chapters/chapter1/graphs/graph1-eps-converted-to.pdf
+>] [8])
+[9]
+("D:\Documents\UP\2015\700 Project\700_Project\Thesis\Template\chapters/chapter
+2/main.tex"
+Chapter 3.
+) [10
+
+
+
+]
+("D:\Documents\UP\2015\700 Project\700_Project\Thesis\Template\chapters/conclus
+ions/main.tex"
+Chapter 4.
+) [11
+
+
+
+]
+("D:\Documents\UP\2015\700 Project\700_Project\Thesis\Template\dissertation.bbl
+" [12
+
+
+
+]) [13]
+("D:\Documents\UP\2015\700 Project\700_Project\Thesis\Template\appendices/appen
+dix1/main.tex"
+Appendix A.
+) [14
+
+
+]
+("D:\Documents\UP\2015\700 Project\700_Project\Thesis\Template\appendices/appen
+dix2/main.tex"
+Appendix B.
+) [15
+
+
+
+]
+("D:\Documents\UP\2015\700 Project\700_Project\Thesis\Template\appendices/acron
+yms/main.tex"
+Appendix C.
+No file dissertation.gls.
+) [16
+
+
+
+
+]
+("D:\Documents\UP\2015\700 Project\700_Project\Thesis\Template\appendices/symbo
+ls/main.tex"
+Appendix D.
+[17
+
+
+
+]) [18]
+("D:\Documents\UP\2015\700 Project\700_Project\Thesis\Template\appendices/deriv
+ed_publications/main.tex"
+Appendix E.
+) [19
+
+
+
+]
+No file dissertation.ind.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 257.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 257.
+("D:\Documents\UP\2015\700 Project\700_Project\Thesis\Template\dissertation.aux
+"
+("D:\Documents\UP\2015\700 Project\700_Project\Thesis\Template\coverpages/main.
+aux")
+("D:\Documents\UP\2015\700 Project\700_Project\Thesis\Template\chapters/introdu
+ction/main.aux")
+("D:\Documents\UP\2015\700 Project\700_Project\Thesis\Template\chapters/chapter
+1/main.aux")
+("D:\Documents\UP\2015\700 Project\700_Project\Thesis\Template\chapters/chapter
+2/main.aux")
+("D:\Documents\UP\2015\700 Project\700_Project\Thesis\Template\chapters/conclus
+ions/main.aux")
+("D:\Documents\UP\2015\700 Project\700_Project\Thesis\Template\appendices/appen
+dix1/main.aux")
+("D:\Documents\UP\2015\700 Project\700_Project\Thesis\Template\appendices/appen
+dix2/main.aux")
+("D:\Documents\UP\2015\700 Project\700_Project\Thesis\Template\appendices/acron
+yms/main.aux")
+("D:\Documents\UP\2015\700 Project\700_Project\Thesis\Template\appendices/symbo
+ls/main.aux")
+("D:\Documents\UP\2015\700 Project\700_Project\Thesis\Template\appendices/deriv
+ed_publications/main.aux"))
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 257.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 257.
+Package rerunfilecheck Info: File `dissertation.out' has not changed.
+(rerunfilecheck)             Checksum: BF8922DA05E9630B6125021D71077A21;2085.
+
+
+LaTeX Warning: There were undefined references.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 257.
+ ) 
+Here is how much of TeX's memory you used:
+ 7939 strings out of 493921
+ 118830 string characters out of 3148889
+ 205581 words of memory out of 3000000
+ 10909 multiletter control sequences out of 15000+200000
+ 18624 words of font info for 73 fonts, out of 3000000 for 9000
+ 841 hyphenation exceptions out of 8191
+ 37i,11n,43p,1359b,439s stack positions out of 5000i,500n,10000p,200000b,50000s
+<F:/Program Files/MikTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><F:/Progra
+m Files/MikTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><F:/Program Files/MikT
+eX/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><F:/Program Files/MikTeX/fonts/ty
+pe1/public/amsfonts/cm/cmmi10.pfb><F:/Program Files/MikTeX/fonts/type1/public/a
+msfonts/cm/cmmi12.pfb><F:/Program Files/MikTeX/fonts/type1/public/amsfonts/cm/c
+mmi8.pfb><F:/Program Files/MikTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><F:/
+Program Files/MikTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><F:/Program Files
+/MikTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><F:/Program Files/MikTeX/fonts/
+type1/public/amsfonts/cm/cmr8.pfb><F:/Program Files/MikTeX/fonts/type1/public/a
+msfonts/cm/cmss10.pfb><F:/Program Files/MikTeX/fonts/type1/public/amsfonts/cm/c
+mss12.pfb><F:/Program Files/MikTeX/fonts/type1/public/amsfonts/cm/cmss17.pfb><F
+:/Program Files/MikTeX/fonts/type1/public/amsfonts/cm/cmss9.pfb><F:/Program Fil
+es/MikTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><F:/Program Files/MikTeX/fo
+nts/type1/public/amsfonts/cm/cmti10.pfb><F:/Program Files/MikTeX/fonts/type1/pu
+blic/amsfonts/cm/cmti12.pfb><F:/Program Files/MikTeX/fonts/type1/public/amsfont
+s/cm/cmtt10.pfb><F:/Program Files/MikTeX/fonts/type1/public/amsfonts/cm/cmtt12.
+pfb><F:/Program Files/MikTeX/fonts/type1/public/amsfonts/cm/cmtt9.pfb>
+Output written on dissertation.pdf (30 pages, 319281 bytes).
+PDF statistics:
+ 470 PDF objects out of 1000 (max. 8388607)
+ 78 named destinations out of 1000 (max. 500000)
+ 283 words of extra memory for PDF output out of 10000 (max. 10000000)
+

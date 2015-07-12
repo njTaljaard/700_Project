@@ -1,0 +1,257 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%              Document Class               %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[12pt, a4paper, oneside]{report}
+% remove comment, below, to compile only the specified chapter (for draft chapter compilations)
+%\includeonly{chapters/introduction/main}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%   Basic Packages and Package Settings     %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{float}												% customised float support
+\usepackage{fancyhdr}											% improved header and footer support
+\usepackage{amssymb}												% American Mathematical Society symbols
+\usepackage{amsmath}												% American Mathematical Society environments
+\usepackage{makeidx}												% automatic index generation
+\usepackage{url}													% URL typesetting
+\usepackage{texnames}											% BIBTeX, SliTeX, AMSTeX, PiCTeX and TeXsis logos
+\usepackage{verbatim}											% multi-line comments
+\usepackage{ifpdf}												% selective setup for PDF compilation
+\usepackage[number=none]{glossary}							% glossary file environments
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%          PDFLaTeX-Specific setup          %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ifpdf
+
+% PDFLaTeX-specific packages
+
+\usepackage[
+	pdftex,															% hyperlinked references for PDF output
+	bookmarks=true,												% (option) build bookmarks
+	bookmarksnumbered=true										% (option) add section numbers to bookmarks
+]{hyperref}
+
+\usepackage{pdfpages}											% required for PDF watermarking
+\usepackage{epstopdf}											% automatic conversion of EPS images
+\usepackage[pdftex]{thumbpdf}									% thumbnail generation for PDF files
+\usepackage{pdflscape}											% required by thumbpdf
+\usepackage[all]{hypcap}										% correct PDF figure links to top of image
+
+% setup options for hyperlinks
+
+\hypersetup{
+	pdfhighlight=/N,												% (option) no visual cue on clicking link
+	pdffitwindow=true,											% (option)
+	pdfstartview=Fit,												% (option) fit initial view to page
+	plainpages=false,												% (option) prevent hyperref page number changes
+	breaklinks=true,												% (option) allow link breaking across lines
+	colorlinks=true,												% (option) color link text only (no borders)
+	pageanchor=false,												% (option) turns off page referencing for title page
+	linkcolor=blue,												% (option) internal link color
+	citecolor=blue,												% (option) citation link color
+	filecolor=blue,												% (option) file link color
+	menucolor=blue,												% (option) Acrobat menu link color
+	pagecolor=blue,												% (option) page link color
+	urlcolor=blue,													% (option) URL link color
+}
+
+% PDF meta-data settings
+
+\hypersetup{
+	pdftitle    = {A Very Long MSc Dissertation With a Long Title},
+	pdfauthor   = {Joseph Thomas Bloggs <jtbloggs@somewhere.co.za>},
+	pdfsubject  = {Some sort of subject (e.g. Data mining)},
+	pdfkeywords = {First keyword, second keyword, third keyword},
+}
+
+% force LaTeX-compliant spacing
+
+\pdfadjustspacing=1
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%       DVI/PostScript-Specific setup       %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\else
+
+\usepackage{graphicx}											% EPS graphics
+
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%                  Lengths                  %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setlength{\textwidth}{158mm}
+\setlength{\hoffset}{4.5mm}
+\setlength{\headheight}{15pt}
+\setlength{\unitlength}{1pt}
+\setlength{\footnotesep}{5mm}
+
+\ifpdf
+	% ensure PDF is centered in display
+	\setlength{\hoffset}{-10.5mm}
+\else
+	% add gutter margin for DVI/PostScript
+	\setlength{\hoffset}{-10.5mm}
+	\addtolength{\hoffset}{4.5mm}
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%               Line Spacing                %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newlength{\originalbaselineskip}
+\setlength{\originalbaselineskip}{\baselineskip}
+\linespread{1.3}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%               List Counters               %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcounter{listcount}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%         Index and Glossary Terms          %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand{\glossaryname}{Acronyms}
+\renewcommand{\gloskip}{}
+\setlength{\namewidth}{79pt}
+
+\ifpdf
+	\newcommand{\idxbf}[1]{\textbf{\hyperpage{#1}}}
+\else
+	\newcommand{\idxbf}[1]{\textbf{#1}}
+\fi
+
+\makeglossary
+\makeindex
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%        Figures and Floating Bodies        %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.0}
+\renewcommand{\textfraction}{0.1}
+\renewcommand{\floatpagefraction}{0.9}
+\setcounter{topnumber}{1}
+\setcounter{bottomnumber}{0}
+\newfloat{graph}{tbp}{lgf}[chapter]
+\floatname{graph}{Graph}
+\newfloat{algorithm}{tbp}{loa}[chapter]
+\floatname{algorithm}{Algorithm}
+
+% bold float caption numbers and reduced size captions
+\makeatletter
+\long\def\@makecaption#1#2{%
+	\vskip\abovecaptionskip
+	\sbox\@tempboxa{{\small{\bf #1:} #2}}%
+	\ifdim \wd\@tempboxa >\hsize
+		{\small{\bf #1:} #2\par}
+	\else
+		\hbox to\hsize{\hfil\box\@tempboxa\hfil}%
+	\fi
+	\vskip\belowcaptionskip
+}
+\renewcommand\floatc@plain[2]{
+	\setbox\@tempboxa\hbox{\small{\bf #1:} #2}%
+	\ifdim\wd\@tempboxa>\hsize
+		{\small{\bf #1:} #2\par}
+	\else
+		\hbox to\hsize{\hfil\box\@tempboxa\hfil}\fi}
+\makeatother
+
+\newlength{\abovesubfiglabelskip}
+\setlength{\abovesubfiglabelskip}{0.5\abovecaptionskip}
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%             Glossary Acronyms             %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newacronym{AI}{Artificial Intelligence}{name=AI, description=Artificial Intelligence}
+\newacronym{ANN}{Artificial Neural Network}{name=ANN, description=Artificial Neural Network}
+\newacronym{CI}{Computational Intelligence}{name=CI, description=Computational Intelligence}
+
+% and any other acronyms you want to use...
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%           Index Sub-References            %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\index{AI|see{Artificial Intelligence}}
+\index{ANN|see{Artificial Neural Network}}
+\index{CI|see{Computational Intelligence}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\include{coverpages/main}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ifpdf
+\hypersetup{pageanchor=true}									% (option) turn page referencing back on for chapters
+\fi
+
+\pagestyle{fancy}
+\fancypagestyle{headings}{
+	\fancyhead[RO,LE]{\thepage}
+	\fancyhead[LO]{\sf\nouppercase{\leftmark}}
+	\fancyhead[RE]{\sf\nouppercase{\rightmark}}
+	\fancyfoot{}
+	\renewcommand{\headrulewidth}{0.4pt}
+}
+
+\include{chapters/introduction/main}
+\include{chapters/chapter1/main} % rename as required (but remember to update directories appropriately)
+\include{chapters/chapter2/main} % rename as required (but remember to update directories appropriately)
+% add all other chapters you decide to write (also create an appropriate directory structure)
+\include{chapters/conclusions/main}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\cleardoublepage
+\ifpdf
+\phantomsection
+\fi
+\label{bibliography}
+\addcontentsline{toc}{chapter}{Bibliography}
+\bibliographystyle{plain}
+\bibliography{dissertation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\appendix
+\include{appendices/appendix1/main}
+\include{appendices/appendix2/main}
+% any further appendices you decide to write (create appropriate directory structure, as with chapters)
+\include{appendices/acronyms/main}
+\include{appendices/symbols/main}
+\include{appendices/derived_publications/main}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\cleardoublepage
+\ifpdf
+\phantomsection
+\fi
+\label{index}
+\addcontentsline{toc}{chapter}{Index}
+\printindex
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

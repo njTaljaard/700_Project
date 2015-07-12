@@ -16,7 +16,7 @@ public class Controller implements Runnable {
     public final Settings settings;
     public final Utilities utils;
     
-    private final String ID;
+    public final String ID;
     private int lastCarryItt;
     public int itterations;
     
@@ -49,6 +49,11 @@ public class Controller implements Runnable {
         
     @Override
     public void run() {
+        
+        /*System.out.println("Start " + settings.GridSize + "-" 
+                + settings.RobotCount + "-" + settings.coverage + "-" 
+                + settings.ratio + "-" + settings.scatterType+ "-" 
+                + settings.weight + "-" + ID);//*/
         
         setup();
         totalPlacedGold = grid.countGold();
@@ -95,7 +100,11 @@ public class Controller implements Runnable {
             System.out.println("Cluster done...");
         }*/
         
-        System.out.println(this.toString() + " " + String.valueOf(itterations) + " " + String.valueOf(grid.countRemainder()));
+        System.out.println(ID + "\t\t" + String.valueOf(itterations) 
+                + " " + String.valueOf(grid.countRemainder()) + "\t" + settings.GridSize + "-" 
+                + settings.RobotCount + "-" + settings.coverage + "-" 
+                + settings.ratio + "-" + settings.scatterType+ "-" 
+                + settings.weight + " " + test);
         
         totalForagedGold = totalPlacedGold - grid.countGold();
         totalForagedRock = totalPlacedRock - grid.countRock();
