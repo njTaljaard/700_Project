@@ -5,6 +5,11 @@ import Setup.RobotState;
 import Setup.Settings;
 import Setup.Utilities;
 import Board.Grid;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * @author Nico
@@ -35,36 +40,73 @@ public class Controller implements Runnable {
     public int totalForagedRock = 0;
     public int totalPlacedRock = 0;
     public int ittRockFinished = 0;
+    
+    public ArrayList<String> fileOut;
     /****************/
     
-    public Controller(Settings settings, int id, boolean print, boolean preCluster, int test) {
+    public Controller(Settings settings, int id, boolean print, boolean preCluster) {
         this.settings = settings;
         this.utils = new Utilities();
         this.ID = String.valueOf(id);
-        this.test = test;
         this.done = false;
         this.print = print;
         this.preCluster = preCluster;
+        this.fileOut = new ArrayList<>();
     }
         
     @Override
     public void run() {
+        fileOut.add("Itt,tWait,tPGold,tFGold,iGold,tPRock,tFRock,iRock");
+            /*controller.itterations + "," + controller.totalWaited +
+            "," + controller.totalPlacedGold + "," + controller.totalForagedGold +
+            "," + controller.ittGoldFinished + "," + controller.totalPlacedRock +
+            "," + controller.totalForagedRock + "," + controller.ittRockFinished */
+        for (int i = 1; i < 31; i++) {
+            this.test = i;
+            simulateConfig();
+        }
         
-        /*System.out.println("Start " + settings.GridSize + "-" 
-                + settings.RobotCount + "-" + settings.coverage + "-" 
-                + settings.ratio + "-" + settings.scatterType+ "-" 
-                + settings.weight + "-" + ID);//*/
+        try {
+            File file;
+            if (preCluster) {
+                file = new File("./Stats/" + ID + "-0" + "-" + settings.GridSize + "-" 
+                        + settings.RobotCount + "-" + settings.coverage + "-" 
+                        + settings.ratio + "-" + settings.scatterType+ "-" 
+                        + settings.weight + ".txt");
+            } else {
+                file = new File("./Stats/" + ID + "-1" + "-" + settings.GridSize + "-" 
+                        + settings.RobotCount + "-" + settings.coverage + "-" 
+                        + settings.ratio + "-" + settings.scatterType+ "-" 
+                        + settings.weight + ".txt");
+            }
+
+            file.createNewFile();
+
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+                for (String write : fileOut)
+                    writer.write(write);
+            }
+        } catch(IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    private void simulateConfig() {
         
-        setup();
+        if (preCluster) {
+            Controller control = new Controller(settings, 0, false, true);
+            control.preCluster();
+
+            while(!control.done){}
+
+            grid = control.grid;
+            done = false;
+        } else {
+            setup();
+        }
+            
         totalPlacedGold = grid.countGold();
         totalPlacedRock = grid.countRock();
-        //utils.writeRobots(robots, settings, ID);
-        
-        /*if (print) {
-            System.out.println("Grid Size: " + grid.grid.length + 
-                    "\nGold: " + Settings.GOLD + " Rock: " + Settings.ROCK + 
-                    "\nAntGold: " + Settings.ANT_GOLD + " AntRock: " + Settings.ANT_ROCK);
-        } */
         
         itterations = 0;
         lastCarryItt = 0;
@@ -76,15 +118,6 @@ public class Controller implements Runnable {
                 robot.update(itterations);
             }
             
-            /*if (print) {
-                if ((itterations % 100 == 0)){
-                    System.out.println("Iteration " + String.valueOf(itterations));
-                    System.out.println("\tRemainding objects : " + String.valueOf(grid.countRemainder()));
-                    utils.writeGrid(grid.grid, settings, String.valueOf(itterations));
-                    //utils.writeRobots(robots, settings, String.valueOf(itterations));
-                }
-            }*/
-            
             if (ittGoldFinished == 0 && grid.countGold() == 0)
                 ittGoldFinished = itterations;
             
@@ -92,19 +125,8 @@ public class Controller implements Runnable {
                 ittRockFinished = itterations;
             
         } while (testStoppingCondition());
-            
-        /*if (print) {
-            utils.writeGrid(grid.grid, settings, "DONE");
-            System.out.println("Done... " + String.valueOf(itterations) + " " + String.valueOf(grid.countRemainder()));
-        } else {
-            System.out.println("Cluster done...");
-        }*/
-        
-        System.out.println(ID + "\t\t" + String.valueOf(itterations) 
-                + " " + String.valueOf(grid.countRemainder()) + "\t" + settings.GridSize + "-" 
-                + settings.RobotCount + "-" + settings.coverage + "-" 
-                + settings.ratio + "-" + settings.scatterType+ "-" 
-                + settings.weight + " " + test);
+                    
+        System.out.println(ID + " " + preCluster);
         
         totalForagedGold = totalPlacedGold - grid.countGold();
         totalForagedRock = totalPlacedRock - grid.countRock();

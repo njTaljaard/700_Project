@@ -360,7 +360,7 @@ public class Grid {
             case Settings.CLUSTERD: 
                 //System.out.println("Clusterd");
                 
-                Controller control = new Controller(settings, 0, false, true, 0);
+                Controller control = new Controller(settings, 0, false, true);
                 control.preCluster();
                 
                 while(!control.done){}

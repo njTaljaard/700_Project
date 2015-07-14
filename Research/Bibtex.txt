@@ -1,0 +1,17 @@
+@inproceedings{Beni:2004:SIS:2131294.2131295,
+ author = {Beni, Gerardo},
+ title = {From Swarm Intelligence to Swarm Robotics},
+ booktitle = {Proceedings of the 2004 International Conference on Swarm Robotics},
+ series = {SAB'04},
+ year = {2005},
+ isbn = {3-540-24296-1, 978-3-540-24296-3},
+ location = {Santa Monica, CA},
+ pages = {1--9},
+ numpages = {9},
+ url = {http://0-dx.doi.org.innopac.up.ac.za/10.1007/978-3-540-30552-1_1},
+ doi = {10.1007/978-3-540-30552-1_1},
+ acmid = {2131295},
+ publisher = {Springer-Verlag},
+ address = {Berlin, Heidelberg},
+}
+

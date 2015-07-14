@@ -21,34 +21,47 @@ public class Utilities {
     public Utilities() {}
     
     public void writeState(Controller controller, Settings settings) {
-        File dir = new File("./Stats/" + settings.GridSize + "-" 
-                + settings.RobotCount + "-" + settings.coverage + "-" 
-                + settings.ratio + "-" + settings.scatterType+ "-" 
-                + settings.weight   );
-        
-        File file = new File("./Stats/" + settings.GridSize + "-" 
-                + settings.RobotCount + "-" + settings.coverage + "-" 
-                + settings.ratio + "-" + settings.scatterType+ "-" 
-                + settings.weight + "/" + controller.test + ".txt");
 
         String write = controller.itterations + "," + controller.totalWaited +
                 "," + controller.totalPlacedGold + "," + controller.totalForagedGold +
                 "," + controller.ittGoldFinished + "," + controller.totalPlacedRock +
                 "," + controller.totalForagedRock + "," + controller.ittRockFinished;
             
-        //Stats.writeState(file, write);
-        try {            
+        controller.fileOut.add(write);
+        
+        //try {  
+
+            /*File dir = new File("./Stats/" + settings.GridSize + "-" 
+                    + settings.RobotCount + "-" + settings.coverage + "-" 
+                    + settings.ratio + "-" + settings.scatterType+ "-" 
+                    + settings.weight);*/
+
+            /*File file = new File("./Stats/" + controller.ID + "-" 
+                    + settings.GridSize + "-" + settings.RobotCount + "-" 
+                    + settings.coverage + "-" + settings.ratio + "-" 
+                    + settings.scatterType+ "-" + settings.weight + "-" 
+                    + controller.test + ".txt");*/
+
+            /*file.createNewFile();
+
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+                writer.write(write);
+            }*/
+            
+            //Stats.writeState(file, write);
+        
             /*if (!dir.isAbsolute()) {
                 dir.mkdirs();
             }//*/
             
-            if (!file.exists()) {
+            /*if (!file.exists()) {
                  
                 if (file.createNewFile()) {
                 
                     try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
                         writer.write(write);
                     } catch (Exception e) {
+                        System.out.println(controller.ID + "\tCould not write to file");
                         e.printStackTrace();
                     }
                 } else {
@@ -61,11 +74,10 @@ public class Utilities {
                 System.out.println(controller.ID + "\tFile exists " 
                         + file.getAbsolutePath() + " " + write);
                 return;
-            }        
-        } catch (IOException ex) {
+            }  */      
+        /*} catch (IOException ex) {
             ex.printStackTrace();
-            return;
-        }
+        }*/
     }
     
     public void writeGrid(int[][] grid, Settings settings, String IT) {
