@@ -7,6 +7,8 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Nico
@@ -26,8 +28,8 @@ public class Main {
         int id1 = 0;
         int id2 = 0;
         
-        final BlockingQueue<Runnable> queue = new ArrayBlockingQueue<>(5000000);
-        ExecutorService executorService = new ThreadPoolExecutor(12, 5000000,
+        final BlockingQueue<Runnable> queue = new ArrayBlockingQueue<>(30720);
+        ExecutorService executorService = new ThreadPoolExecutor(12, 30720,
                 1000, TimeUnit.MILLISECONDS,
                 queue);
                 
@@ -69,9 +71,21 @@ public class Main {
                 }                
             }            
         }//*/
-        
+                
         executorService.shutdown();
-        while (!executorService.isTerminated()) {}
+        
+        double complete;
+        while (!executorService.isTerminated()) {
+            try {
+                Thread.sleep(5000);
+                
+                complete = ((double)queue.remainingCapacity()) / 30720 * 100;
+                System.out.println(complete + "%");
+                
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         
         System.exit(0);
     }

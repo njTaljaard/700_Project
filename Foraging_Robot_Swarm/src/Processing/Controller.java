@@ -56,7 +56,7 @@ public class Controller implements Runnable {
         
     @Override
     public void run() {
-        fileOut.add("Itt,tWait,tPGold,tFGold,iGold,tPRock,tFRock,iRock");
+        fileOut.add("Itterations,totalWait,tPlaceGold,tForageGold,ittGoldFinish,tPlaceRock,tForageRock,ittRockFinish");
             /*controller.itterations + "," + controller.totalWaited +
             "," + controller.totalPlacedGold + "," + controller.totalForagedGold +
             "," + controller.ittGoldFinished + "," + controller.totalPlacedRock +
@@ -69,22 +69,22 @@ public class Controller implements Runnable {
         try {
             File file;
             if (preCluster) {
-                file = new File("./Stats/" + ID + "-0" + "-" + settings.GridSize + "-" 
+                file = new File("./Stats/" + settings.GridSize + "-" 
                         + settings.RobotCount + "-" + settings.coverage + "-" 
                         + settings.ratio + "-" + settings.scatterType+ "-" 
-                        + settings.weight + ".txt");
+                        + settings.weight + "-0-" + ID + ".txt");
             } else {
-                file = new File("./Stats/" + ID + "-1" + "-" + settings.GridSize + "-" 
+                file = new File("./Stats/" + settings.GridSize + "-" 
                         + settings.RobotCount + "-" + settings.coverage + "-" 
                         + settings.ratio + "-" + settings.scatterType+ "-" 
-                        + settings.weight + ".txt");
+                        + settings.weight + "-1-" + ID + ".txt");
             }
 
             file.createNewFile();
 
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
                 for (String write : fileOut)
-                    writer.write(write);
+                    writer.write(write + "\n");
             }
         } catch(IOException ex) {
             ex.printStackTrace();
@@ -101,6 +101,13 @@ public class Controller implements Runnable {
 
             grid = control.grid;
             done = false;
+            
+            this.robots = new Robot[settings.RobotCount];
+        
+            for (int i = 0; i < settings.RobotCount; i++) {  
+                this.robots[i] = new Robot(this, RobotState.BEE);
+            }
+            
         } else {
             setup();
         }
@@ -125,8 +132,6 @@ public class Controller implements Runnable {
                 ittRockFinished = itterations;
             
         } while (testStoppingCondition());
-                    
-        System.out.println(ID + " " + preCluster);
         
         totalForagedGold = totalPlacedGold - grid.countGold();
         totalForagedRock = totalPlacedRock - grid.countRock();
@@ -137,7 +142,11 @@ public class Controller implements Runnable {
         if (ittRockFinished != 0)
             ittRockFinished = itterations;
         
-        utils.writeState(this, settings);
+        fileOut.add(itterations + "," + totalWaited +
+                "," + totalPlacedGold + "," + totalForagedGold +
+                "," + ittGoldFinished + "," + totalPlacedRock +
+                "," + totalForagedRock + "," + ittRockFinished);
+        //utils.writeState(this, settings);
         
         this.done = true;        
         return;
