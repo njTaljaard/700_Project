@@ -28,28 +28,29 @@ public class Main {
         int id1 = 0;
         int id2 = 0;
         
-        final BlockingQueue<Runnable> queue = new ArrayBlockingQueue<>(30720);
-        ExecutorService executorService = new ThreadPoolExecutor(12, 30720,
+        final BlockingQueue<Runnable> queue = new ArrayBlockingQueue<>(38880);
+        ExecutorService executorService = new ThreadPoolExecutor(12, 38880,
                 1000, TimeUnit.MILLISECONDS,
                 queue);
-                
-        //Grid size
-        for (int gSize = 0; gSize <= 2; gSize++) {
-            
-            //Amount of robots
-            for (int rCount = 0; rCount <= 4; rCount++) {
 
-                //Grid coverage
-                for (int cover = 0; cover <= 3; cover++) {
+        //Gold : Rock
+        for (int ratio = 0; ratio <= 8; ratio++) {
+
+            //Pickup controbution
+            for (int weight = 0; weight <= 8; weight++) {            
+
+                //Grid pattern
+                for (int scatter = 0; scatter <= 3; scatter++) {
                     
-                    //Gold : Rock
-                    for (int ratio = 0; ratio <= 7; ratio++) {//*/
-                        //Grid pattern
-                        for (int scatter = 0; scatter <= 3; scatter++) {
-                        
-                            //Pickup controbution
-                            for (int weight = 0; weight <= 7; weight++) {
-                                
+                    //Grid coverage
+                    for (int cover = 0; cover <= 3; cover++) {
+
+                        //Grid size
+                        for (int gSize = 0; gSize <= 2; gSize++) {
+
+                            //Amount of robots
+                            for (int rCount = 0; rCount <= 4; rCount++) {
+
                                 //Run a single configuration
                                 //for (int tests = 0; tests < 30; tests++) {
                                     
@@ -70,16 +71,16 @@ public class Main {
                     }                    
                 }                
             }            
-        }//*/
+        }
                 
         executorService.shutdown();
         
         double complete;
         while (!executorService.isTerminated()) {
             try {
-                Thread.sleep(5000);
+                Thread.sleep(10000);
                 
-                complete = ((double)queue.remainingCapacity()) / 30720 * 100;
+                complete = ((double)queue.remainingCapacity()) / 38880 * 100;
                 System.out.println(complete + "%");
                 
             } catch (InterruptedException ex) {

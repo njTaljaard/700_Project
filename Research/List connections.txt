@@ -24,7 +24,7 @@ path planning of mobile robots. In:Proceedings of the 10th WSEAS
 international conference on evolutionary computing,World Scienti?c and
 Engineering Academy and Society (WSEAS)(2009)84–89 
 
-Ant System:
+Ant System: 77
  [4,77,216] - AI Textbook first AS algorithm (368)
  [216] Path selection
  Algorithm 17.3 AS (371)

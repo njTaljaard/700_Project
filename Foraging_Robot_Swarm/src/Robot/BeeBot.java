@@ -20,7 +20,7 @@ public class BeeBot {
     private int forageCount;
     private int carry;  
     
-    private int tWait = 50;
+    private int tWait = 200;
     private int waitTime = 0;
     
     private boolean laden;
@@ -251,7 +251,7 @@ public class BeeBot {
         } else { //MOVE TO BARE...
             
 		bareCount++;       
-            if (bareCount > (baringVector.bareCount * 1.5)) {
+            if (bareCount > (baringVector.bareCount * 1.3)) {
                 
                 //System.out.println("\nForage - Revert to scout\n");
                 this.state = RobotState.Bee_SCOUT;

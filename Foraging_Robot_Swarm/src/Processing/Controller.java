@@ -69,15 +69,15 @@ public class Controller implements Runnable {
         try {
             File file;
             if (preCluster) {
-                file = new File("./Stats/" + settings.GridSize + "-" 
+                file = new File("./Stats/0/" + settings.GridSize + "-" 
                         + settings.RobotCount + "-" + settings.coverage + "-" 
                         + settings.ratio + "-" + settings.scatterType+ "-" 
-                        + settings.weight + "-0-" + ID + ".txt");
+                        + settings.weight + "-" + ID + ".txt");
             } else {
-                file = new File("./Stats/" + settings.GridSize + "-" 
+                file = new File("./Stats/1/" + settings.GridSize + "-" 
                         + settings.RobotCount + "-" + settings.coverage + "-" 
                         + settings.ratio + "-" + settings.scatterType+ "-" 
-                        + settings.weight + "-1-" + ID + ".txt");
+                        + settings.weight + "-" + ID + ".txt");
             }
 
             file.createNewFile();
