@@ -33,6 +33,10 @@ public class Main {
                 1000, TimeUnit.MILLISECONDS,
                 queue);
 
+        /*
+         * ONLY FORAGE!!!!   
+         */
+        
         //Gold : Rock
         for (int ratio = 0; ratio <= 8; ratio++) {
 
@@ -51,27 +55,86 @@ public class Main {
                             //Amount of robots
                             for (int rCount = 0; rCount <= 4; rCount++) {
 
-                                //Run a single configuration
-                                //for (int tests = 0; tests < 30; tests++) {
-                                    
-                                    executorService.execute(
-                                            new Controller(
-                                                new Settings(gSize, rCount, cover, 
-                                                        ratio, weight, scatter),
-                                                id1++, false, false));//*/
-                                    
-                                    executorService.execute(
-                                            new Controller(
-                                                new Settings(gSize, rCount, cover, 
-                                                        ratio, weight, scatter),
-                                                id2++, false, true));
-                                //}
+                                executorService.execute(
+                                        new Controller(
+                                            new Settings(gSize, rCount, cover, 
+                                                    ratio, weight, scatter),
+                                            id1++, false, false));
                             }                        
                         }
                     }                    
                 }                
             }            
         }
+        
+        /*
+         * PRE CLUSTER!!!!   
+         */
+        
+        //Gold : Rock
+        for (int ratio = 0; ratio <= 8; ratio++) {
+
+            //Pickup controbution
+            for (int weight = 0; weight <= 8; weight++) {            
+
+                //Grid pattern
+                for (int scatter = 0; scatter <= 3; scatter++) {
+                    
+                    //Grid coverage
+                    for (int cover = 0; cover <= 3; cover++) {
+
+                        //Grid size
+                        for (int gSize = 0; gSize <= 2; gSize++) {
+
+                            //Amount of robots
+                            for (int rCount = 0; rCount <= 4; rCount++) {
+                                    
+                                executorService.execute(
+                                        new Controller(
+                                            new Settings(gSize, rCount, cover, 
+                                                    ratio, weight, scatter),
+                                            id2++, false, true));
+                            }                        
+                        }
+                    }                    
+                }                
+            }            
+        }
+        
+        
+        /*
+         * Division of Labor!!!!   
+         */
+        /*
+        //Gold : Rock
+        for (int ratio = 0; ratio <= 8; ratio++) {
+
+            //Pickup controbution
+            for (int weight = 0; weight <= 8; weight++) {            
+
+                //Grid pattern
+                for (int scatter = 0; scatter <= 3; scatter++) {
+                    
+                    //Grid coverage
+                    for (int cover = 0; cover <= 3; cover++) {
+
+                        //Grid size
+                        for (int gSize = 0; gSize <= 2; gSize++) {
+
+                            //Amount of robots
+                            for (int rCount = 0; rCount <= 4; rCount++) {
+                                    
+                                executorService.execute(
+                                        new Controller(
+                                            new Settings(gSize, rCount, cover, 
+                                                    ratio, weight, scatter),
+                                            id2++, false, true));
+                            }                        
+                        }
+                    }                    
+                }                
+            }            
+        }*/
                 
         executorService.shutdown();
         

@@ -230,6 +230,7 @@ public class BeeBot {
 
                 if (pos.column == 0) {
                     //System.out.println("Home base");
+                    int tmp = carry;
                     if (controller.grid.dropItem(pos, Settings.EMPTY)) {
                         //System.out.println(this.toString() + " Drop " + pos.print() + "\n");
                         
@@ -239,7 +240,7 @@ public class BeeBot {
                         
                         if (position.pickupDensity > 0.5) {
 
-                            if (employed) {
+                            if (employed && tmp == Settings.GOLD) {
                                 state = RobotState.Bee_DANCE;
                             }
                         }

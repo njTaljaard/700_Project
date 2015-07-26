@@ -45,8 +45,8 @@ public class Grid {
         
         for (int i = 0; i < grid.length; i++)
             for (int j = 0; j < grid.length; j++)
-                if (grid[i][j] != Settings.EMPTY && grid[i][j] == Settings.ANT_GOLD
-                        && grid[i][j] == Settings.BEE_GOLD)
+                if (grid[i][j] == Settings.GOLD || grid[i][j] == Settings.ANT_GOLD
+                        || grid[i][j] == Settings.BEE_GOLD)
                     c++;
         
         return c;
@@ -57,8 +57,8 @@ public class Grid {
         
         for (int i = 0; i < grid.length; i++)
             for (int j = 0; j < grid.length; j++)
-                if (grid[i][j] == Settings.ROCK && grid[i][j] == Settings.ANT_ROCK
-                        && grid[i][j] == Settings.BEE_ROCK)
+                if (grid[i][j] == Settings.ROCK || grid[i][j] == Settings.ANT_ROCK
+                        || grid[i][j] == Settings.BEE_ROCK)
                     c++;
         
         return c;

@@ -69,15 +69,13 @@ public class Controller implements Runnable {
         try {
             File file;
             if (preCluster) {
-                file = new File("./Stats/0/" + settings.GridSize + "-" 
-                        + settings.RobotCount + "-" + settings.coverage + "-" 
-                        + settings.ratio + "-" + settings.scatterType+ "-" 
-                        + settings.weight + "-" + ID + ".txt");
+                file = new File("./Stats/0/" + settings.ratio + "-" + settings.weight + "-" 
+                        + settings.scatterType + "-" + settings.coverage + "-"
+                        + settings.GridSize + "-" + settings.RobotCount + ".txt");
             } else {
-                file = new File("./Stats/1/" + settings.GridSize + "-" 
-                        + settings.RobotCount + "-" + settings.coverage + "-" 
-                        + settings.ratio + "-" + settings.scatterType+ "-" 
-                        + settings.weight + "-" + ID + ".txt");
+                file = new File("./Stats/1/" + settings.ratio + "-" + settings.weight + "-" 
+                        + settings.scatterType + "-" + settings.coverage + "-"
+                        + settings.GridSize + "-" + settings.RobotCount + ".txt");
             }
 
             file.createNewFile();
@@ -133,8 +131,13 @@ public class Controller implements Runnable {
             
         } while (testStoppingCondition());
         
-        totalForagedGold = totalPlacedGold - grid.countGold();
-        totalForagedRock = totalPlacedRock - grid.countRock();
+        int goldTmp = totalPlacedGold;
+        int rockTmp = totalPlacedRock;
+        
+        System.out.println(goldTmp + " " + rockTmp);
+        
+        totalForagedGold = goldTmp - grid.countGold();
+        totalForagedRock = rockTmp - grid.countRock();
         
         if (ittGoldFinished != 0)
             ittGoldFinished = itterations;
@@ -199,7 +202,7 @@ public class Controller implements Runnable {
     }
     
     /**
-     * Side line
+     * Pre-cluster
      */
     public void preCluster() {
         itterations = 0;
@@ -232,4 +235,8 @@ public class Controller implements Runnable {
         //System.out.println("PreCluster Done " + grid.countRemainder());
         this.done = true;
     }
+    
+    /*
+     * Division of labor
+     */
 }

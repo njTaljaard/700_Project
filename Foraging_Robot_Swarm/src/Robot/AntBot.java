@@ -174,7 +174,7 @@ public class AntBot {
                 
                 setCarry(tmp, Settings.EMPTY);
                 state = RobotState.Ant_SEARCH;
-                avoid = (int) (controller.settings.GridSize * 0.1);
+                avoid = 5;//(int) (controller.settings.GridSize * 0.1);
                 
                 return tmp;
             }
@@ -192,7 +192,7 @@ public class AntBot {
                     
                     setCarry(tmp, Settings.EMPTY);
                     state = RobotState.Ant_SEARCH;
-                    avoid = (int) (controller.settings.GridSize * 0.1);
+                    avoid = 5;//(int) (controller.settings.GridSize * 0.1);
                     
                     return tmp;
                 }
