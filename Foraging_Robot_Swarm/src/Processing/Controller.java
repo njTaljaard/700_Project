@@ -133,9 +133,7 @@ public class Controller implements Runnable {
         
         int goldTmp = totalPlacedGold;
         int rockTmp = totalPlacedRock;
-        
-        System.out.println(goldTmp + " " + rockTmp);
-        
+                
         totalForagedGold = goldTmp - grid.countGold();
         totalForagedRock = rockTmp - grid.countRock();
         
@@ -181,9 +179,9 @@ public class Controller implements Runnable {
         updateCarryItt();
         
         if (preCluster) 
-            return !testStagnation() && itterations < 20000;
+            return !testStagnation() && itterations < 100000;
         else
-            return !grid.complete() && !testStagnation() && itterations < 100000;
+            return !grid.complete() && !testStagnation() && itterations < 200000;
     }
     
     public void updateCarryItt() { 
@@ -198,7 +196,7 @@ public class Controller implements Runnable {
     
     public boolean testStagnation() {
         
-        return (itterations - lastCarryItt) > (grid.grid.length * 20);
+        return (itterations - lastCarryItt) > (grid.grid.length * 500);
     }
     
     /**

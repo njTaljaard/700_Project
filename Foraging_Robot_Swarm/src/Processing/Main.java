@@ -2,6 +2,7 @@ package Processing;
 
 import Processing.Controller;
 import Setup.Settings;
+import java.io.IOException;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
@@ -29,7 +30,7 @@ public class Main {
         int id2 = 0;
         
         final BlockingQueue<Runnable> queue = new ArrayBlockingQueue<>(38880);
-        ExecutorService executorService = new ThreadPoolExecutor(12, 38880,
+        ExecutorService executorService = new ThreadPoolExecutor(32, 38880,
                 1000, TimeUnit.MILLISECONDS,
                 queue);
 
@@ -150,8 +151,15 @@ public class Main {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+     
+        ftp ftp = new ftp();
+        ftp.uploadDirectory("./", "./Uploads");
         
-        System.exit(0);
+        
+        try {   
+            Runtime.getRuntime().exec("shutdown -s -t 0");
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-    
 }
