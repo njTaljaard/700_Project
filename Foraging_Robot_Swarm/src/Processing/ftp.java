@@ -14,10 +14,10 @@ import org.apache.commons.net.ftp.FTPClient;
  */
 public class ftp {
     
-    static String server = "www.myserver.com";
+    static String server = "http://127.0.0.1:8081";
     static int port = 21;
-    static String user = "user";
-    static String pass = "pass";
+    static String user = "Guest";
+    static String pass = "Pass";
     static FTPClient ftpClient;
     static String remoteDirPath;
     static String localDirPath;
@@ -28,7 +28,7 @@ public class ftp {
         try {
             // connect and login to the server
             ftpClient.connect(server, port);
-            ftpClient.login(user, pass);
+            //ftpClient.login(user, pass);
  
             // use local passive mode to pass firewall
             ftpClient.enterLocalPassiveMode();
@@ -53,12 +53,7 @@ public class ftp {
     public void uploadDirectory(String localParentDir, String remoteParentDir) {
 
         try {            
-            ftpClient = new FTPClient();
-            ftpClient.connect(server, port);
-            ftpClient.login(user, pass);
-            ftpClient.enterLocalPassiveMode();
-
-            ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+            ftpClient.setFileType(FTP.LOCAL_FILE_TYPE);
             
             File localDir = new File(localParentDir);
             File[] subFiles = localDir.listFiles();
@@ -107,15 +102,6 @@ public class ftp {
             }
         } catch (IOException ex) {
             Logger.getLogger(ftp.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                if (ftpClient.isConnected()) {
-                    ftpClient.logout();
-                    ftpClient.disconnect();
-                }
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
         }
     }
     
@@ -125,7 +111,7 @@ public class ftp {
 
         InputStream inputStream = new FileInputStream(localFile);
         try {
-            ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+            ftpClient.setFileType(FTP.LOCAL_FILE_TYPE);
             return ftpClient.storeFile(remoteFilePath, inputStream);
         } finally {
             inputStream.close();

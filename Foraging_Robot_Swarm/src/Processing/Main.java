@@ -28,11 +28,10 @@ public class Main {
     public void runSimulation() {
         int id1 = 0;
         int id2 = 0;
-        
+        //38880
         final BlockingQueue<Runnable> queue = new ArrayBlockingQueue<>(38880);
         ExecutorService executorService = new ThreadPoolExecutor(32, 38880,
-                1000, TimeUnit.MILLISECONDS,
-                queue);
+                1000, TimeUnit.MILLISECONDS, queue);
 
         /*
          * ONLY FORAGE!!!!   
@@ -43,13 +42,13 @@ public class Main {
 
             //Pickup controbution
             for (int weight = 0; weight <= 8; weight++) {            
-
+            
                 //Grid pattern
                 for (int scatter = 0; scatter <= 3; scatter++) {
-                    
+            
                     //Grid coverage
                     for (int cover = 0; cover <= 3; cover++) {
-
+                
                         //Grid size
                         for (int gSize = 0; gSize <= 2; gSize++) {
 
@@ -139,8 +138,8 @@ public class Main {
                 
         executorService.shutdown();
         
-        double complete;
-        while (!executorService.isTerminated()) {
+        double complete = 0.0;
+        while (complete != 100.0) {//!executorService.isTerminated()) {
             try {
                 Thread.sleep(10000);
                 
@@ -151,13 +150,15 @@ public class Main {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        
+        System.out.println("FPT stats");
      
         ftp ftp = new ftp();
         ftp.uploadDirectory("./", "./Uploads");
         
-        
         try {   
             Runtime.getRuntime().exec("shutdown -s -t 0");
+            System.exit(0);
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
