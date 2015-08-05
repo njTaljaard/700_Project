@@ -156,10 +156,13 @@ public class Main {
         ftp ftp = new ftp();
         ftp.uploadDirectory("./", "./Uploads");
         
-        try {   
+        try { 
+            Thread.sleep(1000);
             Runtime.getRuntime().exec("shutdown -s -t 0");
             System.exit(0);
         } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InterruptedException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

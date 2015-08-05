@@ -1,0 +1,9 @@
+Download jre (jre-8u51-windows-x65.exe):
+http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html
+
+Install and insure its added to path variable.
+
+Open cmd in dist folder.
+
+Run jar file:
+java -jar Foraging_Robot_Swarm.jar
