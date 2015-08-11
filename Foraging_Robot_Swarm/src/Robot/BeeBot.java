@@ -137,7 +137,7 @@ public class BeeBot {
             
             for (Robot r : dances) {
                                 
-                if (controller.utils.distance(position, r.getPosition().row, r.getPosition().column) < 6) {               
+                if (controller.utils.distance(position, r.getPosition().row, r.getPosition().column) < (controller.settings.GridSize / 4)) {               
                     
                     baringVector = r.getBareing();
                     state = RobotState.Bee_FORAGE;

@@ -196,7 +196,7 @@ public class Controller implements Runnable {
     
     public boolean testStagnation() {
         
-        return (itterations - lastCarryItt) > (grid.grid.length * 500);
+        return (itterations - lastCarryItt) > (grid.grid.length * 200);
     }
     
     /**

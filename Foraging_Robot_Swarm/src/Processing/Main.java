@@ -1,6 +1,5 @@
 package Processing;
 
-import Processing.Controller;
 import Setup.Settings;
 import java.io.IOException;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -30,7 +29,7 @@ public class Main {
         int id2 = 0;
         //38880
         final BlockingQueue<Runnable> queue = new ArrayBlockingQueue<>(38880);
-        ExecutorService executorService = new ThreadPoolExecutor(32, 38880,
+        ExecutorService executorService = new ThreadPoolExecutor(12, 38880,
                 1000, TimeUnit.MILLISECONDS, queue);
 
         /*
