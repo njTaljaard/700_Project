@@ -127,7 +127,6 @@
 \\
 \par{Honey bees have to explore away from their hive to find resource objects and return it represented as foraging [Proposal 11]. Also clustering in the form of sorting object as modeled after how ant organize their dead dependent on the density of corpses [Proposal 8].}
 
-
 \section*{Background}
 
 The following selections introduces further information on the field and also the clustering and foraging algorithms that are experimented with.
@@ -177,13 +176,14 @@ The following selections introduces further information on the field and also th
 \par{Fig2}
 \\
 \begin{enumerate}[nolistsep]
-\item A bee in the scouting state does a random walk through the environment looking for the area with it highest density of objects.
-\item Once a dens area is detected and the probability  of pick-up is greater than [PHI] an object will be loaded and the bee will start foraging.
-\item As laden the bee forages the object along its PI back to the drop sink where it will drop the object. If not laden the bee follows the direction vector back towards the previous found location for the measured distance. During the return process a higher dens area may be detected where upon the bee will changes its bearing vector, this is done if the density is greater than 1.4 of the previous determined density.
-\item An object is unloaded from a laden bee once it reaches its sink and deposits it. If the bee was in the waiting state before foraging it will return to wait else as an unemployed forager it will continue to forage the site.
-\item After a successful deposit the bee calculates the probability of if the found site is successful. If so it will perform a dance for bee in a close vicinity to promote the sites PI as well as it distance.
-\item An employed forager may abort after no object where able to be found where upon it will return to the sink and go into a waiting state.
-\item A bee in the waiting state will be employed until it detects a dance within its vicinity that is deems profitable.  The bee may also resort to unemployed scouting if it does not detect a dance for a prolonged time [tmax].
+	\item A bee in the scouting state does a random walk through the environment looking for the area with it highest density of objects.
+	\item Once a dens area is detected and the probability  of pick-up is greater than [PHI] an object will be loaded and the bee will start foraging.
+	\item As laden the bee forages the object along its PI back to the drop sink where it will drop the object. If not laden the bee follows the direction vector back towards the previous found location for the measured distance. During the return process a higher dens area may be detected where upon the bee will changes its bearing vector, this is done if the density is greater than 1.4 of the previous determined density.
+	\item An object is unloaded from a laden bee once it reaches its sink and deposits it. If the bee was in the waiting state before foraging it will return to wait else as an unemployed forager it will continue to forage the site.
+	\item After a successful deposit the bee calculates the probability of if the found site is successful. If so it will perform a dance for bee in a close vicinity to promote the sites PI as well as it distance otherwise the robot will do a solo forage.
+	\item An employed forager may abort after no object where able to be found where upon it will return to the sink and go into a waiting state.
+	\item A bee in the waiting state will be employed until it detects a dance within its vicinity that is deems profitable.  The bee may also resort to unemployed scouting if it does not detect a dance for a prolonged time [tmax].
+	\item 
 \end{enumerate}
 
 \section*{Simulation Configuration}
