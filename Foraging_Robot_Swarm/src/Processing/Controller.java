@@ -24,6 +24,7 @@ public class Controller implements Runnable {
     public final String ID;
     private int lastCarryItt;
     public int itterations;
+    public int clusterITT;
     
     public boolean done;
     private boolean print;
@@ -91,6 +92,8 @@ public class Controller implements Runnable {
     
     private void simulateConfig() {
         
+        clusterITT = 0;
+        
         if (preCluster) {
             Controller control = new Controller(settings, 0, false, true);
             control.preCluster();
@@ -142,6 +145,9 @@ public class Controller implements Runnable {
         
         if (ittRockFinished != 0)
             ittRockFinished = itterations;
+        
+        if (preCluster)
+            itterations += clusterITT;
         
         fileOut.add(itterations + "," + totalWaited +
                 "," + totalPlacedGold + "," + totalForagedGold +
@@ -196,7 +202,7 @@ public class Controller implements Runnable {
     
     public boolean testStagnation() {
         
-        return (itterations - lastCarryItt) > (grid.grid.length * 500);
+        return (itterations - lastCarryItt) > (grid.grid.length * 200);
     }
     
     /**

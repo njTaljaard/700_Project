@@ -14,10 +14,10 @@ import org.apache.commons.net.ftp.FTPClient;
  */
 public class ftp {
     
-    static String server = "http://127.0.0.1:8081";
+    static String server = "http://php2asp.com";
     static int port = 21;
-    static String user = "Guest";
-    static String pass = "Pass";
+    static String user = "zarika";
+    static String pass = "F@@dNow6";
     static FTPClient ftpClient;
     static String remoteDirPath;
     static String localDirPath;

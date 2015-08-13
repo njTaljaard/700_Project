@@ -30,43 +30,9 @@ public class Main {
         int id2 = 0;
         //38880
         final BlockingQueue<Runnable> queue = new ArrayBlockingQueue<>(38880);
-        ExecutorService executorService = new ThreadPoolExecutor(32, 38880,
+        ExecutorService executorService = new ThreadPoolExecutor(39, 38880,
                 1000, TimeUnit.MILLISECONDS, queue);
 
-        /*
-         * ONLY FORAGE!!!!   
-         */
-        
-        //Gold : Rock
-        for (int ratio = 0; ratio <= 8; ratio++) {
-
-            //Pickup controbution
-            for (int weight = 0; weight <= 8; weight++) {            
-            
-                //Grid pattern
-                for (int scatter = 0; scatter <= 3; scatter++) {
-            
-                    //Grid coverage
-                    for (int cover = 0; cover <= 3; cover++) {
-                
-                        //Grid size
-                        for (int gSize = 0; gSize <= 2; gSize++) {
-
-                            //Amount of robots
-                            for (int rCount = 0; rCount <= 4; rCount++) {
-
-                                executorService.execute(
-                                        new Controller(
-                                            new Settings(gSize, rCount, cover, 
-                                                    ratio, weight, scatter),
-                                            id1++, false, false));
-                            }                        
-                        }
-                    }                    
-                }                
-            }            
-        }
-        
         /*
          * PRE CLUSTER!!!!   
          */
@@ -101,6 +67,39 @@ public class Main {
             }            
         }
         
+        /*
+         * ONLY FORAGE!!!!   
+         */
+        
+        //Gold : Rock
+        for (int ratio = 0; ratio <= 8; ratio++) {
+
+            //Pickup controbution
+            for (int weight = 0; weight <= 8; weight++) {            
+            
+                //Grid pattern
+                for (int scatter = 0; scatter <= 3; scatter++) {
+            
+                    //Grid coverage
+                    for (int cover = 0; cover <= 3; cover++) {
+                
+                        //Grid size
+                        for (int gSize = 0; gSize <= 2; gSize++) {
+
+                            //Amount of robots
+                            for (int rCount = 0; rCount <= 4; rCount++) {
+
+                                executorService.execute(
+                                        new Controller(
+                                            new Settings(gSize, rCount, cover, 
+                                                    ratio, weight, scatter),
+                                            id1++, false, false));
+                            }                        
+                        }
+                    }                    
+                }                
+            }            
+        }
         
         /*
          * Division of Labor!!!!   
@@ -139,7 +138,7 @@ public class Main {
         executorService.shutdown();
         
         double complete = 0.0;
-        while (complete != 100.0) {//!executorService.isTerminated()) {
+        while (queue.remainingCapacity() != 3880) {//!executorService.isTerminated()) {
             try {
                 Thread.sleep(10000);
                 
@@ -150,13 +149,13 @@ public class Main {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
-        System.out.println("FPT stats");
+                
+        System.out.println("I am done");
      
-        ftp ftp = new ftp();
+        /*ftp ftp = new ftp();
         ftp.uploadDirectory("./", "./Uploads");
         
-        try { 
+        /*try { 
             Thread.sleep(1000);
             Runtime.getRuntime().exec("shutdown -s -t 0");
             System.exit(0);
@@ -164,6 +163,6 @@ public class Main {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InterruptedException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
     }
 }
