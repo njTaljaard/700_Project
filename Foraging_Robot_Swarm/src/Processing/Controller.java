@@ -26,7 +26,6 @@ public class Controller implements Runnable {
     public int itterations;
     public int clusterITT;
     
-    public boolean done;
     private boolean print;
     private boolean preCluster;
     
@@ -49,7 +48,6 @@ public class Controller implements Runnable {
         this.settings = settings;
         this.utils = new Utilities();
         this.ID = String.valueOf(id);
-        this.done = false;
         this.print = print;
         this.preCluster = preCluster;
         this.fileOut = new ArrayList<>();
@@ -81,6 +79,10 @@ public class Controller implements Runnable {
 
             file.createNewFile();
 
+            System.out.println(settings.ratio + "-" + settings.weight + "-" 
+                        + settings.scatterType + "-" + settings.coverage + "-"
+                        + settings.GridSize + "-" + settings.RobotCount);
+            
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
                 for (String write : fileOut)
                     writer.write(write + "\n");
@@ -91,33 +93,30 @@ public class Controller implements Runnable {
     }
     
     private void simulateConfig() {
-        
-        clusterITT = 0;
-        
-        if (preCluster) {
-            Controller control = new Controller(settings, 0, false, true);
-            control.preCluster();
-
-            while(!control.done){}
-
-            grid = control.grid;
-            done = false;
-            
-            this.robots = new Robot[settings.RobotCount];
-        
-            for (int i = 0; i < settings.RobotCount; i++) {  
-                this.robots[i] = new Robot(this, RobotState.BEE);
-            }
-            
-        } else {
-            setup();
-        }
-            
-        totalPlacedGold = grid.countGold();
-        totalPlacedRock = grid.countRock();
-        
+                
         itterations = 0;
         lastCarryItt = 0;
+        totalWaited = 0;
+        
+        this.grid = new Grid(settings, utils, this);
+        this.grid.createGrid();
+            
+        if (preCluster) {  
+            preClusterAnt(); 
+            lastCarryItt = itterations;
+        } else {
+            itterations = 0;
+            lastCarryItt = 0;
+            totalWaited = 0;           
+        }
+        
+        this.robots = new Robot[settings.RobotCount];
+        
+        for (int i = 0; i < settings.RobotCount; i++)
+            this.robots[i] = new Robot(this, RobotState.BEE);
+        
+        totalPlacedGold = grid.countGold();
+        totalPlacedRock = grid.countRock();
         
         do {
             itterations++;
@@ -136,7 +135,7 @@ public class Controller implements Runnable {
         
         int goldTmp = totalPlacedGold;
         int rockTmp = totalPlacedRock;
-                
+        
         totalForagedGold = goldTmp - grid.countGold();
         totalForagedRock = rockTmp - grid.countRock();
         
@@ -155,29 +154,7 @@ public class Controller implements Runnable {
                 "," + totalForagedRock + "," + ittRockFinished);
         //utils.writeState(this, settings);
         
-        this.done = true;        
         return;
-    }
-    
-    private void setup() {
-        
-        if (preCluster) {
-            settings.scatterType = 1;
-            //System.out.println("Create grid : " + settings.scatterType);
-            this.grid = new Grid(settings, utils);
-        } else {
-            //System.out.println("Create grid : " + settings.scatterType);
-            this.grid = new Grid(settings,utils);
-        }
-        
-        this.robots = new Robot[settings.RobotCount];
-        
-        for (int i = 0; i < settings.RobotCount; i++) {  
-            if (preCluster)
-                this.robots[i] = new Robot(this, RobotState.ANT);
-            else
-                this.robots[i] = new Robot(this, RobotState.BEE);
-        }
     }
     
     private boolean testStoppingCondition() {
@@ -202,21 +179,22 @@ public class Controller implements Runnable {
     
     public boolean testStagnation() {
         
-        return (itterations - lastCarryItt) > (grid.grid.length * 200);
+        return (itterations - lastCarryItt) > (grid.grid.length * 400);
     }
     
     /**
      * Pre-cluster
      */
-    public void preCluster() {
+    public void preClusterAnt() { 
         itterations = 0;
         lastCarryItt = 0;
+        totalWaited = 0;       
+        this.robots = new Robot[settings.RobotCount];
         
-        setup();
-        //utils.writeRobots(robots, settings, ID);
-        
-        //System.out.println("PreCluster " + grid.countRemainder());
-        //utils.writeGrid(grid.grid, settings, "PreCluster");
+        for (int i = 0; i < settings.RobotCount; i++)
+            this.robots[i] = new Robot(this, RobotState.ANT);
+         
+        preCluster = true;
         
         do {
             itterations++;
@@ -225,22 +203,34 @@ public class Controller implements Runnable {
                 robot.update(itterations);
             }
             
-            /*if (print) {
-                if (itterations % 100 == 0) {
-                    utils.writeGrid(grid.grid, settings, String.valueOf(itterations) + " cluster");
-                }
-            }*/
+        } while (testStoppingCondition());
+        
+        preCluster = true;
+        
+        this.grid.clear();
+    }
+    
+    public void preClusterMap() {
+        this.robots = new Robot[settings.RobotCount];
+        
+        for (int i = 0; i < settings.RobotCount; i++)
+            this.robots[i] = new Robot(this, RobotState.ANT);
+        
+        boolean tmp = preCluster;
+        
+        preCluster = true;
+        
+        do {
+            itterations++;
+            
+            for (Robot robot : robots) {
+                robot.update(itterations);
+            }
             
         } while (testStoppingCondition());
         
-        grid.clear();
-            
-        //utils.writeGrid(grid.grid, settings, "PreCluster Done");
-        //System.out.println("PreCluster Done " + grid.countRemainder());
-        this.done = true;
+        preCluster = tmp;
+        
+        this.grid.clear();
     }
-    
-    /*
-     * Division of labor
-     */
 }

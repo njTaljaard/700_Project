@@ -11,22 +11,30 @@ import java.util.ArrayList;
  * @author Nico
  */
 public class Grid {
+    private Controller controller;
     public int[][] grid;
     public Settings settings;
     private final Utilities utils;
     private final Grouping grouping;
     public ArrayList<Robot> dancers;
     
-    public Grid(Settings settings, Utilities util) {
+    public Grid(Settings settings, Utilities util, Controller con) {
+        this.utils = util;
+        this.settings = settings;
+        this.controller = con;
+        this.grid = new int[settings.GridSize][settings.GridSize];
+        this.grouping = new Grouping();
+        this.dancers = new ArrayList<>();
+        
+        //createGrid();
+    }
+    
+    public Grid(Settings settings, Utilities util, boolean create) {
         this.utils = util;
         this.settings = settings;
         this.grid = new int[settings.GridSize][settings.GridSize];
         this.grouping = new Grouping();
         this.dancers = new ArrayList<>();
-        
-        createGrid();
-        
-        //util.writeGrid(grid, settings, "0");
     }
     
     public int countRemainder() {
@@ -324,7 +332,7 @@ public class Grid {
      * 
      */
     
-    private void createGrid() {
+    public void createGrid() {
         //init possitions of rocks & gold
         int placement = (int) ((Math.pow(settings.GridSize, 2)) * settings.coverage);
         int gold = (int) (placement / (settings.ratio + 1));
@@ -358,16 +366,19 @@ public class Grid {
                     
                 break;
             case Settings.CLUSTERD: 
-                //System.out.println("Clusterd");
-                
-                Controller control = new Controller(settings, 0, false, true);
-                control.preCluster();
-                
-                while(!control.done){}
-                
                 settings.scatterType = 1;
-                grid = control.grid.grid;
+                Grid tmpGrid = new Grid(settings, utils, controller);
+                tmpGrid.createGrid();
                 
+                int[][] arr = tmpGrid.grid;
+                this.grid = new int[settings.GridSize][settings.GridSize];
+                
+                for (int i = 0; i < settings.GridSize; i++) {
+                    System.arraycopy(arr[i], 0, this.grid[i], 0, settings.GridSize);
+                }
+                
+                settings.scatterType = 2;
+                controller.preClusterMap();
                 break;
             case Settings.VEIN:
                 //System.out.println("Vein");

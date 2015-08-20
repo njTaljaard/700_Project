@@ -1,8 +1,6 @@
 package Processing;
 
-import Processing.Controller;
 import Setup.Settings;
-import java.io.IOException;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
@@ -16,9 +14,27 @@ import java.util.logging.Logger;
  */
 public class Main {
     
+    static int ratio;
+    static int scatter;
+    static String type;
+    
     public static void main(String[] args) {
         Main mn = new Main();
-        mn.runSimulation();
+        
+        if (args.length == 3) {
+            ratio = Integer.parseInt(args[0]);
+            scatter = Integer.parseInt(args[1]);
+            type = args[2];
+            mn.runSimulation();
+        } else {
+            System.out.println("Use arguments:");
+            System.out.println("1. Ratio: 0, 0.2, 0.25, 0.33, 0.5, 0.667, 0.75, 0.8, 1");
+            System.out.println("2. Scatter: 0-4");
+            System.out.println("3. Type: 0 / 1");
+            System.out.println("");
+            System.out.println("PreCluster = 0 : Scatter = 2, 3, 4");
+            System.out.println("No Cluster = 1 : Scatter = 2");
+        }
     }
     
     public Main() {
@@ -29,120 +45,90 @@ public class Main {
         int id1 = 0;
         int id2 = 0;
         //38880
-        final BlockingQueue<Runnable> queue = new ArrayBlockingQueue<>(38880);
-        ExecutorService executorService = new ThreadPoolExecutor(39, 38880,
+        final BlockingQueue<Runnable> queue = new ArrayBlockingQueue<>(480);
+        ExecutorService executorService = new ThreadPoolExecutor(40, 480,
                 1000, TimeUnit.MILLISECONDS, queue);
 
-        /*
-         * PRE CLUSTER!!!!   
-         */
-        
-        //Gold : Rock
-        for (int ratio = 0; ratio <= 8; ratio++) {
-
-            //Pickup controbution
-            for (int weight = 0; weight <= 8; weight++) {            
-
-                //Grid pattern
-                for (int scatter = 0; scatter <= 3; scatter++) {
-                    
-                    //Grid coverage
-                    for (int cover = 0; cover <= 3; cover++) {
-
-                        //Grid size
-                        for (int gSize = 0; gSize <= 2; gSize++) {
-
-                            //Amount of robots
-                            for (int rCount = 0; rCount <= 4; rCount++) {
-                                    
-                                executorService.execute(
-                                        new Controller(
-                                            new Settings(gSize, rCount, cover, 
-                                                    ratio, weight, scatter),
-                                            id2++, false, true));
-                            }                        
-                        }
-                    }                    
-                }                
-            }            
-        }
-        
-        /*
-         * ONLY FORAGE!!!!   
-         */
-        
-        //Gold : Rock
-        for (int ratio = 0; ratio <= 8; ratio++) {
-
-            //Pickup controbution
-            for (int weight = 0; weight <= 8; weight++) {            
+        if ("0".equals(type)) {
             
-                //Grid pattern
-                for (int scatter = 0; scatter <= 3; scatter++) {
-            
-                    //Grid coverage
-                    for (int cover = 0; cover <= 3; cover++) {
-                
-                        //Grid size
-                        for (int gSize = 0; gSize <= 2; gSize++) {
+            /*
+             * PRE CLUSTER!!!!   
+             */
 
-                            //Amount of robots
-                            for (int rCount = 0; rCount <= 4; rCount++) {
+            //Gold : Rock
+            //for (int ratio = 0; ratio <= 8; ratio++) {
 
-                                executorService.execute(
-                                        new Controller(
-                                            new Settings(gSize, rCount, cover, 
-                                                    ratio, weight, scatter),
-                                            id1++, false, false));
-                            }                        
-                        }
-                    }                    
-                }                
-            }            
-        }
+                //Pickup controbution
+                for (int weight = 0; weight <= 8; weight++) {            
+
+                    //Grid pattern
+                    //for (int scatter = 1; scatter <= 3; scatter++) {
+
+                        //Grid coverage
+                        for (int cover = 0; cover <= 3; cover++) {
+
+                            //Grid size
+                            for (int gSize = 0; gSize <= 2; gSize++) {
+
+                                //Amount of robots
+                                for (int rCount = 0; rCount <= 4; rCount++) {
+
+                                    executorService.execute(
+                                            new Controller(
+                                                new Settings(gSize, rCount, cover, 
+                                                        ratio, weight, scatter),
+                                                id2++, false, true));
+                                }                        
+                            }
+                        }                    
+                    //}                
+                }            
+            //}
+        } else if ("1".equals(type)) {
         
-        /*
-         * Division of Labor!!!!   
-         */
-        /*
-        //Gold : Rock
-        for (int ratio = 0; ratio <= 8; ratio++) {
+            /*
+             * ONLY FORAGE!!!!   
+             */
+        
+            //Gold : Rock
+            //for (int ratio = 0; ratio <= 8; ratio++) {
 
-            //Pickup controbution
-            for (int weight = 0; weight <= 8; weight++) {            
+                //Pickup controbution
+                for (int weight = 0; weight <= 8; weight++) {            
 
-                //Grid pattern
-                for (int scatter = 0; scatter <= 3; scatter++) {
-                    
-                    //Grid coverage
-                    for (int cover = 0; cover <= 3; cover++) {
+                    //Grid pattern
+                    //for (int scatter = 0; scatter <= 3; scatter++) {
 
-                        //Grid size
-                        for (int gSize = 0; gSize <= 2; gSize++) {
+                        //Grid coverage
+                        for (int cover = 0; cover <= 3; cover++) {
 
-                            //Amount of robots
-                            for (int rCount = 0; rCount <= 4; rCount++) {
-                                    
-                                executorService.execute(
-                                        new Controller(
-                                            new Settings(gSize, rCount, cover, 
-                                                    ratio, weight, scatter),
-                                            id2++, false, true));
-                            }                        
-                        }
-                    }                    
-                }                
-            }            
-        }*/
-                
+                            //Grid size
+                            for (int gSize = 0; gSize <= 2; gSize++) {
+
+                                //Amount of robots
+                                for (int rCount = 0; rCount <= 4; rCount++) {
+
+                                    executorService.execute(
+                                            new Controller(
+                                                new Settings(gSize, rCount, cover, 
+                                                        ratio, weight, scatter),
+                                                id1++, false, false));
+                                }                        
+                            }
+                        }                    
+                    //}                
+                }            
+            //}
+        }
+                        
         executorService.shutdown();
         
         double complete = 0.0;
-        while (queue.remainingCapacity() != 3880) {//!executorService.isTerminated()) {
+        while (queue.remainingCapacity() != 480) {//!executorService.isTerminated()) {
             try {
                 Thread.sleep(10000);
                 
-                complete = ((double)queue.remainingCapacity()) / 38880 * 100;
+                complete = ((double)queue.remainingCapacity()) / 480 * 100;
                 System.out.println(complete + "%");
                 
             } catch (InterruptedException ex) {
@@ -152,17 +138,5 @@ public class Main {
                 
         System.out.println("I am done");
      
-        /*ftp ftp = new ftp();
-        ftp.uploadDirectory("./", "./Uploads");
-        
-        /*try { 
-            Thread.sleep(1000);
-            Runtime.getRuntime().exec("shutdown -s -t 0");
-            System.exit(0);
-        } catch (IOException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
     }
 }
