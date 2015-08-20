@@ -14,23 +14,43 @@ import java.util.logging.Logger;
  */
 public class Main {
     
-    static int ratio;
+    static int ratio, ratio2;
     static int scatter;
     static String type;
+    static int simulations;
+    static int cores;
     
     public static void main(String[] args) {
         Main mn = new Main();
         
-        if (args.length == 3) {
+        if (args.length == 4) {
             ratio = Integer.parseInt(args[0]);
+            ratio2 = ratio;
             scatter = Integer.parseInt(args[1]);
             type = args[2];
+            cores = Integer.parseInt(args[3]);
+            simulations = 480;
             mn.runSimulation();
+        } else if (args.length == 3) {
+            ratio = 0;
+            ratio2 = 8;
+            scatter = Integer.parseInt(args[0]);
+            type = args[1];
+            cores = Integer.parseInt(args[2]);
+            simulations = 4320;
+            mn.runSimulation();            
         } else {
             System.out.println("Use arguments:");
             System.out.println("1. Ratio: 0, 0.2, 0.25, 0.33, 0.5, 0.667, 0.75, 0.8, 1");
             System.out.println("2. Scatter: 0-4");
             System.out.println("3. Type: 0 / 1");
+            System.out.println("4. Cores: 12 / 40");
+            System.out.println("");
+            System.out.println("OR");
+            System.out.println("");
+            System.out.println("2. Scatter: 0-4");
+            System.out.println("3. Type: 0 / 1");
+            System.out.println("4. Cores: 12 / 40");
             System.out.println("");
             System.out.println("PreCluster = 0 : Scatter = 2, 3, 4");
             System.out.println("No Cluster = 1 : Scatter = 2");
@@ -45,8 +65,8 @@ public class Main {
         int id1 = 0;
         int id2 = 0;
         //38880
-        final BlockingQueue<Runnable> queue = new ArrayBlockingQueue<>(480);
-        ExecutorService executorService = new ThreadPoolExecutor(40, 480,
+        final BlockingQueue<Runnable> queue = new ArrayBlockingQueue<>(simulations);
+        ExecutorService executorService = new ThreadPoolExecutor(cores, simulations,
                 1000, TimeUnit.MILLISECONDS, queue);
 
         if ("0".equals(type)) {
@@ -56,7 +76,7 @@ public class Main {
              */
 
             //Gold : Rock
-            //for (int ratio = 0; ratio <= 8; ratio++) {
+            for (; ratio <= ratio2; ratio++) {
 
                 //Pickup controbution
                 for (int weight = 0; weight <= 8; weight++) {            
@@ -83,7 +103,7 @@ public class Main {
                         }                    
                     //}                
                 }            
-            //}
+            }
         } else if ("1".equals(type)) {
         
             /*
@@ -91,7 +111,7 @@ public class Main {
              */
         
             //Gold : Rock
-            //for (int ratio = 0; ratio <= 8; ratio++) {
+            for (; ratio <= ratio2; ratio++) {
 
                 //Pickup controbution
                 for (int weight = 0; weight <= 8; weight++) {            
@@ -118,17 +138,17 @@ public class Main {
                         }                    
                     //}                
                 }            
-            //}
+            }
         }
                         
         executorService.shutdown();
         
         double complete = 0.0;
-        while (queue.remainingCapacity() != 480) {//!executorService.isTerminated()) {
+        while (queue.remainingCapacity() != simulations) {//!executorService.isTerminated()) {
             try {
                 Thread.sleep(10000);
                 
-                complete = ((double)queue.remainingCapacity()) / 480 * 100;
+                complete = ((double)queue.remainingCapacity()) / simulations * 100;
                 System.out.println(complete + "%");
                 
             } catch (InterruptedException ex) {
