@@ -33,11 +33,11 @@ public class Main {
             mn.runSimulation();
         } else if (args.length == 3) {
             ratio = 0;
-            ratio2 = 8;
+            ratio2 = 7;
             scatter = Integer.parseInt(args[0]);
             type = args[1];
             cores = Integer.parseInt(args[2]);
-            simulations = 4320;
+            simulations = 3840;
             mn.runSimulation();            
         } else {
             System.out.println("Use arguments:");
@@ -79,7 +79,7 @@ public class Main {
             for (; ratio <= ratio2; ratio++) {
 
                 //Pickup controbution
-                for (int weight = 0; weight <= 8; weight++) {            
+                for (int weight = 0; weight <= 7; weight++) {            
 
                     //Grid pattern
                     //for (int scatter = 1; scatter <= 3; scatter++) {
@@ -114,7 +114,7 @@ public class Main {
             for (; ratio <= ratio2; ratio++) {
 
                 //Pickup controbution
-                for (int weight = 0; weight <= 8; weight++) {            
+                for (int weight = 0; weight <= 7; weight++) {            
 
                     //Grid pattern
                     //for (int scatter = 0; scatter <= 3; scatter++) {
