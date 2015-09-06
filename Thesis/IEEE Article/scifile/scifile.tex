@@ -111,9 +111,8 @@
 % Place your abstract within the special {sciabstract} environment.
 
 \begin{sciabstract}
-  Abstract
+  This empirical study aims to improve on the prioritized foraging problem through using robotic swarms. The attempt will be introducing clustering before the foraging process. It focuses on swarm intelligence in cooperation with swarm robotics with social insect behaviors as the working force. Previous works shows foraging using a honey-bee approach is most successful in the dynamic environments used. The ant cluster is chosen for no in communication or pheromones are required. It was found that cluster beforehand has potential although it comes at a significantly higher time cost.
 \end{sciabstract}
-
 
 
 % In setting up this template for *Science* papers, we've used both
@@ -207,7 +206,7 @@ The following selections introduces further information on the field and also th
 
 \section{Simulation Configuration}
 
-\par{The simulated environment is representation with a 2D grid which has values assigned for every state for robots and the type of object and their own state of carried. Each object and robot fills one index of the grid. Objects can be picked up by robots once on top of an object or move around it as an obstacle to get to higher dens areas.}
+\par{The simulated environment is representation with a 2D grid which has values assigned for every state for robots and the type of object and their own state of carried. Each object and robot fills one index of the grid. Objects can be picked up by robots once on top of an object or move around it as an obstacle to get to higher dens areas. Where an area is calculated over a 5 index range around the robots position.}
 
 \par{An object is successfully foraged once it reaches the end of the environment at column zero where object will be dropped and removed from the environment. The adoption to the setup for a mining environment where the sinks will be place at specific locations would be simple. Different environment layouts are used for testing, with this four object distributions: Uniform (Fig 3.a), Clustered with Lumer-Faieta (Fig 3.b), Vein (Fig 3.c), Gaussian (Fig 3.d).}
 \\
@@ -251,7 +250,7 @@ The following selections introduces further information on the field and also th
 
 The result will use the priority of item, ratio of items and the iteration count aimed at solving the following hypotheses with regards to the percentage of items foraged: 
 \begin{enumerate}[nolistsep]
-	\item The relative effect of stagnation and limitation across the algorithms for result clarification.
+	\item The relative effect of stagnation and set limitation across the algorithms.
 	\item Pre-clustering will increase the success rate that more priority items are foraged against only performing foraging.
 	\item Pre-clustering will require a higher iteration count but will be acceptable due to a significantly higher success rate.
 \end{enumerate}
@@ -260,7 +259,7 @@ Section 5.1 to 5.3 will cover each hypotheses independently, attempting to solve
 \subsection{Relation between Performance and Stopping Conditions}
 
 \par{This section aim to establish the time impact that pre-clustering has the process against only foraging. Due to the constraint on stagnation as well as iteration count causes that an amount of simulation are preemptively stopped. As from the percentages of stopped simulations shown in Table 5:}
-
+\\
 \begin{table}[h]
 \centering
 \begin{tabular}{|l|l|l|l|}
@@ -273,11 +272,13 @@ Pre-Cluster & 31.06     & 35.5    & 77578              \\ \hline
 \label{my-label}
 \end{table}
 
-\par{These statistics are recorded over the entire simulation, including the pre-clustering process when it is used. The stagnation rate is based on the amount of iterations robots spend unladen, it is preemptively stopped once the above set limit is passed. As these statistics show $66.56\%$ of the the pre-cluster simulations where preemptively stopped. Although this has hindered the performance of the simulations it has still performed excellently.}
+\par{These statistics are recorded over the entire simulation, including the pre-clustering process when it is used. This indicates that the clustering consumes a high amount of iteration from the $2.15$ increase on iteration count.}
+
+\par{The stagnation rate is based on the amount of iterations robots spend unladen, it is preemptively stopped once the above set limit is passed. As these statistics show $66.56\%$ of the the pre-cluster simulations where preemptively stopped where only $20.95\%$ of non-cluster was affected. Although this has hindered the performance of the simulations it has still performed exceptionally.}
 
 \subsection{Relation between Item Priority and Ratio of Items Analysis with Regards to Foraging Success}
-\par{The relation analysis of $r$ and $\tau$ is describe in Table 2 as a representation of how successful the process was in terms of percentage. A condensate version is shown in Table 1.}
-
+\par{The relation analysis of $r$ and $\tau$ is describe in Table 2 as a representation of how successful the simulations where. These values were calculated in terms of the percentage of items foraged against the amount of priority items placed. A condensate form is shown in Table 1.}
+\\
 \begin{table}[h]
 \centering
 \begin{tabular}{|l|l|l|}
@@ -291,7 +292,7 @@ Pre-Cluster & 0.740   & 0.361   \\ \hline
 \end{table}
 
 \par{As from shown the pre-cluster as been slightly less successful then the Honey Bee foraging alone. Although the pre-clustering has still obtained a higher success rate for dynamic environments as tested by Jade [Jade]. Also improvements made on the implementation [Jade] has shown a $7.7\%$ increase on success rate and also a $1.5\%$ lower standard deviation for the Honey-Bee foraging without clustering. The detailed overview of the analysis is giving in Table 3. }
-\\
+
 \begin{table}[h]
 \centering
 \begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
@@ -299,32 +300,32 @@ Pre-Cluster & 0.740   & 0.361   \\ \hline
 \multirow{2}{*}{Algorithm}                         & \multirow{2}{*}{\hspace{0.017\linewidth}$r$} & \multicolumn{8}{l|}{\hspace{0.28\linewidth} $t$}                                                                                        \\ \cline{3-10} 
                                                    &                    & 0.2         & 0.25        & 0.33        & 0.5         & 0.667       & 0.75        & 0.8         & 1.0         \\ \hline
 \multirow{8}{*}{Non-Cluster}                       & 0.2                & 0.700       & 0.540       & 0.898       & 0.799       & {\bf 0.968} & 0.893       & {\bf 0.941} & {\bf 0.998} \\
-                                                   & 0.25               & {\bf 0.999} & {\bf 0.999} & {\bf 1.000}   & {\bf 1.000}   & 0.968       & {\bf 1.000}   & 0.950       & 0.697       \\
+                                                   & 0.25               & {\bf 0.999} & {\bf 0.999} & {\bf 1.000}   & {\bf 1.000}   & 0.968       & {\bf 1.000}   & {\bf 0.950}       & 0.697       \\
                                                    & 0.33               & 0.554       & 0.899       & 0.819       & {\bf 0.961} & {\bf 0.904} & {\bf 0.938} & {\bf 0.901} & 0.561       \\
-                                                   & 0.5                & 0.792       & 0.712       & 0.954       & 0.885       & {\bf 0.992} & {\bf 0.941} & {\bf 0.994} & {\bf 1.000}   \\
+                                                   & 0.5                & 0.792       & 0.712       & {\bf 0.954}       & 0.885       & {\bf 0.992} & {\bf 0.941} & {\bf 0.994} & {\bf 1.000}   \\
                                                    & 0.667              & {\bf 1.000}   & {\bf 1.000}   & {\bf 1.000}   & {\bf 0.968} & {\bf 0.950} & 0.900       & 0.576       & 0.800       \\
                                                    & 0.75               & 0.730       & {\bf 0.951} & 0.894       & {\bf 0.995} & {\bf 0.939} & 0.706       & 0.571       & 0.895       \\
                                                    & 0.8                & 0.826       & {\bf 0.975} & 0.893       & 0.942       & {\bf 0.999} & {\bf 0.999} & {\bf 1.000}   & {\bf 1.000}   \\
-                                                   & 1.0                & {\bf 1.000}   & {\bf 0.968} & {\bf 1.00}   & {\bf 0.950} & 0.717       & 0.561       & 0.900       & 0.810       \\ \hline
-\multirow{8}{*}{\begin{tabular}[c]{@{}c@{}} Pre-Cluster\end{tabular}} & 0.2                & 0.690       & 0.488       & {\bf 0.890} & 0.690       & 0.960       & 0.680       & {\bf 0.890} & 0.756                 \\
-                                                                               & 0.25               & 0.870       & {\bf 0.995} & 0.722       & 0.914       & 0.632       & {\bf 0.948} & 0.564       & 0.716                 \\
+                                                   & 1.0                & {\bf 1.000}   & {\bf 0.968} & {\bf 1.00}   & {\bf 0.950} & 0.717       & 0.561       & {\bf 0.900}       & 0.810       \\ \hline
+\multirow{8}{*}{\begin{tabular}[c]{@{}c@{}} Pre-Cluster\end{tabular}} & 0.2                & 0.690       & 0.488       & {\bf 0.890} & 0.690       & \bf{0.960}       & 0.680       & {\bf 0.890} & 0.756                 \\
+                                                                               & 0.25               & 0.870       & {\bf 0.995} & 0.722       & \bf{0.914}       & 0.632       & {\bf 0.948} & 0.564       & 0.716                 \\
                                                                                & 0.33               & 0.528       & {\bf 0.899} & 0.684       & {\bf 0.814} & 0.466       & 0.448       & 0.469       & 0.542                \\
-                                                                               & 0.5                & 0.756       & 0.638       & {\bf 0.906} & 0.710       & {\bf 0.968} & 0.652       & {\bf 0.998} & {\bf 0.869}                 \\
+                                                                               & 0.5                & 0.756       & 0.638       & {\bf 0.906} & 0.710       & {\bf 0.968} & 0.652       & {\bf 0.998} & 0.869                 \\
                                                                                & 0.667              & {\bf 1.000} & 0.637       & {\bf 1.000} & 0.579       & 0.884       & 0.590       & 0.574       & 0.762               \\
                                                                                & 0.75               & 0.674       & {\bf 0.837} & 0.656       & 0.503       & 0.284       & 0.706       & 0.506       & {\bf 0.898}                 \\
                                                                                & 0.8                & 0.695       & {\bf 0.956} & 0.682       & {\bf 0.890} & 0.756       & {\bf 0.876} & {\bf 0.997} & 0.723                 \\
-                                                                               & 1.0                  & {\bf 0.916} & 0.632       & {\bf 0.947} & 0.564       & 0.731       & 0.534       & 0.905       & 0.716                 \\ \hline
+                                                                               & 1.0                  & {\bf 0.916} & 0.632       & {\bf 0.947} & 0.564       & 0.731       & 0.534       & {\bf 0.905}       & 0.716                 \\ \hline
 \end{tabular}
 \caption{Completion Based Performance}
 \label{my-label}
 \end{table}
 
-\par{The pre-clustering algorithm }
+\par{The pre-clustering algorithm has high success points but also due to the limitations discussed above low point creep in. This how ever does not hinder the performance showing pre-clustering does in fact show promise and the ability to increase the overall success rate of the foraging process.}
 
 \subsection{Relation between Item Priority and Ratio of Items Analysis with Regards to Duration}
 
-\par{Test 2}
-
+\par{This section uses the amount of iterations against the success rate achieved during the simulation. The higher the success rate the lower the shown value and the inverse is the true for the iteration count. Table 4 shows a summation of the process time verses its success rates.}
+\\
 \begin{table}[h]
 \centering
 \begin{tabular}{|l|l|l|}
@@ -333,11 +334,12 @@ Pre-Cluster & 0.740   & 0.361   \\ \hline
 Non-Cluster & 0.042   & 0.421   \\ \hline
 Pre-Cluster & 0.268   & 0.311   \\ \hline
 \end{tabular}
-\caption{•}
+\caption{Time-Performance Summation}
+\label{my-label}
 \end{table}
 
-\par{Test}
-
+\par{As Table 4 shows the pre-clustering is a not every efficient regarding item foraging per iteration. It proves to have be $6$ times less efficient per iteration then only foraging with regards to time constraints. Although it has a lower standard deviation resulting in a more consistent result. This may be due to the high amount of simulations being limited by iterations.}
+\\
 \begin{table}[h]
 \centering
 \begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
@@ -364,8 +366,6 @@ Pre-Cluster & 0.268   & 0.311   \\ \hline
 \caption{Time Based Performance}
 \label{my-label}
 \end{table}
-
-\par{test}
 
 \section{Conclusion}
 
