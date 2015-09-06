@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2015.2.24)  18 AUG 2015 21:44
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2015.2.24)  6 SEP 2015 10:05
 entering extended mode
 **scifile.tex
 
@@ -83,19 +83,22 @@ Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 \Gin@req@height=\dimen104
 \Gin@req@width=\dimen105
 )
+("F:\Program Files\MikTeX\tex\latex\multirow\multirow.sty"
+\bigstrutjot=\dimen106
+)
 (C:\Users\Nico\AppData\Roaming\MiKTeX\2.9\tex\latex\caption\caption.sty
 Package: caption 2013/05/02 v3.3-89 Customizing captions (AR)
 
 (C:\Users\Nico\AppData\Roaming\MiKTeX\2.9\tex\latex\caption\caption3.sty
 Package: caption3 2013/05/02 v1.6-88 caption3 kernel (AR)
 Package caption3 Info: TeX engine: e-TeX on input line 57.
-\captionmargin=\dimen106
-\captionmargin@=\dimen107
-\captionwidth=\dimen108
-\caption@tempdima=\dimen109
-\caption@indent=\dimen110
-\caption@parindent=\dimen111
-\caption@hangindent=\dimen112
+\captionmargin=\dimen107
+\captionmargin@=\dimen108
+\captionwidth=\dimen109
+\caption@tempdima=\dimen110
+\caption@indent=\dimen111
+\caption@parindent=\dimen112
+\caption@hangindent=\dimen113
 )
 \c@ContinuedFloat=\count90
 )
@@ -105,33 +108,43 @@ Package: subcaption 2013/02/03 v1.1-62 Sub-captions (AR)
 \c@subtable=\count92
 )
 ("D:\Documents\UP\2015\700 Project\700_Project\Thesis\IEEE Article\scifile\scif
-ile.aux")
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 98.
-LaTeX Font Info:    ... okay on input line 98.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 98.
-LaTeX Font Info:    ... okay on input line 98.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 98.
-LaTeX Font Info:    ... okay on input line 98.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 98.
-LaTeX Font Info:    ... okay on input line 98.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 98.
-LaTeX Font Info:    ... okay on input line 98.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 98.
-LaTeX Font Info:    ... okay on input line 98.
-LaTeX Font Info:    Try loading font information for OT1+ptm on input line 98.
+ile.aux"
+
+LaTeX Warning: Label `my-label' multiply defined.
+
+
+LaTeX Warning: Label `my-label' multiply defined.
+
+
+LaTeX Warning: Label `my-label' multiply defined.
+
+)
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 99.
+LaTeX Font Info:    ... okay on input line 99.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 99.
+LaTeX Font Info:    ... okay on input line 99.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 99.
+LaTeX Font Info:    ... okay on input line 99.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 99.
+LaTeX Font Info:    ... okay on input line 99.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 99.
+LaTeX Font Info:    ... okay on input line 99.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 99.
+LaTeX Font Info:    ... okay on input line 99.
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 99.
  ("F:\Program Files\MikTeX\tex\latex\psnfss\ot1ptm.fd"
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
 (C:\Users\Nico\AppData\Roaming\MiKTeX\2.9\tex\context\base\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count93
-\scratchdimen=\dimen113
+\scratchdimen=\dimen114
 \scratchbox=\box27
 \nofMPsegments=\count94
 \nofMParguments=\count95
 \everyMPshowfont=\toks17
 \MPscratchCnt=\count96
-\MPscratchDim=\dimen114
+\MPscratchDim=\dimen115
 \MPnumerator=\count97
 \makeMPintoPDFobject=\count98
 \everyMPtoPDFconversion=\toks18
@@ -139,51 +152,39 @@ File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <14.4> on input line 106.
+(Font)              <14.4> on input line 107.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 106.
+(Font)              <7> on input line 107.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 112.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 113.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <17.28> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 128.
-
-Underfull \hbox (badness 10000) in paragraph at lines 130--132
-
- []
-
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 138.
-
-Underfull \hbox (badness 10000) in paragraph at lines 140--142
-
- []
-
-[1
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 129.
+ [1
 
 {C:/Users/Nico/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
-Underfull \hbox (badness 10000) in paragraph at lines 142--144
-
- []
-
-[2] [3] <Diagrams/desertant.png, id=14, 721.69624pt x 305.14pt>
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 141.
+ [2]
+[3] <Diagrams/desertant.png, id=14, 721.69624pt x 305.14pt>
 File: Diagrams/desertant.png Graphic file (type png)
 
 <use Diagrams/desertant.png>
-Package pdftex.def Info: Diagrams/desertant.png used on input line 165.
+Package pdftex.def Info: Diagrams/desertant.png used on input line 170.
 (pdftex.def)             Requested size: 455.24408pt x 192.48132pt.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 173.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 173.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 173.
  [4 <D:/Documents/UP/2015/700 Project/700_Project/Thesis/IEEE Article/scifile/D
 iagrams/desertant.png>]
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 178.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 178.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 178.
+
 <Diagrams/honeybee.png, id=20, 629.35126pt x 275.0275pt>
 File: Diagrams/honeybee.png Graphic file (type png)
 
 <use Diagrams/honeybee.png>
-Package pdftex.def Info: Diagrams/honeybee.png used on input line 186.
+Package pdftex.def Info: Diagrams/honeybee.png used on input line 191.
 (pdftex.def)             Requested size: 455.24408pt x 198.94289pt.
 
 
@@ -191,52 +192,68 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 [5] [6 <D:/Documents/UP/2015/700 Project/700_Project/Thesis/IEEE Article/scifil
 e/Diagrams/honeybee.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 205--207
-
- []
-
 File: Diagrams/desertant.png Graphic file (type png)
-<use Diagrams/desertant.png>
-Package pdftex.def Info: Diagrams/desertant.png used on input line 213.
+ <use Diagrams/desertant.png>
+Package pdftex.def Info: Diagrams/desertant.png used on input line 218.
 (pdftex.def)             Requested size: 18.2092pt x 7.69646pt.
 File: Diagrams/honeybee.png Graphic file (type png)
- <use Diagrams/honeybee.png>
-Package pdftex.def Info: Diagrams/honeybee.png used on input line 219.
+
+<use Diagrams/honeybee.png>
+Package pdftex.def Info: Diagrams/honeybee.png used on input line 224.
 (pdftex.def)             Requested size: 18.2092pt x 7.9567pt.
 File: Diagrams/desertant.png Graphic file (type png)
-
-<use Diagrams/desertant.png>
-Package pdftex.def Info: Diagrams/desertant.png used on input line 225.
+ <use Diagrams/desertant.png>
+Package pdftex.def Info: Diagrams/desertant.png used on input line 230.
 (pdftex.def)             Requested size: 18.2092pt x 7.69646pt.
 File: Diagrams/honeybee.png Graphic file (type png)
- <use Diagrams/honeybee.png>
-Package pdftex.def Info: Diagrams/honeybee.png used on input line 231.
+
+<use Diagrams/honeybee.png>
+Package pdftex.def Info: Diagrams/honeybee.png used on input line 236.
 (pdftex.def)             Requested size: 18.2092pt x 7.9567pt.
- [7]
+ [7] [8]
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[9]
+Missing character: There is no â in font ptmr7t!
+Missing character: There is no € in font ptmr7t!
+Missing character: There is no ¢ in font ptmr7t!
+Missing character: There is no â in font ptmr7t!
+Missing character: There is no € in font ptmr7t!
+Missing character: There is no ¢ in font ptmr7t!
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
 ("D:\Documents\UP\2015\700 Project\700_Project\Thesis\IEEE Article\scifile\scif
-ile.bbl" [8]
+ile.bbl" [10]
 
 LaTeX Warning: Empty `thebibliography' environment on input line 3.
 
-) [9]
+) [11]
 ("D:\Documents\UP\2015\700 Project\700_Project\Thesis\IEEE Article\scifile\scif
-ile.aux") ) 
+ile.aux")
+
+LaTeX Warning: There were multiply-defined labels.
+
+ ) 
 Here is how much of TeX's memory you used:
- 2670 strings out of 493921
- 42056 string characters out of 3148889
- 101097 words of memory out of 3000000
- 5970 multiletter control sequences out of 15000+200000
+ 2685 strings out of 493921
+ 42350 string characters out of 3148889
+ 123296 words of memory out of 3000000
+ 5981 multiletter control sequences out of 15000+200000
  20698 words of font info for 43 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 36i,8n,38p,1164b,445s stack positions out of 5000i,500n,10000p,200000b,50000s
-{F:/Program Files/MikTeX/fonts/enc/dvips/fontname/8r.enc}<F:/Program
- Files/MikTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><F:/Program Files/MikTe
-X/fonts/type1/public/amsfonts/cm/cmr12.pfb><F:/Program Files/MikTeX/fonts/type1
-/urw/times/utmb8a.pfb><F:/Program Files/MikTeX/fonts/type1/urw/times/utmr8a.pfb
-><F:/Program Files/MikTeX/fonts/type1/urw/times/utmri8a.pfb>
-Output written on scifile.pdf (9 pages, 91091 bytes).
+ 36i,16n,38p,1030b,445s stack positions out of 5000i,500n,10000p,200000b,50000s
+{F:/Program Files/MikTeX/fonts/enc/dvips/fontname/8r.enc}<F:/Program Files/Mi
+kTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><F:/Program Files/MikTeX/fonts/t
+ype1/public/amsfonts/cm/cmr12.pfb><F:/Program Files/MikTeX/fonts/type1/urw/time
+s/utmb8a.pfb><F:/Program Files/MikTeX/fonts/type1/urw/times/utmr8a.pfb><F:/Prog
+ram Files/MikTeX/fonts/type1/urw/times/utmri8a.pfb>
+Output written on scifile.pdf (11 pages, 100041 bytes).
 PDF statistics:
- 58 PDF objects out of 1000 (max. 8388607)
+ 64 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  11 words of extra memory for PDF output out of 10000 (max. 10000000)
 

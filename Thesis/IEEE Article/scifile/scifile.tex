@@ -64,6 +64,7 @@
 {\end{list}}
 
 \usepackage{graphicx}
+\usepackage{multirow}
 \usepackage{caption}
 \usepackage{subcaption}
 \graphicspath{ {Diagrams/} }
@@ -127,9 +128,11 @@
 
 \section{Introduction}
 
-\par{Swarm Robotics is an entity constructed of simple behavior  robots in collaboration, the inspiration for these robot algorithms draw from social insects such as: Bees, ants and termites [Robots-Dorigo]. These insects are reliant on water, food and organization as a source of survival through searching, retrieval and sorting which is the basis of the algorithms in the form of foraging and clustering [Proposal 6].}
-\\
-\par{Honey bees have to explore away from their hive to find resource objects and return it represented as foraging [Proposal 11]. Also clustering in the form of sorting object as modeled after how ant organize their dead dependent on the density of corpses [Proposal 8].}
+\par{Swarm Robotics is an entity constructed of simple behavior  robots in collaboration, the inspiration for these robot algorithms draw from social insects such as: Bees, ants and termites [Robots-Dorigo]. These insects are reliant on water, food and organization as a source of survival through search, retrieval and sorting. The described processes are the basis of the algorithms in the form of foraging and clustering [Proposal 6].}
+
+\par{This is ideal for the mining industry for ore retrieval with shorting waiting times between blasting through the robotic abilities [Jade]. Honey bees have to explore away from their hive to search and retrieve of resources as the foraging [Proposal 11]. Also clustering which is modeled after how ant organize their dead dependent on the density of corpses locations [Proposal 8]. In mining this will improve efficiency of extracting the gold from out the mines with obstructions and rubble [Jade].} 
+
+\par{\textbf{Foraging was used as.......} As by Lumer, the ant clustering algorithm has been used to solve problems in fields such as cryptography, sorting and graphs [Lumer]. Prioritization foraging as tested by Jade [Jade] has found that the honey bee proves to be more successful in foraging in dynamic environments. This paper introduces clustering before the foraging process to way it effects on the foraging success rate, productivity and increased time requirement.}
 
 \section{Background}
 
@@ -138,14 +141,16 @@ The following selections introduces further information on the field and also th
 \subsection{Swarm Intelligence / Robotics}
 
 \par{Swarm Intelligence (SI) as a method of problem solving through the use of agents interacting with their environment as the source of their knowledge [Beni-Robot]. The agents are represented as robots in a collective body known as Swarm Robotics. As collective intelligence of the swarm it raises the social behavior an individual robot, the test algorithms used are independent of an controlling entity to provide guidance to other robots. The independence of this allows robots to base decision on their immediate environment, their current robotic status and ability.}
-\\
+
 \par{Swarm-based robotics (SR) is defined by Bonabeau \textit{et al} [Robot-Swarm] that it may be able to perform tasks without needing a explicit representation of the environment. These robots are modeled after insect colonies respectively as desert ants for clustering and honey bees for foraging. Each colony has their own internal communication method to achieving their goals and enable the process that is mimicked on the robots.}
-\\
+
 \par{SI and SR as a self-organized social insects use a communication method call stigmergy [Robot-Swarm], it can be in a form of sematectonic and sign-based communication. Where sign-based is in the form of physical information exchange and sematectonic by means of environment changes. Stigmergy will be used as follow: Direct where the honey bee broadcasts a foraging site by dancing when it arrives at the hive. Also by in-direct for ant cemetery clustering where each ant exams the environment to affect its decision making.}
 
 \subsection{Desert-ant Cemetery Clustering}
 
-\par{The desert ant is used to model the ant clustering process, it is chosen for these ants are independent of any direct communication or information sharing. Desert ants do not require any pheromones or beacons to provide navigation it only uses vision of its immediate environment [12 Jade]. The cemetery cluster is based on the ant that move there died into clusters dependent on the observed environment and the density of object clusters [77 AI]. As for movement decisions it uses random navigation or if detection movement is towards the lowest density [13 Jade]. Once an object is picked up it is carries towards the highest dens array until it satisfies the dropping probability where it is then dropped.  This clustering process will aim at improving the performance of foraging due to the closer group of the same priority objects. The abilities of a desert ant is simplistic and does not require many detectors to be added to the robot making it viable and can be cost effective as only a camera is required.}
+\par{The desert ant is used to model the ant clustering process, it is chosen for these ants are independent of any direct communication or information sharing. Desert ants do not require any pheromones or beacons to provide navigation it only uses vision of its immediate environment [12 Jade]. The cemetery cluster is based on the ant that move there died into clusters dependent on the observed environment and the density of object clusters [77 AI].}
+
+\par{As for movement decisions it uses random navigation or if detection movement is towards the lowest density [13 Jade]. Once an object is picked up it is carries towards the highest dens array until it satisfies the dropping probability where it is then dropped.  This clustering process will aim at improving the performance of foraging due to the closer group of the same priority objects. The abilities of a desert ant is simplistic and does not require many detectors to be added to the robot making it viable and can be cost effective as only a camera is required.}
 
 \subsection{Honey-bee Foraging}
 
@@ -181,7 +186,7 @@ The following selections introduces further information on the field and also th
 \subsection{Honey-bee Foraging}
 
 \par{The honey bee algorithm consists of two type of robots and initialized by random as unemployed foragers or scouts. The position of each robot is initialized along the starting column of the grid for an increased spread of robots. A sink where objects are drop is not limited to a single location for all robots but the initialization position of the specific robot is its own drop point. All robots states are depicted in Figure.2 and described as follows:}
-\\
+
 \begin{figure}[h]
 \includegraphics[width=\textwidth]{honeybee.png}
 \centering
@@ -189,7 +194,7 @@ The following selections introduces further information on the field and also th
 \label{fig:honeyBeeState}
 \end{figure}
 
-\begin{enumerate}
+\begin{enumerate}[nolistsep]
 	\item A bee in the scouting state does a random walk through the environment looking for the area with it highest density of objects.
 	\item Once a dens area is detected and the probability  of pick-up is greater than $\phi$ an object will be loaded and the bee will start foraging.
 	\item As laden the bee forages the object along its PI back to the drop sink where it will drop the object. If not laden the bee follows the direction vector back towards the previous found location for the measured distance. During the return process a higher dens area may be detected where upon the bee will changes its bearing vector, this is done if the density is greater than 1.4 of the previous determined density.
@@ -203,7 +208,7 @@ The following selections introduces further information on the field and also th
 \section{Simulation Configuration}
 
 \par{The simulated environment is representation with a 2D grid which has values assigned for every state for robots and the type of object and their own state of carried. Each object and robot fills one index of the grid. Objects can be picked up by robots once on top of an object or move around it as an obstacle to get to higher dens areas.}
-\\
+
 \par{An object is successfully foraged once it reaches the end of the environment at column zero where object will be dropped and removed from the environment. The adoption to the setup for a mining environment where the sinks will be place at specific locations would be simple. Different environment layouts are used for testing, with this four object distributions: Uniform (Fig 3.a), Clustered with Lumer-Faieta (Fig 3.b), Vein (Fig 3.c), Gaussian (Fig 3.d).}
 \\
 \begin{figure}[h]
@@ -236,24 +241,131 @@ The following selections introduces further information on the field and also th
 \label{fig:EnvironmentScaters}
 \end{figure}
 
-\par{The configuration are setup as follows where each is configuration is simulated 30 times. Scatter layout, the placement of object as names above to test different dispersion resulting from an explosions. Grid sizes representing the number of position units increasing complexity and required simulation time, $S = 50, 100, 200$. The amount of robots used to cluster and forage objects, $c = 10, 30, 50, 70, 100$. Grid coverage as a percentage of objects placed against open locations for movement, $p = 5\%, 20\%, 50\%, 70\%, 90\%$. A ratio representation, $r = 0, 0.2, 0.25, 0.333, 0.5, 0.667, 0.75, 0.8, 1$ as the number of prioritized objects against non-prioritized object. A priority value is used to determine the priority of a populated area calculated per item detected for $\tau = 0, 0.2, 0.25, 0.333, 0.5, 0.667, 0.75, 0.8, 1$. Honey-bee specific values are used for the allowed waiting time of $tmax = 100$, the max time spent foraging is determine by $1.3$ times of the distance acquired from the dance. A stagnation condition has been created to prevent endless random walks that is determined from when the last pick up occurred.}
+\vspace{0.3cm}
 
-\section*{Results}
+\par{The configuration are setup as follows where each is configuration is simulated 30 times. Scatter layout, the placement of object as names above to test different dispersion resulting from an explosions. Grid sizes representing the number of position units increasing complexity and required simulation time, $S = 50, 100, 200$. The amount of robots used to cluster and forage objects, $c = 10, 30, 50, 70, 100$. Grid coverage as a percentage of objects placed against open locations for movement, $p = 5\%, 20\%, 50\%, 70\%, 90\%$. A ratio representation, $r = 0.2, 0.25, 0.333, 0.5, 0.667, 0.75, 0.8, 1$ as the number of prioritized objects against non-prioritized object. A priority value is used to determine the priority of a populated area calculated per item detected for $\tau = 0.2, 0.25, 0.333, 0.5, 0.667, 0.75, 0.8, 1$. Honey-bee specific values are used for the allowed waiting time of $tmax = 100$, the max time spent foraging is determine by $1.3$ times of the distance acquired from the dance.}
+
+\par{A stagnation condition has been created to prevent endless random walks that is determined from when the last pick up occurred. This stagnation limit is set at $400$ time the grid size which is applied to the clustering and foraging processes. Also a $100 000$ limit on iterations across both pre-clustering is required and foraging combined.}
+
+\section{Results}
 
 The result will use the priority of item, ratio of items and the iteration count aimed at solving the following hypotheses with regards to the percentage of items foraged: 
 \begin{enumerate}[nolistsep]
+	\item The relative effect of stagnation and limitation across the algorithms for result clarification.
 	\item Pre-clustering will increase the success rate that more priority items are foraged against only performing foraging.
 	\item Pre-clustering will require a higher iteration count but will be acceptable due to a significantly higher success rate.
 \end{enumerate}
-Section 4.1 and Section 4.2 will cover each hypotheses accordingly.
+Section 5.1 to 5.3 will cover each hypotheses independently, attempting to solve each through statistical results of the simulation of above. 
 
-\subsection{Relation between Item Priority and Ratio of Items Analysis}
+\subsection{Relation between Performance and Stopping Conditions}
 
-\par{Test 1}
+\par{This section aim to establish the time impact that pre-clustering has the process against only foraging. Due to the constraint on stagnation as well as iteration count causes that an amount of simulation are preemptively stopped. As from the percentages of stopped simulations shown in Table 5:}
 
-\subsection{Relation between Item Priority and Iteration Count Analysis}
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|l|l|}
+\hline
+            & Stagnated & Limited & Average Iterations \\ \hline
+Non-Cluster & 20.95     & 0.0     & 36073              \\ \hline
+Pre-Cluster & 31.06     & 35.5    & 77578              \\ \hline
+\end{tabular}
+\caption{Stopping Condition Limitations as Percentages}
+\label{my-label}
+\end{table}
+
+\par{These statistics are recorded over the entire simulation, including the pre-clustering process when it is used. The stagnation rate is based on the amount of iterations robots spend unladen, it is preemptively stopped once the above set limit is passed. As these statistics show $66.56\%$ of the the pre-cluster simulations where preemptively stopped. Although this has hindered the performance of the simulations it has still performed excellently.}
+
+\subsection{Relation between Item Priority and Ratio of Items Analysis with Regards to Foraging Success}
+\par{The relation analysis of $r$ and $\tau$ is describe in Table 2 as a representation of how successful the process was in terms of percentage. A condensate version is shown in Table 1.}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+            & Average & Std Dev \\ \hline
+Non-Cluster & 0.884   & 0.279   \\ \hline
+Pre-Cluster & 0.740   & 0.361   \\ \hline
+\end{tabular}
+\caption{Performance Summation}
+\label{my-label}
+\end{table}
+
+\par{As from shown the pre-cluster as been slightly less successful then the Honey Bee foraging alone. Although the pre-clustering has still obtained a higher success rate for dynamic environments as tested by Jade [Jade]. Also improvements made on the implementation [Jade] has shown a $7.7\%$ increase on success rate and also a $1.5\%$ lower standard deviation for the Honey-Bee foraging without clustering. The detailed overview of the analysis is giving in Table 3. }
+\\
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+\hline
+\multirow{2}{*}{Algorithm}                         & \multirow{2}{*}{\hspace{0.017\linewidth}$r$} & \multicolumn{8}{l|}{\hspace{0.28\linewidth} $t$}                                                                                        \\ \cline{3-10} 
+                                                   &                    & 0.2         & 0.25        & 0.33        & 0.5         & 0.667       & 0.75        & 0.8         & 1.0         \\ \hline
+\multirow{8}{*}{Non-Cluster}                       & 0.2                & 0.700       & 0.540       & 0.898       & 0.799       & {\bf 0.968} & 0.893       & {\bf 0.941} & {\bf 0.998} \\
+                                                   & 0.25               & {\bf 0.999} & {\bf 0.999} & {\bf 1.000}   & {\bf 1.000}   & 0.968       & {\bf 1.000}   & 0.950       & 0.697       \\
+                                                   & 0.33               & 0.554       & 0.899       & 0.819       & {\bf 0.961} & {\bf 0.904} & {\bf 0.938} & {\bf 0.901} & 0.561       \\
+                                                   & 0.5                & 0.792       & 0.712       & 0.954       & 0.885       & {\bf 0.992} & {\bf 0.941} & {\bf 0.994} & {\bf 1.000}   \\
+                                                   & 0.667              & {\bf 1.000}   & {\bf 1.000}   & {\bf 1.000}   & {\bf 0.968} & {\bf 0.950} & 0.900       & 0.576       & 0.800       \\
+                                                   & 0.75               & 0.730       & {\bf 0.951} & 0.894       & {\bf 0.995} & {\bf 0.939} & 0.706       & 0.571       & 0.895       \\
+                                                   & 0.8                & 0.826       & {\bf 0.975} & 0.893       & 0.942       & {\bf 0.999} & {\bf 0.999} & {\bf 1.000}   & {\bf 1.000}   \\
+                                                   & 1.0                & {\bf 1.000}   & {\bf 0.968} & {\bf 1.00}   & {\bf 0.950} & 0.717       & 0.561       & 0.900       & 0.810       \\ \hline
+\multirow{8}{*}{\begin{tabular}[c]{@{}c@{}} Pre-Cluster\end{tabular}} & 0.2                & 0.690       & 0.488       & {\bf 0.890} & 0.690       & 0.960       & 0.680       & {\bf 0.890} & 0.756                 \\
+                                                                               & 0.25               & 0.870       & {\bf 0.995} & 0.722       & 0.914       & 0.632       & {\bf 0.948} & 0.564       & 0.716                 \\
+                                                                               & 0.33               & 0.528       & {\bf 0.899} & 0.684       & {\bf 0.814} & 0.466       & 0.448       & 0.469       & 0.542                \\
+                                                                               & 0.5                & 0.756       & 0.638       & {\bf 0.906} & 0.710       & {\bf 0.968} & 0.652       & {\bf 0.998} & {\bf 0.869}                 \\
+                                                                               & 0.667              & {\bf 1.000} & 0.637       & {\bf 1.000} & 0.579       & 0.884       & 0.590       & 0.574       & 0.762               \\
+                                                                               & 0.75               & 0.674       & {\bf 0.837} & 0.656       & 0.503       & 0.284       & 0.706       & 0.506       & {\bf 0.898}                 \\
+                                                                               & 0.8                & 0.695       & {\bf 0.956} & 0.682       & {\bf 0.890} & 0.756       & {\bf 0.876} & {\bf 0.997} & 0.723                 \\
+                                                                               & 1.0                  & {\bf 0.916} & 0.632       & {\bf 0.947} & 0.564       & 0.731       & 0.534       & 0.905       & 0.716                 \\ \hline
+\end{tabular}
+\caption{Completion Based Performance}
+\label{my-label}
+\end{table}
+
+\par{The pre-clustering algorithm }
+
+\subsection{Relation between Item Priority and Ratio of Items Analysis with Regards to Duration}
 
 \par{Test 2}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+            & Average & Std Dev \\ \hline
+Non-Cluster & 0.042   & 0.421   \\ \hline
+Pre-Cluster & 0.268   & 0.311   \\ \hline
+\end{tabular}
+\caption{•}
+\end{table}
+
+\par{Test}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|}
+\hline
+\multirow{2}{*}{Algorithm}                         & \multirow{2}{*}{\hspace{0.017\linewidth}$r$} & \multicolumn{8}{l|}{\hspace{0.28\linewidth} $t$}                                                                                         \\ \cline{3-10} 
+                                                   &                    & 0.2         & 0.25        & 0.33         & 0.5         & 0.667       & 0.75        & 0.8         & 1.0         \\ \hline
+\multirow{8}{*}{Non-Cluster}                       & 0.2                & {\bf 0.057} & 0.180       & {\bf 0.0567} & 0.338       & 0.146       & 0.454       & 0.325       & 0.500       \\
+                                                   & 0.25               & 0.253       & {\bf 0.123} & 0.492        & 0.177       & 0.563       & 0.180       & 0.672       & {\bf 0.052} \\
+                                                   & 0.33               & 0.190       & {\bf 0.081} & 0.422        & 0.140       & 0.544       & 0.326       & 0.504       & {\bf 0.065} \\
+                                                   & 0.5                & 0.166       & 0.253       & 0.192        & 0.440       & 0.208       & 0.632       & {\bf 0.073} & 0.286       \\
+                                                   & 0.667              & {\bf 0.102} & 0.522       & 0.142        & 0.564       & 0.308       & 0.482       & {\bf 0.066} & 0.170       \\
+                                                   & 0.75               & 0.319       & 0.198       & 0.478        & 0.226       & 0.642       & {\bf 0.058} & 0.188       & {\bf 0.057} \\
+                                                   & 0.8                & 0.352       & {\bf 0.151} & 0.447        & 0.317       & 0.494       & 0.250       & {\bf 0.120} & 0.491       \\
+                                                   & 1.0                & 0.181       & 0.564       & 0.182        & 0.671       & 0.059       & 0.179       & {\bf 0.062} & 0.373       \\ \hline
+\multicolumn{1}{|c|}{\multirow{8}{*}{Pre-Cluster}} & 0.2                & {\bf 0.359} & 0.403       & 0.552        & 0.534       & 0.683       & 0.473       & 0.700       & 0.476       \\
+\multicolumn{1}{|c|}{}                             & 0.25               & 0.745       & 0.676       & 0.695        & 0.579       & 0.616       & 0.606       & 0.557       & {\bf 0.381} \\
+\multicolumn{1}{|c|}{}                             & 0.33               & 0.441       & 0.565       & 0.550        & 0.588       & 0.352       & 0.355       & {\bf 0.235} & 0.411       \\
+\multicolumn{1}{|c|}{}                             & 0.5                & {\bf 0.409} & 0.574       & 0.552        & 0.656       & 0.612       & 0.611       & 0.612       & 0.815       \\
+\multicolumn{1}{|c|}{}                             & 0.667              & 0.695       & 0.512       & 0.765        & 0.386       & 0.723       & {\bf 0.362} & 0.437       & 0.425       \\
+\multicolumn{1}{|c|}{}                             & 0.75               & 0.610       & 0.518       & 0.608        & {\bf 0.320} & 0.262       & {\bf 0.370} & 0.426       & 0.560       \\
+\multicolumn{1}{|c|}{}                             & 0.8                & 0.540       & 0.680       & {\bf 0.474}  & 0.701       & {\bf 0.476} & 0.754       & 0.677       & 0.696       \\
+\multicolumn{1}{|c|}{}                             & 1.0               & 0.582       & 0.615       & 0.606        & 0.557       & {\bf 0.387} & 0.448       & 0.566       & 0.566       \\ \hline
+\end{tabular}
+\caption{Time Based Performance}
+\label{my-label}
+\end{table}
+
+\par{test}
 
 \section{Conclusion}
 
