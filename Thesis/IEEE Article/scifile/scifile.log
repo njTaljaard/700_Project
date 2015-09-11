@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2015.2.24)  6 SEP 2015 21:48
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2015.2.24)  11 SEP 2015 17:58
 entering extended mode
 **scifile.tex
 
@@ -212,14 +212,7 @@ File: Diagrams/honeybee.png Graphic file (type png)
 <use Diagrams/honeybee.png>
 Package pdftex.def Info: Diagrams/honeybee.png used on input line 235.
 (pdftex.def)             Requested size: 18.2092pt x 7.9567pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[7] [8] [9]
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
+ [7] [8] [9]
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
@@ -229,11 +222,11 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 ("D:\Documents\UP\2015\700 Project\700_Project\Thesis\IEEE Article\scifile\scif
-ile.bbl"
+ile.bbl" [11]
 
 LaTeX Warning: Empty `thebibliography' environment on input line 3.
 
-) [11] [12]
+) [12]
 ("D:\Documents\UP\2015\700 Project\700_Project\Thesis\IEEE Article\scifile\scif
 ile.aux")
 
@@ -243,7 +236,7 @@ LaTeX Warning: There were multiply-defined labels.
 Here is how much of TeX's memory you used:
  2685 strings out of 493921
  42350 string characters out of 3148889
- 126296 words of memory out of 3000000
+ 123296 words of memory out of 3000000
  5981 multiletter control sequences out of 15000+200000
  20698 words of font info for 43 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
@@ -253,7 +246,7 @@ kTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><F:/Program Files/MikTeX/fonts/t
 ype1/public/amsfonts/cm/cmr12.pfb><F:/Program Files/MikTeX/fonts/type1/urw/time
 s/utmb8a.pfb><F:/Program Files/MikTeX/fonts/type1/urw/times/utmr8a.pfb><F:/Prog
 ram Files/MikTeX/fonts/type1/urw/times/utmri8a.pfb>
-Output written on scifile.pdf (12 pages, 102605 bytes).
+Output written on scifile.pdf (12 pages, 102624 bytes).
 PDF statistics:
  67 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
